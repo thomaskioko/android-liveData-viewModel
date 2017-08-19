@@ -10,6 +10,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        compileOptions {
+            android.compileOptions.sourceCompatibility 1.8
+            android.compileOptions.targetCompatibility 1.8
+        }
     }
     buildTypes {
         release {
@@ -26,4 +31,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.0'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.0'
+
+    compile 'com.jakewharton.timber:timber:4.5.1'
+
+    //for lifecycle and LiveData and ViewModel
+    compile 'android.arch.lifecycle:runtime:1.0.0-alpha1'
+    compile 'android.arch.lifecycle:extensions:1.0.0-alpha1'
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha1"
 }
