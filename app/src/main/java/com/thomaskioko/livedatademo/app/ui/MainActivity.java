@@ -1,7 +1,9 @@
-package com.thomaskioko.livedatademo;
+package com.thomaskioko.livedatademo.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.thomaskioko.livedatademo.R;
 
 public class MainActivity extends AppCompatActivity {
 
