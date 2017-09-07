@@ -18,14 +18,14 @@ public class MainActivity extends LifecycleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MainActivityViewModel model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-
         ListView listView = findViewById(R.id.list);
         ProgressBar progressBar = findViewById(R.id.progressbar);
 
         progressBar.setVisibility(View.VISIBLE);
 
-        model.getGitUserNames()
+        ViewModelProviders.of(this)
+                .get(MainActivityViewModel.class)
+                .getGitUserNames()
                 .observe(this, stringList -> {
                     // update UI
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
@@ -34,5 +34,6 @@ public class MainActivity extends LifecycleActivity {
                     listView.setAdapter(adapter);
                     progressBar.setVisibility(View.GONE);
                 });
+
     }
 }
