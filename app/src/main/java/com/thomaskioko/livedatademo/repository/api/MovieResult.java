@@ -1,7 +1,7 @@
-package com.thomaskioko.livedatademo.service.repository.api;
+package com.thomaskioko.livedatademo.repository.api;
 
 import com.google.gson.annotations.SerializedName;
-import com.thomaskioko.livedatademo.service.repository.model.Movie;
+import com.thomaskioko.livedatademo.repository.model.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
