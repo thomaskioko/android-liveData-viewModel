@@ -7,6 +7,22 @@ A simple android project that demonstrates how to implement Android Architecture
 * JDK Version 1.7 & above
 * Android Studio Preview Version 3.0 
 
+### Prerequisites
+For the app to make requests you require a [TMDB API key](https://developers.themoviedb.org/3/getting-started ). 
+
+If you don’t already have an account, you will need to [create one](https://www.themoviedb.org/account/signup) 
+in order to request an API Key.
+
+Once you have it, open `gradle.properties` file and paste your API key in `TMDB_API_KEY` variable.
+
+### Libraries Used
+
+
+1. [Dagger](http://square.github.io/dagger/)
+2. [Retrofit](http://square.github.io/retrofit/)
+3. [OkHttp](http://square.github.io/okhttp/)
+5. [Timber](https://github.com/JakeWharton/timber)
+
 
 ### License
 
