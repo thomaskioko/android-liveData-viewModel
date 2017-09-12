@@ -4,12 +4,21 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+
+import com.thomaskioko.livedatademo.repository.RepositoryManager;
+import com.thomaskioko.livedatademo.repository.api.MovieResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import timber.log.Timber;
 
 /**
@@ -18,7 +27,14 @@ import timber.log.Timber;
 
 public class MainActivityViewModel extends ViewModel {
 
+    RepositoryManager mRepositoryManager;
     private MutableLiveData<List<String>> mListMutableLiveData;
+
+    @Inject
+    MainActivityViewModel(@NonNull RepositoryManager repositoryManager) {
+        mRepositoryManager = repositoryManager;
+    }
+
 
     /**
      * Helper method that returns a list of user names.
@@ -51,6 +67,24 @@ public class MainActivityViewModel extends ViewModel {
             mListMutableLiveData.setValue(fruitsStringList);
         }, 5000);
 
+    }
+
+    /**
+     * Invoke {@link com.thomaskioko.livedatademo.repository.api.TmdbService} to fetch
+     * list of popular movies
+     */
+    public void getPopularMovies() {
+        mRepositoryManager.getPopularMovies().enqueue(new Callback<MovieResult>() {
+            @Override
+            public void onResponse(@NonNull Call<MovieResult> call, @NonNull Response<MovieResult> response) {
+                Timber.i("@getPopularMovies:: Status Code " + response.code());
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MovieResult> call, @NonNull Throwable t) {
+                Timber.e("@getPopularMovies:: " + t.getMessage());
+            }
+        });
     }
 
     @Override
