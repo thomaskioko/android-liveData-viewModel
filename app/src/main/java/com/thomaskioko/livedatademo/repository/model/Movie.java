@@ -1,4 +1,4 @@
-package com.thomaskioko.livedatademo.service.repository.model;
+package com.thomaskioko.livedatademo.repository.model;
 
 import com.google.gson.annotations.SerializedName;
 
