@@ -7,13 +7,24 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-beta4'
+        classpath 'com.android.tools.build:gradle:3.0.0-beta5'
         
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
+
+ext.supportLibVersion = '26.0.2'
+ext.archVersion = '1.0.0-alpha9'
+ext.retrofitVersion = '2.3.0'
+ext.okhttpVersion = '3.4.1'
+ext.daggerVersion = '2.11'
+ext.constraintLayoutVersion = "1.0.2"
+ext.mockitoVersion = "2.7.19"
+ext.timberVersion = "4.5.1"
+ext.timberVersion = "4.5.1"
+
 
 allprojects {
     repositories {
