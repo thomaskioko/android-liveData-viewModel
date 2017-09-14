@@ -23,7 +23,6 @@ ext.daggerVersion = '2.11'
 ext.constraintLayoutVersion = "1.0.2"
 ext.mockitoVersion = "2.7.19"
 ext.timberVersion = "4.5.1"
-ext.timberVersion = "4.5.1"
 
 
 allprojects {
