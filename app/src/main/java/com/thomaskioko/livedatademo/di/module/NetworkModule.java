@@ -15,7 +15,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.thomaskioko.livedatademo.utils.AppConstants.BASE_URL;
 import static com.thomaskioko.livedatademo.utils.AppConstants.CONNECT_TIMEOUT;
@@ -63,7 +63,7 @@ public class NetworkModule {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(okHttpClient)
-                .addConverterFactory(JacksonConverterFactory.create()) // Serialize Objects
+                .addConverterFactory(GsonConverterFactory.create()) // Serialize Objects
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //Set call to return {@link Observable}
                 .build();
     }
