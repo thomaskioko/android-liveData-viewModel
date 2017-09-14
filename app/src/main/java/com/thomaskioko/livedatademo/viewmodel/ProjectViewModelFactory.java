@@ -1,4 +1,4 @@
-package com.thomaskioko.livedatademo.ui.viewmodel;
+package com.thomaskioko.livedatademo.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

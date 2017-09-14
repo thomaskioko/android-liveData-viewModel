@@ -1,4 +1,4 @@
-package com.thomaskioko.livedatademo.ui.viewmodel;
+package com.thomaskioko.livedatademo.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import com.thomaskioko.livedatademo.repository.TmdbRepository;
-import com.thomaskioko.livedatademo.repository.api.ApiResponse;
+import com.thomaskioko.livedatademo.repository.model.ApiResponse;
 
 import javax.inject.Inject;
 
