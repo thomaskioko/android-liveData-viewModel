@@ -8,10 +8,12 @@ import com.thomaskioko.livedatademo.repository.api.MovieResult;
 
 public class ApiResponse {
 
+    private int statusCode;
     private MovieResult movieResult;
     private Throwable error;
 
-    public ApiResponse(MovieResult movieResult) {
+    public ApiResponse(int statusCode, MovieResult movieResult) {
+        this.statusCode = statusCode;
         this.movieResult = movieResult;
         this.error = null;
     }
@@ -35,5 +37,13 @@ public class ApiResponse {
 
     public void setError(Throwable error) {
         this.error = error;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 }
