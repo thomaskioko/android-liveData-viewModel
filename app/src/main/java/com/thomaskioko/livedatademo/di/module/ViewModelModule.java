@@ -4,8 +4,8 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.thomaskioko.livedatademo.di.qualifires.ViewModelKey;
-import com.thomaskioko.livedatademo.ui.viewmodel.MainActivityViewModel;
-import com.thomaskioko.livedatademo.ui.viewmodel.ProjectViewModelFactory;
+import com.thomaskioko.livedatademo.viewmodel.MainActivityViewModel;
+import com.thomaskioko.livedatademo.viewmodel.ProjectViewModelFactory;
 
 import dagger.Binds;
 import dagger.Module;
