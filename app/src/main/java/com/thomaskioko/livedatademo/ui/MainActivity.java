@@ -6,13 +6,15 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.di.Injectable;
-import com.thomaskioko.livedatademo.ui.viewmodel.MainActivityViewModel;
+import com.thomaskioko.livedatademo.repository.api.MovieResult;
+import com.thomaskioko.livedatademo.repository.model.ApiResponse;
+import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.viewmodel.MainActivityViewModel;
 
 import javax.inject.Inject;
 
@@ -20,6 +22,7 @@ import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import timber.log.Timber;
 
 public class MainActivity extends LifecycleActivity implements Injectable, HasActivityInjector {
 
@@ -42,15 +45,30 @@ public class MainActivity extends LifecycleActivity implements Injectable, HasAc
         progressBar.setVisibility(View.VISIBLE);
         ViewModelProviders.of(this, viewModelFactory)
                 .get(MainActivityViewModel.class)
-                .getGitUserNames()
-                .observe(this, stringList -> {
-                    // update UI
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                            android.R.layout.simple_list_item_1, android.R.id.text1, stringList);
-                    // Assign adapter to ListView
-                    listView.setAdapter(adapter);
+                .getPopularMovies()
+                .observe(this, apiResponse -> {
                     progressBar.setVisibility(View.GONE);
+                    handleApiResponse(apiResponse);
                 });
+    }
+
+    /**
+     * Helper method that handles responses from, the API
+     *
+     * @param apiResponse
+     */
+    private void handleApiResponse(ApiResponse apiResponse) {
+
+        if (apiResponse.getStatusCode() != 200) {
+            Timber.e("API Error: ");
+        } else if (apiResponse.getError() != null) {
+            Timber.e("Error: " + apiResponse.getError().getMessage());
+        } else {
+            MovieResult movieResult = apiResponse.getMovieResult();
+            for (Movie movie : movieResult.getResults()) {
+                Timber.i("Title: " + movie.getTitle());
+            }
+        }
 
     }
 
