@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.thomaskioko.livedatademo.di.qualifires.ViewModelKey;
-import com.thomaskioko.livedatademo.viewmodel.MainActivityViewModel;
+import com.thomaskioko.livedatademo.viewmodel.MovieListViewModel;
 import com.thomaskioko.livedatademo.viewmodel.ProjectViewModelFactory;
 
 import dagger.Binds;
@@ -19,8 +19,8 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MainActivityViewModel.class)
-    abstract ViewModel bindMainActivityViewModel(MainActivityViewModel mainActivityViewModel);
+    @ViewModelKey(MovieListViewModel.class)
+    abstract ViewModel bindMovieListViewModel(MovieListViewModel movieListViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ProjectViewModelFactory projectViewModelFactory);

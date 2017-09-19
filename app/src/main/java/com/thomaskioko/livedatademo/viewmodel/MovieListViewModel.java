@@ -16,13 +16,13 @@ import timber.log.Timber;
  * @author Thomas Kioko
  */
 
-public class MainActivityViewModel extends ViewModel {
+public class MovieListViewModel extends ViewModel {
 
     private MediatorLiveData<ApiResponse> mApiResponseMediatorLiveData;
     private TmdbRepository tmdbRepository;
 
     @Inject
-    MainActivityViewModel(@NonNull TmdbRepository tmdbRepository) {
+    MovieListViewModel(@NonNull TmdbRepository tmdbRepository) {
         this.tmdbRepository = tmdbRepository;
     }
 

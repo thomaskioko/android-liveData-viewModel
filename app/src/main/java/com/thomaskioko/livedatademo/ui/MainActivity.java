@@ -14,7 +14,7 @@ import com.thomaskioko.livedatademo.di.Injectable;
 import com.thomaskioko.livedatademo.repository.api.MovieResult;
 import com.thomaskioko.livedatademo.repository.model.ApiResponse;
 import com.thomaskioko.livedatademo.repository.model.Movie;
-import com.thomaskioko.livedatademo.viewmodel.MainActivityViewModel;
+import com.thomaskioko.livedatademo.viewmodel.MovieListViewModel;
 
 import javax.inject.Inject;
 
@@ -44,7 +44,7 @@ public class MainActivity extends LifecycleActivity implements Injectable, HasAc
 
         progressBar.setVisibility(View.VISIBLE);
         ViewModelProviders.of(this, viewModelFactory)
-                .get(MainActivityViewModel.class)
+                .get(MovieListViewModel.class)
                 .getPopularMovies()
                 .observe(this, apiResponse -> {
                     progressBar.setVisibility(View.GONE);
@@ -53,9 +53,10 @@ public class MainActivity extends LifecycleActivity implements Injectable, HasAc
     }
 
     /**
-     * Helper method that handles responses from, the API
+     * Helper method that handles responses from, the API.It's responsible for displaying either
+     * an error message of a list of movies based on the reponse from the server.
      *
-     * @param apiResponse
+     * @param apiResponse {@link ApiResponse}
      */
     private void handleApiResponse(ApiResponse apiResponse) {
 
