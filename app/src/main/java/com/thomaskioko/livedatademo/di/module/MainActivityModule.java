@@ -1,6 +1,6 @@
 package com.thomaskioko.livedatademo.di.module;
 
-import com.thomaskioko.livedatademo.ui.MainActivity;
+import com.thomaskioko.livedatademo.view.ui.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
