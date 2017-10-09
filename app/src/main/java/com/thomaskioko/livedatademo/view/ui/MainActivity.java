@@ -1,12 +1,13 @@
-package com.thomaskioko.livedatademo.ui;
+package com.thomaskioko.livedatademo.view.ui;
 
 import android.app.Activity;
 import android.arch.lifecycle.LifecycleActivity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.thomaskioko.livedatademo.R;
@@ -14,7 +15,11 @@ import com.thomaskioko.livedatademo.di.Injectable;
 import com.thomaskioko.livedatademo.repository.api.MovieResult;
 import com.thomaskioko.livedatademo.repository.model.ApiResponse;
 import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.view.adapter.MovieListAdapter;
 import com.thomaskioko.livedatademo.viewmodel.MovieListViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -32,6 +37,10 @@ public class MainActivity extends LifecycleActivity implements Injectable, HasAc
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
+    RecyclerView mRecyclerView;
+    MovieListAdapter mMovieListAdapter;
+    private List<Movie> mMovieList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +48,13 @@ public class MainActivity extends LifecycleActivity implements Injectable, HasAc
 
         AndroidInjection.inject(this);
 
-        ListView listView = findViewById(R.id.list);
+        mRecyclerView = findViewById(R.id.recyclerView);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mRecyclerView.getContext(), 3);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+
+        mMovieListAdapter = new MovieListAdapter(mMovieList);
+        mRecyclerView.setAdapter(mMovieListAdapter);
+
         ProgressBar progressBar = findViewById(R.id.progressbar);
 
         progressBar.setVisibility(View.VISIBLE);
@@ -66,9 +81,9 @@ public class MainActivity extends LifecycleActivity implements Injectable, HasAc
             Timber.e("Error: " + apiResponse.getError().getMessage());
         } else {
             MovieResult movieResult = apiResponse.getMovieResult();
-            for (Movie movie : movieResult.getResults()) {
-                Timber.i("Title: " + movie.getTitle());
-            }
+
+            mMovieList.addAll(movieResult.getResults());
+            mMovieListAdapter.notifyDataSetChanged();
         }
 
     }
