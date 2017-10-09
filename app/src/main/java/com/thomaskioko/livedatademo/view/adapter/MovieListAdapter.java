@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.repository.model.Movie;
-import com.thomaskioko.livedatademo.util.ApplicationConstants;
 
 import java.util.List;
 
@@ -41,9 +40,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     public void onBindViewHolder(MovieViewHolder holder, int position) {
 
         Movie movie = mMovieList.get(position);
+        String posterUrl = holder.ivPoster.getContext().getString(R.string.tmdb_image_url) +
+                holder.ivPoster.getContext().getString(R.string.image_size_780) + movie.getPosterUrl();
 
         Glide.with(holder.ivPoster.getContext())
-                .load(ApplicationConstants.TMDB_IMAGE_URL + ApplicationConstants.IMAGE_SIZE_780 + movie.getPosterUrl())
+                .load(posterUrl)
                 .into(holder.ivPoster);
 
     }
