@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">LiveData Demo</string>
+
+
+    <!-- Base TMDB Image Url  -->
+    <string name="tmdb_image_url">http://image.tmdb.org/t/p/</string>
+    <!-- TMDB Image Sizes-->
+    <string name="image_size_185">w185</string>
+    <string name="image_size_500">w500</string>
+    <string name="image_size_780">w780</string>
+    <string name="image_size_original">original</string>
 </resources>
