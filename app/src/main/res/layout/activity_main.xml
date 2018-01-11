@@ -6,23 +6,14 @@
     android:orientation="vertical"
     tools:context=".view.ui.MainActivity">
 
-    <include layout="@layout/include_toolbar"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="MergeRootFrame"
+        android:layout_width="match_parent" android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="match_parent"/>
     </FrameLayout>
 
 </LinearLayout>
