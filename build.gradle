@@ -25,6 +25,10 @@ ext.mockitoVersion = "2.7.19"
 ext.timberVersion = "4.6.0"
 ext.glideVersion = "3.7.0"
 ext.butterKnifeVersion = "8.8.1"
+ext.junitVersion = "4.12"
+ext.coreTestingVersion = "1.0.0"
+ext.supportTestVersion = "1.0.0"
+ext.espressoCoreVersion = "3.0.1"
 
 
 allprojects {

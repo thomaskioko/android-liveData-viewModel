@@ -66,8 +66,12 @@ dependencies {
 
 
     // Testing
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.0'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.0'
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "android.arch.core:core-testing:$archVersion"
+    androidTestImplementation "com.android.support.test:runner:$supportTestVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCoreVersion"
+
+    androidTestImplementation("android.arch.core:core-testing:$archVersion", {
+    })
 
 }
