@@ -41,7 +41,7 @@ public class MovieListViewModel extends ViewModel {
     private void loadPopularMovies() {
         mApiResponseMediatorLiveData.addSource(
                 tmdbRepository.getPopularMovies(),
-                apiResponse -> mApiResponseMediatorLiveData.setValue(apiResponse)
+                apiResponse -> mApiResponseMediatorLiveData.postValue(apiResponse)
         );
     }
 
