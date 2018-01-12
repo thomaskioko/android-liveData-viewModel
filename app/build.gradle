@@ -9,7 +9,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.thomaskioko.livedatademo.util.TmdbTestRunner"
 
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
@@ -64,8 +64,11 @@ dependencies {
     compile "com.jakewharton:butterknife:$butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
 
-
     // Testing
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
+    androidTestCompile "org.mockito:mockito-core:$mockitoVersion"
+    androidTestCompile "org.mockito:mockito-android:$mockitoVersion"
+
     testImplementation "junit:junit:$junitVersion"
     testImplementation "android.arch.core:core-testing:$archVersion"
     androidTestImplementation "com.android.support.test:runner:$supportTestVersion"
@@ -73,5 +76,7 @@ dependencies {
 
     androidTestImplementation("android.arch.core:core-testing:$archVersion", {
     })
+
+    androidTestImplementation "org.mockito:mockito-core:$mockitoVersion", { exclude group: 'net.bytebuddy' }
 
 }
