@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import com.thomaskioko.livedatademo.repository.TmdbRepository;
 import com.thomaskioko.livedatademo.repository.model.ApiResponse;
@@ -26,6 +27,7 @@ public class MovieListViewModel extends ViewModel {
         this.tmdbRepository = tmdbRepository;
     }
 
+    @VisibleForTesting
     public LiveData<ApiResponse> getPopularMovies() {
         if (mApiResponseMediatorLiveData == null) {
             mApiResponseMediatorLiveData = new MediatorLiveData<>();
