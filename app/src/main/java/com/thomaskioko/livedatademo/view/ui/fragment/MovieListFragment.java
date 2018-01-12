@@ -34,7 +34,7 @@ import timber.log.Timber;
 public class MovieListFragment extends LifecycleFragment implements Injectable{
 
     @Inject
-    ViewModelProvider.Factory viewModelFactory;
+    public ViewModelProvider.Factory viewModelFactory;
 
     RecyclerView mRecyclerView;
     ProgressBar progressBar;
