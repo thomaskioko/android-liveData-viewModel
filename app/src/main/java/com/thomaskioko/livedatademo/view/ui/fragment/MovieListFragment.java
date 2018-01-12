@@ -72,10 +72,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable{
         ViewModelProviders.of(this, viewModelFactory)
                 .get(MovieListViewModel.class)
                 .getPopularMovies()
-                .observe(this, apiResponse -> {
-                    progressBar.setVisibility(View.GONE);
-                    handleApiResponse(apiResponse);
-                });
+                .observe(this, this::handleApiResponse);
     }
 
     /**
@@ -85,11 +82,12 @@ public class MovieListFragment extends LifecycleFragment implements Injectable{
      * @param apiResponse {@link ApiResponse}
      */
     private void handleApiResponse(ApiResponse apiResponse) {
+        progressBar.setVisibility(View.GONE);
 
         if (apiResponse.getStatusCode() != 200) {
             Timber.e("API Error: ");
         } else if (apiResponse.getError() != null) {
-            Timber.e("Error: " + apiResponse.getError().getMessage());
+            Timber.e("Error: %s", apiResponse.getError().getMessage());
         } else {
             MovieResult movieResult = apiResponse.getMovieResult();
 
