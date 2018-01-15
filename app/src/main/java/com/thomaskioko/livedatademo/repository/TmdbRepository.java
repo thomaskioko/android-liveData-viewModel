@@ -37,12 +37,12 @@ public class TmdbRepository {
         movieResultCall.enqueue(new Callback<MovieResult>() {
             @Override
             public void onResponse(@NonNull Call<MovieResult> call, @NonNull Response<MovieResult> response) {
-                apiResponseMutableLiveData.setValue(new ApiResponse(response.code(), response.body()));
+                apiResponseMutableLiveData.postValue(new ApiResponse(response.code(), response.body()));
             }
 
             @Override
             public void onFailure(@NonNull Call<MovieResult> call, @NonNull Throwable t) {
-                apiResponseMutableLiveData.setValue(new ApiResponse(t));
+                apiResponseMutableLiveData.postValue(new ApiResponse(t));
             }
         });
 
