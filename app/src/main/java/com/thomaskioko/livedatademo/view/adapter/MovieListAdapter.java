@@ -54,6 +54,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         return mMovieList.size();
     }
 
+    public void setData(List<Movie> movieList) {
+        mMovieList = movieList;
+        notifyDataSetChanged();
+    }
+
     /**
      * ViewHolder class
      */
