@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.di.Injectable;
@@ -25,19 +26,26 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 /**
  * @author Thomas Kioko
  */
 
-public class MovieListFragment extends LifecycleFragment implements Injectable{
+public class MovieListFragment extends LifecycleFragment implements Injectable {
 
     @Inject
     public ViewModelProvider.Factory viewModelFactory;
 
+    @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.progressbar)
     ProgressBar progressBar;
+    @BindView(R.id.tvError)
+    TextView errorTextView;
+
     MovieListAdapter mMovieListAdapter;
     private List<Movie> mMovieList = new ArrayList<>();
 
@@ -48,8 +56,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable{
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.movie_list_fragment, container, false);
-        mRecyclerView = view.findViewById(R.id.recyclerView);
-        progressBar = view.findViewById(R.id.progressbar);
+        ButterKnife.bind(this, view);
 
         return view;
     }
@@ -65,8 +72,6 @@ public class MovieListFragment extends LifecycleFragment implements Injectable{
 
         mMovieListAdapter = new MovieListAdapter(mMovieList);
         mRecyclerView.setAdapter(mMovieListAdapter);
-
-
 
         progressBar.setVisibility(View.VISIBLE);
         ViewModelProviders.of(this, viewModelFactory)
@@ -86,8 +91,11 @@ public class MovieListFragment extends LifecycleFragment implements Injectable{
 
         if (apiResponse.getStatusCode() != 200) {
             Timber.e("API Error: ");
+            errorTextView.setText(getResources().getString(R.string.error_loading));
         } else if (apiResponse.getError() != null) {
             Timber.e("Error: %s", apiResponse.getError().getMessage());
+            errorTextView.setText(apiResponse.getError().getMessage());
+            errorTextView.setVisibility(View.VISIBLE);
         } else {
             MovieResult movieResult = apiResponse.getMovieResult();
 
