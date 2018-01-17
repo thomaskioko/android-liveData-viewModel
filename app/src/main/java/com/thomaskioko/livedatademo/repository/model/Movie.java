@@ -1,5 +1,6 @@
 package com.thomaskioko.livedatademo.repository.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -12,6 +13,9 @@ import java.util.List;
 public class Movie {
 
     private List<String> genre = new ArrayList<>();
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName(value = "poster_path")
     public String posterUrl;
     private Double rating;
@@ -86,6 +90,15 @@ public class Movie {
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 
