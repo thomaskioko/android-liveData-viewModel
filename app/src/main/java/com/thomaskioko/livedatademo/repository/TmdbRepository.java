@@ -48,4 +48,22 @@ public class TmdbRepository {
 
         return apiResponseMutableLiveData;
     }
+
+    public LiveData<ApiResponse> searchMovie(String query) {
+        MutableLiveData<ApiResponse> apiResponseMutableLiveData = new MutableLiveData<>();
+        Call<MovieResult> movieResultCall = mTmdbService.searchMovies(query);
+        movieResultCall.enqueue(new Callback<MovieResult>() {
+            @Override
+            public void onResponse(@NonNull Call<MovieResult> call, @NonNull Response<MovieResult> response) {
+                apiResponseMutableLiveData.postValue(new ApiResponse(response.code(), response.body()));
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<MovieResult> call, @NonNull Throwable t) {
+                apiResponseMutableLiveData.postValue(new ApiResponse(t));
+            }
+        });
+
+        return apiResponseMutableLiveData;
+    }
 }
