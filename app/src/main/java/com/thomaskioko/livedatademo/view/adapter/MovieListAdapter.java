@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.repository.model.Movie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,15 +19,9 @@ import java.util.List;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
 
-    private List<Movie> mMovieList;
+    private List<Movie> mMovieList =new ArrayList<>();
 
-    /**
-     * Constructor
-     *
-     * @param movieList List of movie items
-     */
-    public MovieListAdapter(List<Movie> movieList) {
-        mMovieList = movieList;
+    public MovieListAdapter() {
     }
 
     @Override
