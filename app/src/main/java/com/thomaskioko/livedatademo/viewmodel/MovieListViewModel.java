@@ -20,6 +20,7 @@ import timber.log.Timber;
 public class MovieListViewModel extends ViewModel {
 
     private MediatorLiveData<ApiResponse> mApiResponseMediatorLiveData;
+    private MediatorLiveData<ApiResponse> mSearchMediatorLiveData;
     private TmdbRepository tmdbRepository;
 
     @Inject
@@ -36,6 +37,15 @@ public class MovieListViewModel extends ViewModel {
         return mApiResponseMediatorLiveData;
     }
 
+    @VisibleForTesting
+    public LiveData<ApiResponse> getSearchMovie(String query) {
+        if (mSearchMediatorLiveData == null) {
+            mSearchMediatorLiveData = new MediatorLiveData<>();
+            searchMovie(query);
+        }
+        return mSearchMediatorLiveData;
+    }
+
     /**
      * Invoke {@link com.thomaskioko.livedatademo.repository.api.TmdbService} to fetch
      * list of popular movies
@@ -44,6 +54,13 @@ public class MovieListViewModel extends ViewModel {
         mApiResponseMediatorLiveData.addSource(
                 tmdbRepository.getPopularMovies(),
                 apiResponse -> mApiResponseMediatorLiveData.postValue(apiResponse)
+        );
+    }
+
+    private void searchMovie(String query) {
+        mSearchMediatorLiveData.addSource(
+                tmdbRepository.searchMovie(query),
+                apiResponse -> mSearchMediatorLiveData.postValue(apiResponse)
         );
     }
 
