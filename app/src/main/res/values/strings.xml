@@ -12,6 +12,7 @@
 
     <!-- Error Message -->
     <string name="error_loading">Could not fetch movies!</string>
+    <string name="error_no_results">No Movie found :(</string>
 
     <string name="hint_search">Search Movies</string>
 </resources>
