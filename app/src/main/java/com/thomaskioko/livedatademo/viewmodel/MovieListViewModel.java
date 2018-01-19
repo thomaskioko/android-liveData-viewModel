@@ -39,10 +39,11 @@ public class MovieListViewModel extends ViewModel {
 
     @VisibleForTesting
     public LiveData<ApiResponse> getSearchMovie(String query) {
-        if (mSearchMediatorLiveData == null) {
-            mSearchMediatorLiveData = new MediatorLiveData<>();
-            searchMovie(query);
-        }
+        mSearchMediatorLiveData = new MediatorLiveData<>();
+        mSearchMediatorLiveData.addSource(
+                tmdbRepository.searchMovie(query),
+                apiResponse -> mSearchMediatorLiveData.postValue(apiResponse)
+        );
         return mSearchMediatorLiveData;
     }
 
@@ -57,12 +58,6 @@ public class MovieListViewModel extends ViewModel {
         );
     }
 
-    private void searchMovie(String query) {
-        mSearchMediatorLiveData.addSource(
-                tmdbRepository.searchMovie(query),
-                apiResponse -> mSearchMediatorLiveData.postValue(apiResponse)
-        );
-    }
 
     @Override
     protected void onCleared() {
