@@ -36,7 +36,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
         Movie movie = mMovieList.get(position);
         String posterUrl = holder.ivPoster.getContext().getString(R.string.tmdb_image_url) +
-                holder.ivPoster.getContext().getString(R.string.image_size_780) + movie.getPosterUrl();
+                holder.ivPoster.getContext().getString(R.string.image_size_780) + movie.posterUrl;
 
         Glide.with(holder.ivPoster.getContext())
                 .load(posterUrl)
