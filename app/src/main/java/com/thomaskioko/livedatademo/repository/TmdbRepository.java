@@ -1,19 +1,22 @@
 package com.thomaskioko.livedatademo.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
 import com.thomaskioko.livedatademo.repository.api.MovieResult;
 import com.thomaskioko.livedatademo.repository.api.TmdbService;
 import com.thomaskioko.livedatademo.repository.model.ApiResponse;
+import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.repository.util.NetworkBoundResource;
+import com.thomaskioko.livedatademo.repository.util.AppExecutors;
+import com.thomaskioko.livedatademo.vo.Resource;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import timber.log.Timber;
 
 /**
  * This class helps manage communication from repository to ViewModels
@@ -25,45 +28,42 @@ import retrofit2.Response;
 public class TmdbRepository {
 
     private TmdbService mTmdbService;
+    private final AppExecutors mAppExecutors;
 
     @Inject
-    TmdbRepository(TmdbService tmdbService) {
+    TmdbRepository(AppExecutors appExecutors, TmdbService tmdbService) {
         mTmdbService = tmdbService;
+        mAppExecutors = appExecutors;
     }
 
-    public LiveData<ApiResponse> getPopularMovies() {
-        MutableLiveData<ApiResponse> apiResponseMutableLiveData = new MutableLiveData<>();
-        Call<MovieResult> movieResultCall = mTmdbService.getPopularMovies();
-        movieResultCall.enqueue(new Callback<MovieResult>() {
+    public LiveData<Resource<MovieResult>> getPopularMovies() {
+        return new NetworkBoundResource<MovieResult, MovieResult>(mAppExecutors){
             @Override
-            public void onResponse(@NonNull Call<MovieResult> call, @NonNull Response<MovieResult> response) {
-                apiResponseMutableLiveData.postValue(new ApiResponse(response.code(), response.body()));
+            protected void saveCallResult(@NonNull MovieResult item) {
+
             }
 
+            @NonNull
             @Override
-            public void onFailure(@NonNull Call<MovieResult> call, @NonNull Throwable t) {
-                apiResponseMutableLiveData.postValue(new ApiResponse(t));
+            protected LiveData<ApiResponse<MovieResult>> createCall() {
+                return mTmdbService.getPopularMovies();
             }
-        });
-
-        return apiResponseMutableLiveData;
+        }.asLiveData();
     }
 
-    public LiveData<ApiResponse> searchMovie(String query) {
-        MutableLiveData<ApiResponse> apiResponseMutableLiveData = new MutableLiveData<>();
-        Call<MovieResult> movieResultCall = mTmdbService.searchMovies(query);
-        movieResultCall.enqueue(new Callback<MovieResult>() {
+    public LiveData<Resource<List<Movie>>> searchMovie(String query) {
+        return new NetworkBoundResource<List<Movie>, MovieResult>(mAppExecutors){
             @Override
-            public void onResponse(@NonNull Call<MovieResult> call, @NonNull Response<MovieResult> response) {
-                apiResponseMutableLiveData.postValue(new ApiResponse(response.code(), response.body()));
+            protected void saveCallResult(@NonNull MovieResult item) {
+                Timber.d("@saveCallResult:: " + item.getResults());
+
             }
 
+            @NonNull
             @Override
-            public void onFailure(@NonNull Call<MovieResult> call, @NonNull Throwable t) {
-                apiResponseMutableLiveData.postValue(new ApiResponse(t));
+            protected LiveData<ApiResponse<MovieResult>> createCall() {
+                return mTmdbService.searchMovies(query);
             }
-        });
-
-        return apiResponseMutableLiveData;
+        }.asLiveData();
     }
 }
