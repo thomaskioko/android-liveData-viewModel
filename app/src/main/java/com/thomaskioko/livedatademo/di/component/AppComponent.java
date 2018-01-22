@@ -5,6 +5,7 @@ import android.app.Application;
 import com.thomaskioko.livedatademo.TmdbApp;
 import com.thomaskioko.livedatademo.di.module.AppModule;
 import com.thomaskioko.livedatademo.di.module.MainActivityModule;
+import com.thomaskioko.livedatademo.di.module.RoomModule;
 
 import javax.inject.Singleton;
 
@@ -20,7 +21,8 @@ import dagger.android.AndroidInjectionModule;
 @Component(modules = {
         AndroidInjectionModule.class,
         AppModule.class,
-        MainActivityModule.class
+        MainActivityModule.class,
+        RoomModule.class,
 })
 public interface AppComponent {
     @Component.Builder
