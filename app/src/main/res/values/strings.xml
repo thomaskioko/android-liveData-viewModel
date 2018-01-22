@@ -9,4 +9,10 @@
     <string name="image_size_500">w500</string>
     <string name="image_size_780">w780</string>
     <string name="image_size_original">original</string>
+
+    <!-- Error Message -->
+    <string name="error_loading">Could not fetch movies!</string>
+    <string name="error_no_results">No Movie found :(</string>
+
+    <string name="hint_search">Search Movies</string>
 </resources>

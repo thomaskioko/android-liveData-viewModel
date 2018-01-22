@@ -1,9 +1,9 @@
 package com.thomaskioko.livedatademo.view.ui;
 
-import android.arch.lifecycle.LifecycleActivity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.view.ui.fragment.MovieListFragment;
@@ -15,7 +15,8 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class MainActivity extends LifecycleActivity implements HasSupportFragmentInjector {
+//TODO:: Fix display of searchbar when LifecycleActivity is Implemented
+public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;

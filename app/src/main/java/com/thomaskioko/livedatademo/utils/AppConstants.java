@@ -20,5 +20,5 @@ public class AppConstants {
     /**
      * Endpoint
      */
-    public static final String BASE_URL = "http://api.themoviedb.org/3/movie/";
+    public static final String BASE_URL = "http://api.themoviedb.org/3/";
 }

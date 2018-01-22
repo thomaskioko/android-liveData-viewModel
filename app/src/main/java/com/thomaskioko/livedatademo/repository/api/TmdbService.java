@@ -2,6 +2,7 @@ package com.thomaskioko.livedatademo.repository.api;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * @author Thomas Kioko
@@ -14,7 +15,7 @@ public interface TmdbService {
      *
      * @return JSON Result
      */
-    @GET("top_rated?")
+    @GET("movie/top_rated?")
     Call<MovieResult> getTopRatedMovies();
 
     /**
@@ -22,6 +23,9 @@ public interface TmdbService {
      *
      * @return JSON Result
      */
-    @GET("popular?")
+    @GET("movie/popular?")
     Call<MovieResult> getPopularMovies();
+
+    @GET("search/movie?")
+    Call<MovieResult> searchMovies(@Query("query") String query);
 }
