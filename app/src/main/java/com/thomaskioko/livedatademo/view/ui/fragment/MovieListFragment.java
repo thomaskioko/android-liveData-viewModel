@@ -22,16 +22,14 @@ import android.widget.TextView;
 
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.di.Injectable;
-import com.thomaskioko.livedatademo.repository.api.MovieResult;
-import com.thomaskioko.livedatademo.repository.model.ApiResponse;
 import com.thomaskioko.livedatademo.view.adapter.MovieListAdapter;
 import com.thomaskioko.livedatademo.viewmodel.MovieListViewModel;
+import com.thomaskioko.livedatademo.viewmodel.SearchViewModel;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 import static android.content.Context.SEARCH_SERVICE;
 
@@ -54,6 +52,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
     Toolbar mToolbar;
 
     private MovieListViewModel viewModel;
+    private SearchViewModel searchViewModel;
     private MovieListAdapter mMovieListAdapter;
 
     @Nullable
@@ -80,12 +79,14 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         mMovieListAdapter = new MovieListAdapter();
         mRecyclerView.setAdapter(mMovieListAdapter);
 
-        progressBar.setVisibility(View.VISIBLE);
+
         viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(MovieListViewModel.class);
 
-        viewModel.getPopularMovies()
-                .observe(this, this::handleApiResponse);
+        searchViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(SearchViewModel.class);
+
+        viewModel.getPopularMovies().observe(this, apiResponse -> {});
     }
 
 
@@ -111,51 +112,43 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
                 return true;
             }
         });
-        searchView.setOnCloseListener(() -> {
-            viewModel.getPopularMovies()
-                    .observe(this, this::handleApiResponse);
-            return false;
-        });
+        searchView.setOnCloseListener(() -> false);
 
     }
 
     private void findMovie(String query) {
-        if (!query.isEmpty()) {
+        if (!query.isEmpty() || !query.equals("")) {
             progressBar.setVisibility(View.VISIBLE);
-            viewModel.getSearchMovie(query)
-                    .observe(this, this::handleApiResponse);
-        }
 
-    }
+            searchViewModel.setSearchQuery(query);
+            searchViewModel.getSearchResults().observe(this, listResource -> {
+                if ((listResource != null ? listResource.data : null) != null) {
 
-    /**
-     * Helper method that handles responses from, the API.It's responsible for displaying either
-     * an error message of a list of movies based on the reponse from the server.
-     *
-     * @param apiResponse {@link ApiResponse}
-     */
-    private void handleApiResponse(ApiResponse apiResponse) {
-        progressBar.setVisibility(View.GONE);
+                    switch (listResource.status) {
+                        case ERROR:
+                            progressBar.setVisibility(View.GONE);
+                            errorTextView.setText(listResource.message);
+                            break;
+                        case LOADING:
+                            progressBar.setVisibility(View.VISIBLE);
+                            break;
+                        case SUCCESS:
+                            progressBar.setVisibility(View.GONE);
+                            if (listResource.data.size() > 0) {
+                                mMovieListAdapter.setData(listResource.data);
+                                mMovieListAdapter.notifyDataSetChanged();
+                            } else {
+                                errorTextView.setText(getResources().getString(R.string.error_no_results));
+                                errorTextView.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        default:
+                            progressBar.setVisibility(View.GONE);
+                            break;
+                    }
 
-        if (apiResponse.getStatusCode() != 200) {
-            Timber.e("API Error: ");
-            errorTextView.setText(getResources().getString(R.string.error_loading));
-        } else if (apiResponse.getError() != null) {
-            Timber.e("Error: %s", apiResponse.getError().getMessage());
-            errorTextView.setText(apiResponse.getError().getMessage());
-            errorTextView.setVisibility(View.VISIBLE);
-        } else {
-            errorTextView.setVisibility(View.GONE);
-            MovieResult movieResult = apiResponse.getMovieResult();
-            mMovieListAdapter.clearAdapter();
-
-            if(movieResult.getResults().size() > 0){
-                mMovieListAdapter.setData(movieResult.getResults());
-                mMovieListAdapter.notifyDataSetChanged();
-            }else{
-                errorTextView.setText(getResources().getString(R.string.error_no_results));
-                errorTextView.setVisibility(View.VISIBLE);
-            }
+                }
+            });
         }
 
     }
