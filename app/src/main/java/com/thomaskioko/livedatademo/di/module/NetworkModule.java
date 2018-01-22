@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.thomaskioko.livedatademo.BuildConfig;
 import com.thomaskioko.livedatademo.repository.api.AuthInterceptor;
+import com.thomaskioko.livedatademo.utils.LiveDataCallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -66,6 +67,7 @@ public class NetworkModule {
                 .baseUrl(BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create()) // Serialize Objects
+                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //Set call to return {@link Observable}
                 .build();
     }
