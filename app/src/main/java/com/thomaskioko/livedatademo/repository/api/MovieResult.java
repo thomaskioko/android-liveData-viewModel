@@ -6,9 +6,6 @@ import com.thomaskioko.livedatademo.repository.model.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Thomas Kioko
- */
 
 public class MovieResult {
     private Integer page;

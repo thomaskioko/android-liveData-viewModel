@@ -33,9 +33,6 @@ import butterknife.ButterKnife;
 
 import static android.content.Context.SEARCH_SERVICE;
 
-/**
- * @author Thomas Kioko
- */
 
 public class MovieListFragment extends LifecycleFragment implements Injectable {
 

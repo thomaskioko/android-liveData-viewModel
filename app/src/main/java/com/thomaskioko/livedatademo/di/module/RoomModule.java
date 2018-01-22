@@ -11,9 +11,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * @author Thomas Kioko
- */
 
 @Module
 public class RoomModule {

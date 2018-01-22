@@ -15,7 +15,6 @@ import timber.log.Timber;
 
 /**
  * Common class used by API responses.
- * @author Thomas Kioko
  */
 
 public class ApiResponse<T> {

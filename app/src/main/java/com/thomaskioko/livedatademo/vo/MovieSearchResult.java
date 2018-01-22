@@ -9,9 +9,6 @@ import com.thomaskioko.livedatademo.db.TmdbTypeConverters;
 
 import java.util.List;
 
-/**
- * @author Thomas Kioko
- */
 
 @Entity(primaryKeys = {"query"})
 @TypeConverters(TmdbTypeConverters.class)

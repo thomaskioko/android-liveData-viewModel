@@ -7,9 +7,6 @@ import com.thomaskioko.livedatademo.repository.model.ApiResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-/**
- * @author Thomas Kioko
- */
 
 public interface TmdbService {
 

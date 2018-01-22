@@ -1,8 +1,5 @@
 package com.thomaskioko.livedatademo.utils;
 
-/**
- * @author Thomas Kioko
- */
 
 public class AppConstants {
     /**

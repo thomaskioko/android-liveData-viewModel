@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Thomas Kioko
+ *
  */
 @Dao
 public abstract class MovieDao {

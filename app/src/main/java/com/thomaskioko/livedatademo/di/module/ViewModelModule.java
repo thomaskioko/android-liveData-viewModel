@@ -13,9 +13,6 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
 
-/**
- * @author Thomas Kioko
- */
 @Module
 public abstract class ViewModelModule {
 

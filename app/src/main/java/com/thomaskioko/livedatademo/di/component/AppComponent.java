@@ -13,9 +13,6 @@ import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 
-/**
- * @author Thomas Kioko
- */
 
 @Singleton
 @Component(modules = {

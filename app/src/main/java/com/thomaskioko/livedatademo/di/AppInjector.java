@@ -14,9 +14,6 @@ import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.HasSupportFragmentInjector;
 
-/**
- * @author Thomas Kioko
- */
 
 public class AppInjector {
     private AppInjector() {}

@@ -26,7 +26,6 @@ import static com.thomaskioko.livedatademo.utils.AppConstants.WRITE_TIMEOUT;
 /**
  * This class is responsible for setting up Retrofit and anything related to network calls.
  *
- * @author Thomas Kioko
  */
 
 @Module

@@ -20,9 +20,6 @@ import javax.inject.Inject;
 
 import timber.log.Timber;
 
-/**
- * @author Thomas Kioko
- */
 
 public class SearchViewModel extends ViewModel {
 
