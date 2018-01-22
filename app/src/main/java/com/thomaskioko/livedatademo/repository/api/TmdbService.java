@@ -1,6 +1,9 @@
 package com.thomaskioko.livedatademo.repository.api;
 
-import retrofit2.Call;
+import android.arch.lifecycle.LiveData;
+
+import com.thomaskioko.livedatademo.repository.model.ApiResponse;
+
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -16,7 +19,7 @@ public interface TmdbService {
      * @return JSON Result
      */
     @GET("movie/top_rated?")
-    Call<MovieResult> getTopRatedMovies();
+    LiveData<ApiResponse<MovieResult>> getTopRatedMovies();
 
     /**
      * Get popular movies.
@@ -24,8 +27,8 @@ public interface TmdbService {
      * @return JSON Result
      */
     @GET("movie/popular?")
-    Call<MovieResult> getPopularMovies();
+    LiveData<ApiResponse<MovieResult>> getPopularMovies();
 
     @GET("search/movie?")
-    Call<MovieResult> searchMovies(@Query("query") String query);
+    LiveData<ApiResponse<MovieResult>> searchMovies(@Query("query") String query);
 }
