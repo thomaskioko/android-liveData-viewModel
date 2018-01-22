@@ -7,6 +7,7 @@ import com.thomaskioko.livedatademo.di.qualifires.ViewModelKey;
 import com.thomaskioko.livedatademo.viewmodel.MovieDetailViewModel;
 import com.thomaskioko.livedatademo.viewmodel.MovieListViewModel;
 import com.thomaskioko.livedatademo.viewmodel.ProjectViewModelFactory;
+import com.thomaskioko.livedatademo.viewmodel.SearchViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -17,6 +18,11 @@ import dagger.multibindings.IntoMap;
  */
 @Module
 public abstract class ViewModelModule {
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchViewModel.class)
+    abstract ViewModel bindSearchViewModel(SearchViewModel searchViewModel);
 
     @Binds
     @IntoMap
