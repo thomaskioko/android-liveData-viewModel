@@ -2,16 +2,17 @@ package com.thomaskioko.livedatademo.repository.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
+import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+import com.thomaskioko.livedatademo.db.TmdbTypeConverters;
 
 
 @Entity(indices = {@Index("id")},
         primaryKeys = {"id"})
-
+@TypeConverters(TmdbTypeConverters.class)
 public class Movie {
 
     @SerializedName("id")
