@@ -4,8 +4,11 @@ import android.app.SearchManager;
 import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -48,7 +52,6 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private MovieListViewModel viewModel;
     private SearchViewModel searchViewModel;
     private MovieListAdapter mMovieListAdapter;
 
@@ -77,13 +80,15 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         mRecyclerView.setAdapter(mMovieListAdapter);
 
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(MovieListViewModel.class);
+        ViewModelProviders.of(this, viewModelFactory)
+                .get(MovieListViewModel.class)
+                .getPopularMovies()
+                .observe(this, apiResponse -> {
+                });
 
         searchViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(SearchViewModel.class);
 
-        viewModel.getPopularMovies().observe(this, apiResponse -> {});
     }
 
 
@@ -100,13 +105,13 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 findMovie(query);
+                dismissKeyboard(searchView.getWindowToken());
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                findMovie(query);
-                return true;
+                return false;
             }
         });
         searchView.setOnCloseListener(() -> false);
@@ -119,7 +124,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
 
             searchViewModel.setSearchQuery(query);
             searchViewModel.getSearchResults().observe(this, listResource -> {
-                if ((listResource != null ? listResource.data : null) != null) {
+                if (listResource != null) {
 
                     switch (listResource.status) {
                         case ERROR:
@@ -131,7 +136,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
                             break;
                         case SUCCESS:
                             progressBar.setVisibility(View.GONE);
-                            if (listResource.data.size() > 0) {
+                            if (listResource.data != null) {
                                 mMovieListAdapter.setData(listResource.data);
                                 mMovieListAdapter.notifyDataSetChanged();
                             } else {
@@ -148,6 +153,15 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
             });
         }
 
+    }
+
+    private void dismissKeyboard(IBinder windowToken) {
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(windowToken, 0);
+        }
     }
 
 }
