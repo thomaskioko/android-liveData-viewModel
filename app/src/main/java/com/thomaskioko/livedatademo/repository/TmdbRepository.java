@@ -1,7 +1,6 @@
 package com.thomaskioko.livedatademo.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -13,7 +12,6 @@ import com.thomaskioko.livedatademo.repository.model.ApiResponse;
 import com.thomaskioko.livedatademo.repository.model.Movie;
 import com.thomaskioko.livedatademo.repository.util.AppExecutors;
 import com.thomaskioko.livedatademo.repository.util.NetworkBoundResource;
-import com.thomaskioko.livedatademo.utils.AbsentLiveData;
 import com.thomaskioko.livedatademo.vo.Resource;
 
 import java.util.List;
@@ -41,22 +39,22 @@ public class TmdbRepository {
         mMovieDao = movieDao;
     }
 
-    public LiveData<Resource<MovieResult>> getPopularMovies() {
-        return new NetworkBoundResource<MovieResult, MovieResult>(mAppExecutors) {
+    public LiveData<Resource<List<Movie>>> getPopularMovies() {
+        return new NetworkBoundResource<List<Movie>, MovieResult>(mAppExecutors) {
             @Override
             protected void saveCallResult(@NonNull MovieResult item) {
 
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable MovieResult data) {
+            protected boolean shouldFetch(@Nullable List<Movie> data) {
                 return false;
             }
 
             @NonNull
             @Override
-            protected LiveData<MovieResult> loadFromDb() {
-                return null;
+            protected LiveData<List<Movie>> loadFromDb() {
+                return mMovieDao.findAll();
             }
 
             @NonNull
@@ -76,19 +74,14 @@ public class TmdbRepository {
 
             @Override
             protected boolean shouldFetch(@Nullable List<Movie> data) {
-                return data == null;
+                return data == null || data.isEmpty();
             }
 
             @NonNull
             @Override
             protected LiveData<List<Movie>> loadFromDb() {
-                return Transformations.switchMap(mMovieDao.search(query), searchData -> {
-                    if (searchData == null) {
-                        return AbsentLiveData.create();
-                    } else {
-                        return mMovieDao.loadOrdered(searchData.repoIds);
-                    }
-                });
+                //Fetch from the db
+                return mMovieDao.findAll();
             }
 
             @NonNull
