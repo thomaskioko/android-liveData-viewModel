@@ -12,10 +12,7 @@ import java.util.List;
 public class TestUtil {
 
     public static Movie createMovie(String posterPath) {
-        Movie movie = new Movie();
-        movie.setPosterUrl(posterPath);
-
-        return movie;
+        return new Movie(346364, posterPath, 7.8, 2017, "Star Wars: The Last Jedi");
     }
 
     public static MovieResult createMovieResult(Integer page, List<Movie> movieList) {
