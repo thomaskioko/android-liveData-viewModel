@@ -22,9 +22,6 @@ public abstract class MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertMovies(List<Movie> movieList);
 
-    @Query("SELECT * FROM Movie WHERE query = :query")
-    public abstract LiveData<Movie> search(String query);
-
     @Query("DELETE FROM Movie")
     public abstract void deleteAll();
 
