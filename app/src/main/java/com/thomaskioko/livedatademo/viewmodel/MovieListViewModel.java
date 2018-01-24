@@ -1,13 +1,20 @@
 package com.thomaskioko.livedatademo.viewmodel;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.thomaskioko.livedatademo.repository.TmdbRepository;
-import com.thomaskioko.livedatademo.repository.model.ApiResponse;
+import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.utils.AbsentLiveData;
+import com.thomaskioko.livedatademo.utils.Objects;
+import com.thomaskioko.livedatademo.vo.Resource;
+
+import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -16,31 +23,41 @@ import timber.log.Timber;
 
 public class MovieListViewModel extends ViewModel {
 
-    private MediatorLiveData<ApiResponse> mApiResponseMediatorLiveData;
+    private final LiveData<Resource<List<Movie>>> moviesLiveData;
+    private final MutableLiveData<String> query = new MutableLiveData<>();
+    private final LiveData<Resource<List<Movie>>> searchResults;
 
 
     @Inject
     MovieListViewModel(@NonNull TmdbRepository tmdbRepository) {
+        moviesLiveData = tmdbRepository.getPopularMovies();
+        searchResults = Transformations.switchMap(query, search -> {
 
+            if (search == null || search.trim().length() == 0) {
+                return AbsentLiveData.create();
+            } else {
+                return tmdbRepository.searchMovie(search);
+            }
+        });
+    }
+
+    @VisibleForTesting
+    public LiveData<Resource<List<Movie>>> getSearchResults() {
+        return searchResults;
+    }
+
+    public void setSearchQuery(@NonNull String originalInput) {
+        String input = originalInput.toLowerCase(Locale.getDefault()).trim();
+        if (Objects.equals(input, query.getValue())) {
+            return;
+        }
+        query.setValue(input);
     }
 
 
     @VisibleForTesting
-    public LiveData<ApiResponse> getPopularMovies() {
-        if (mApiResponseMediatorLiveData == null) {
-            mApiResponseMediatorLiveData = new MediatorLiveData<>();
-            loadPopularMovies();
-        }
-        return mApiResponseMediatorLiveData;
-    }
-
-
-    /**
-     * Invoke {@link com.thomaskioko.livedatademo.repository.api.TmdbService} to fetch
-     * list of popular movies
-     */
-    private void loadPopularMovies() {
-
+    public LiveData<Resource<List<Movie>>> getPopularMovies() {
+        return moviesLiveData;
     }
 
 
