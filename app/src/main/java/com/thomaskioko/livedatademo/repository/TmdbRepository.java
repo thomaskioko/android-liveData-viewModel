@@ -43,17 +43,17 @@ public class TmdbRepository {
         return new NetworkBoundResource<List<Movie>, MovieResult>(mAppExecutors) {
             @Override
             protected void saveCallResult(@NonNull MovieResult item) {
-
+                mMovieDao.insertMovies(item.getResults());
             }
 
             @Override
             protected boolean shouldFetch(@Nullable List<Movie> data) {
-                return false;
+                return true;
             }
 
             @NonNull
             @Override
-            protected LiveData<List<Movie>> loadFromDb() {
+            protected LiveData<List<Movie>> loadFromDb()  {
                 return mMovieDao.findAll();
             }
 
