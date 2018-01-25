@@ -3,6 +3,7 @@ package com.thomaskioko.livedatademo.util;
 import com.thomaskioko.livedatademo.repository.api.MovieResult;
 import com.thomaskioko.livedatademo.repository.model.Movie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,5 +22,13 @@ public class TestUtil {
         movieResult.setResults(movieList);
 
         return movieResult;
+    }
+
+    public static List<Movie> getMovieList(){
+        List<Movie> movieList = new ArrayList<>();
+        movieList.add(createMovie("\\/9E2y5Q7WlCVNEhP5GiVTjhEhx1o.jpg"));
+        movieList.add(createMovie("\\/47pLZ1gr63WaciDfHCpmoiXJlVr.jpg"));
+
+        return  movieList;
     }
 }
