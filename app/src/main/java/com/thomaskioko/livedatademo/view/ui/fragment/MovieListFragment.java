@@ -26,9 +26,12 @@ import android.widget.TextView;
 
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.di.Injectable;
+import com.thomaskioko.livedatademo.repository.model.Movie;
 import com.thomaskioko.livedatademo.view.adapter.MovieListAdapter;
 import com.thomaskioko.livedatademo.viewmodel.MovieListViewModel;
-import com.thomaskioko.livedatademo.viewmodel.SearchViewModel;
+import com.thomaskioko.livedatademo.vo.Resource;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -52,7 +55,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private SearchViewModel searchViewModel;
+    private MovieListViewModel mMovieListViewModel;
     private MovieListAdapter mMovieListAdapter;
 
     @Nullable
@@ -80,14 +83,11 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         mRecyclerView.setAdapter(mMovieListAdapter);
 
 
-        ViewModelProviders.of(this, viewModelFactory)
-                .get(MovieListViewModel.class)
-                .getPopularMovies()
-                .observe(this, apiResponse -> {
-                });
+       mMovieListViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(MovieListViewModel.class);
 
-        searchViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(SearchViewModel.class);
+       mMovieListViewModel.getPopularMovies()
+                .observe(this, this::handleResponse);
 
     }
 
@@ -114,45 +114,48 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
                 return false;
             }
         });
-        searchView.setOnCloseListener(() -> false);
+        searchView.setOnCloseListener(() -> {
+            searchView.onActionViewCollapsed();
+            return false;
+        });
 
     }
 
     private void findMovie(String query) {
         if (!query.isEmpty() || !query.equals("")) {
             progressBar.setVisibility(View.VISIBLE);
-
-            searchViewModel.setSearchQuery(query);
-            searchViewModel.getSearchResults().observe(this, listResource -> {
-                if (listResource != null) {
-
-                    switch (listResource.status) {
-                        case ERROR:
-                            progressBar.setVisibility(View.GONE);
-                            errorTextView.setText(listResource.message);
-                            break;
-                        case LOADING:
-                            progressBar.setVisibility(View.VISIBLE);
-                            break;
-                        case SUCCESS:
-                            progressBar.setVisibility(View.GONE);
-                            if (listResource.data != null) {
-                                mMovieListAdapter.setData(listResource.data);
-                                mMovieListAdapter.notifyDataSetChanged();
-                            } else {
-                                errorTextView.setText(getResources().getString(R.string.error_no_results));
-                                errorTextView.setVisibility(View.VISIBLE);
-                            }
-                            break;
-                        default:
-                            progressBar.setVisibility(View.GONE);
-                            break;
-                    }
-
-                }
-            });
+            mMovieListViewModel.setSearchQuery(query);
+            mMovieListViewModel.getSearchResults().observe(this, this::handleResponse);
         }
 
+    }
+
+    private void handleResponse(Resource<List<Movie>> listResource) {
+        if (listResource != null) {
+            switch (listResource.status) {
+                case ERROR:
+                    progressBar.setVisibility(View.GONE);
+                    errorTextView.setText(listResource.message);
+                    break;
+                case LOADING:
+                    progressBar.setVisibility(View.VISIBLE);
+                    break;
+                case SUCCESS:
+                    progressBar.setVisibility(View.GONE);
+                    if (listResource.data != null && listResource.data.size() > 0) {
+                        mMovieListAdapter.setData(listResource.data);
+                        mMovieListAdapter.notifyDataSetChanged();
+                    } else {
+                        errorTextView.setText(getResources().getString(R.string.error_no_results));
+                        errorTextView.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                default:
+                    progressBar.setVisibility(View.GONE);
+                    errorTextView.setText(getResources().getString(R.string.error_no_results));
+                    break;
+            }
+        }
     }
 
     private void dismissKeyboard(IBinder windowToken) {
