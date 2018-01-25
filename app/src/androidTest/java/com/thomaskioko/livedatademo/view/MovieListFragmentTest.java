@@ -5,10 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.EditText;
 
 import com.thomaskioko.livedatademo.R;
-import com.thomaskioko.livedatademo.repository.api.MovieResult;
-import com.thomaskioko.livedatademo.repository.model.ApiResponse;
 import com.thomaskioko.livedatademo.repository.model.Movie;
 import com.thomaskioko.livedatademo.testing.SingleFragmentActivity;
 import com.thomaskioko.livedatademo.util.EspressoTestUtil;
@@ -17,6 +16,7 @@ import com.thomaskioko.livedatademo.util.TestUtil;
 import com.thomaskioko.livedatademo.util.ViewModelUtil;
 import com.thomaskioko.livedatademo.view.ui.fragment.MovieListFragment;
 import com.thomaskioko.livedatademo.viewmodel.MovieListViewModel;
+import com.thomaskioko.livedatademo.vo.Resource;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,12 +27,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.not;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -47,7 +51,7 @@ public class MovieListFragmentTest {
             new ActivityTestRule<>(SingleFragmentActivity.class, true, true);
 
     private MovieListViewModel viewModel;
-    private MediatorLiveData<ApiResponse> mApiResponseMediatorLiveData = new MediatorLiveData<>();
+    private MediatorLiveData<Resource<List<Movie>>> result = new MediatorLiveData<>();
 
     @Before
     public void init() {
@@ -55,7 +59,8 @@ public class MovieListFragmentTest {
         MovieListFragment movieListFragment = new MovieListFragment();
 
         viewModel = mock(MovieListViewModel.class);
-        when(viewModel.getPopularMovies()).thenReturn(mApiResponseMediatorLiveData);
+        when(viewModel.getPopularMovies()).thenReturn(result);
+        when(viewModel.getSearchResults()).thenReturn(result);
 
         movieListFragment.viewModelFactory = ViewModelUtil.createFor(viewModel);
 
@@ -63,13 +68,29 @@ public class MovieListFragmentTest {
     }
 
     @Test
-    public void loadResults() {
+    public void testSearchMovie(){
+        //click on the search icon
+        onView(withId(R.id.action_search)).perform(click());
+
+        //Type the test in the search  field and submit the query
+        onView(isAssignableFrom(EditText.class)).perform(typeText("Spiderman"));
+
+        verify(viewModel).setSearchQuery("Spiderman");
+        result.postValue(Resource.loading(null));
+
+        //Check the progressBar is displayed
+        onView(withId(R.id.progressbar)).check(matches(isDisplayed()));
+
+    }
+
+
+    @Test
+    public void testLoadResults() {
         List<Movie> movieList = new ArrayList<>();
         movieList.add(TestUtil.createMovie("\\/9E2y5Q7WlCVNEhP5GiVTjhEhx1o.jpg"));
         movieList.add(TestUtil.createMovie("\\/47pLZ1gr63WaciDfHCpmoiXJlVr.jpg"));
 
-        MovieResult movieResult = TestUtil.createMovieResult(1, movieList);
-        mApiResponseMediatorLiveData.postValue(new ApiResponse(200, movieResult));
+        result.postValue(Resource.success(movieList));
 
         onView(listMatcher().atPosition(0)).check(matches(isDisplayed()));
         onView(withId(R.id.progressbar)).check(matches(not(isDisplayed())));
@@ -77,7 +98,7 @@ public class MovieListFragmentTest {
 
     @Test
     public void error() {
-        mApiResponseMediatorLiveData.postValue(new ApiResponse(new Throwable("Could not fetch movies!")));
+        result.postValue(Resource.error("Failed to load data", null));
         onView(withId(R.id.tvError)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
