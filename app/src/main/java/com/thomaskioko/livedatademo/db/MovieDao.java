@@ -25,4 +25,7 @@ public abstract class MovieDao {
     @Query("DELETE FROM Movie")
     public abstract void deleteAll();
 
+    @Query("SELECT * FROM Movie where title LIKE :title")
+    public abstract LiveData<List<Movie>> searchMovieByTitle(String title);
+
 }
