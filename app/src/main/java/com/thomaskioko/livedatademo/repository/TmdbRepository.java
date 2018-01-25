@@ -48,7 +48,7 @@ public class TmdbRepository {
 
             @Override
             protected boolean shouldFetch(@Nullable List<Movie> data) {
-                return true;
+                return data == null || data.isEmpty();
             }
 
             @NonNull
@@ -81,7 +81,7 @@ public class TmdbRepository {
             @Override
             protected LiveData<List<Movie>> loadFromDb() {
                 //Fetch from the db
-                return mMovieDao.findAll();
+                return mMovieDao.searchMovieByTitle(query);
             }
 
             @NonNull
