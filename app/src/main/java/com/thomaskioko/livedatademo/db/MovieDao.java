@@ -11,7 +11,7 @@ import com.thomaskioko.livedatademo.repository.model.Movie;
 import java.util.List;
 
 /**
- *
+ *  Interface for database access on Movie related operations.
  */
 @Dao
 public abstract class MovieDao {
@@ -20,12 +20,17 @@ public abstract class MovieDao {
     public abstract LiveData<List<Movie>> findAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public abstract void insert(Movie... movie);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertMovies(List<Movie> movieList);
 
     @Query("DELETE FROM Movie")
     public abstract void deleteAll();
 
-    @Query("SELECT * FROM Movie where title LIKE :title")
+    @Query("SELECT * FROM Movie where title = :title")
     public abstract LiveData<List<Movie>> searchMovieByTitle(String title);
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    public abstract long createMovieIfNotExists(Movie movie);
 }
