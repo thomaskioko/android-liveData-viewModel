@@ -12,8 +12,8 @@ import java.util.List;
 
 public class TestUtil {
 
-    public static Movie createMovie(String posterPath) {
-        return new Movie(346364, posterPath, 7.8, 2017, "Star Wars: The Last Jedi");
+    public static Movie createMovie(String title, String posterPath) {
+        return new Movie(346364, posterPath, 7.8, 2017, title);
     }
 
     public static MovieResult createMovieResult(Integer page, List<Movie> movieList) {
@@ -26,8 +26,8 @@ public class TestUtil {
 
     public static List<Movie> getMovieList(){
         List<Movie> movieList = new ArrayList<>();
-        movieList.add(createMovie("\\/9E2y5Q7WlCVNEhP5GiVTjhEhx1o.jpg"));
-        movieList.add(createMovie("\\/47pLZ1gr63WaciDfHCpmoiXJlVr.jpg"));
+        movieList.add(createMovie("Star Wars: The Last Jedi", "\\/9E2y5Q7WlCVNEhP5GiVTjhEhx1o.jpg"));
+        movieList.add(createMovie("Star Wars: The Last Jedi", "\\/47pLZ1gr63WaciDfHCpmoiXJlVr.jpg"));
 
         return  movieList;
     }
