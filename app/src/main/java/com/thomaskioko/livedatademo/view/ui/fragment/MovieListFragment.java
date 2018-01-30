@@ -1,6 +1,5 @@
 package com.thomaskioko.livedatademo.view.ui.fragment;
 
-import android.app.SearchManager;
 import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -9,38 +8,37 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.di.Injectable;
 import com.thomaskioko.livedatademo.repository.model.Movie;
 import com.thomaskioko.livedatademo.view.adapter.MovieListAdapter;
-import com.thomaskioko.livedatademo.view.adapter.SearchAdapter;
+import com.thomaskioko.livedatademo.view.adapter.SearchItemAdapter;
 import com.thomaskioko.livedatademo.viewmodel.MovieListViewModel;
 import com.thomaskioko.livedatademo.vo.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.content.Context.SEARCH_SERVICE;
 
 
 public class MovieListFragment extends LifecycleFragment implements Injectable {
@@ -51,17 +49,20 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.search_results)
-    ListView searchResults;
+    RecyclerView searchResults;
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
     @BindView(R.id.tvError)
     TextView errorTextView;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.search_view)
+    MaterialSearchView materialSearchView;
 
     private MovieListViewModel mMovieListViewModel;
     private MovieListAdapter mMovieListAdapter;
-    private SearchAdapter searchAdapter;
+    private SearchItemAdapter searchAdapter;
+    private List<Movie> mMovieList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -95,7 +96,10 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
                 .observe(this, listResource -> handleResponse(false, listResource));
 
 
-        searchAdapter = new SearchAdapter(getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        searchResults.setLayoutManager(linearLayoutManager);
+
+        searchAdapter = new SearchItemAdapter();
         searchResults.setAdapter(searchAdapter);
 
     }
@@ -107,40 +111,65 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         super.onCreateOptionsMenu(menu, inflater);
 
         // Retrieve the SearchView and plug it into SearchManager
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        MenuItem item = menu.findItem(R.id.action_search);
+        materialSearchView.setMenuItem(item);
+        materialSearchView.setCursorDrawable(R.drawable.color_cursor_white);
+
+        materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 findMovie(query);
-                dismissKeyboard(searchView.getWindowToken());
+                dismissKeyboard(materialSearchView.getWindowToken());
                 return true;
             }
 
             @Override
-            public boolean onQueryTextChange(String query) {
-                findMovie(query);
+            public boolean onQueryTextChange(String newText) {
+                findMovie(newText);
                 return false;
             }
-        });
-        searchView.setOnCloseListener(() -> {
-            searchView.onActionViewCollapsed();
-            searchResults.setVisibility(View.GONE);
-            return false;
         });
 
     }
 
-    private void findMovie(String query) {
-        if (!query.isEmpty() || !query.equals("")) {
-            progressBar.setVisibility(View.VISIBLE);
-            mMovieListViewModel.setSearchQuery(query);
-            mMovieListViewModel.getSearchResults().observe(this,
-                    listResource -> handleResponse(true, listResource)
-            );
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mMovieListViewModel.getPopularMovies()
+                    .observe(this, listResource -> handleResponse(false, listResource));
         }
 
+        return true;
+    }
+
+
+    private void findMovie(String query) {
+        if (!query.isEmpty() || !query.equals("")) {
+            final List<Movie> filteredModelList = filter(mMovieList, query);
+            if (filteredModelList.size() <= 0) {
+                mMovieListViewModel.setSearchQuery(query);
+                mMovieListViewModel.getSearchResults().observe(this,
+                        listResource -> handleResponse(true, listResource)
+                );
+            } else {
+                searchAdapter.setItems(filteredModelList);
+                searchAdapter.notifyDataSetChanged();
+            }
+        }
+
+    }
+
+    private List<Movie> filter(List<Movie> models, String query) {
+        query = query.toLowerCase();
+        final List<Movie> filteredModelList = new ArrayList<>();
+        for (Movie model : models) {
+            final String text = model.title.toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
     }
 
     private void handleResponse(boolean searchQuery, Resource<List<Movie>> listResource) {
@@ -158,12 +187,12 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
                     progressBar.setVisibility(View.GONE);
                     errorTextView.setVisibility(View.GONE);
                     if (listResource.data != null && listResource.data.size() > 0) {
-                        if (searchQuery) {
+                        if (!searchQuery) {
+                            mMovieList = listResource.data;
                             mMovieListAdapter.setData(listResource.data);
                             mMovieListAdapter.notifyDataSetChanged();
                         } else {
-                            searchResults.setVisibility(View.VISIBLE);
-                            searchAdapter.setMovies(listResource.data);
+                            searchAdapter.setItems(listResource.data);
                             mRecyclerView.setVisibility(View.GONE);
                         }
                     } else {
