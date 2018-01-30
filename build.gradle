@@ -30,6 +30,7 @@ ext.coreTestingVersion = "1.0.0"
 ext.supportTestVersion = "1.0.0"
 ext.espressoCoreVersion = "3.0.1"
 ext.mockitoVersion = "2.7.19"
+ext.materialSearchViewVersion = "1.4.0"
 
 
 allprojects {
