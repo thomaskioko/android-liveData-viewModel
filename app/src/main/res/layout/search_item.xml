@@ -27,6 +27,8 @@
         android:layout_toRightOf="@+id/movie_thumb"
         android:fontFamily="sans-serif-condensed"
         android:textSize="18sp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         tools:text="Search Result" />
