@@ -13,7 +13,7 @@ import dagger.android.HasActivityInjector;
 import timber.log.Timber;
 
 /**
- * @author Thomas Kioko
+ *
  */
 
 public class TmdbApp extends Application implements HasActivityInjector {

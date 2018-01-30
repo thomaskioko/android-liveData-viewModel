@@ -16,7 +16,7 @@ buildscript {
 }
 
 ext.supportLibVersion = '26.1.0'
-ext.archVersion = '1.0.0-alpha9'
+ext.archVersion = '1.0.0'
 ext.retrofitVersion = '2.3.0'
 ext.okhttpVersion = '3.4.1'
 ext.daggerVersion = '2.11'
@@ -30,6 +30,7 @@ ext.coreTestingVersion = "1.0.0"
 ext.supportTestVersion = "1.0.0"
 ext.espressoCoreVersion = "3.0.1"
 ext.mockitoVersion = "2.7.19"
+ext.materialSearchViewVersion = "1.4.0"
 
 
 allprojects {

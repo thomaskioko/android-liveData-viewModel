@@ -1,105 +1,38 @@
 package com.thomaskioko.livedatademo.repository.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.thomaskioko.livedatademo.db.TmdbTypeConverters;
 
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * @author Thomas Kioko
- */
-
+@Entity(indices = {@Index("id")},
+        primaryKeys = {"id"})
+@TypeConverters(TmdbTypeConverters.class)
 public class Movie {
 
-    private List<String> genre = new ArrayList<>();
     @SerializedName("id")
     @Expose
-    private int id;
+    @NonNull
+    public final int id;
     @SerializedName(value = "poster_path")
     public String posterUrl;
-    private Double rating;
-    private Integer releaseYear;
-    private String title;
+    public Double rating;
+    @SerializedName(value = "release_date")
+    public String releaseYear;
+    public String title;
 
-    /**
-     * @return The genre
-     */
-    public List<String> getGenre() {
-        return genre;
-    }
 
-    /**
-     * @param genre The genre
-     */
-    public void setGenre(List<String> genre) {
-        this.genre = genre;
-    }
-
-    /**
-     * @return The posterUrl
-     */
-    public String getPosterUrl() {
-        return posterUrl;
-    }
-
-    /**
-     * @param posterUrl The posterUrl
-     */
-    public void setPosterUrl(String posterUrl) {
+    public Movie(int id, String posterUrl, Double rating, String releaseYear, String title){
+        this.id = id;
         this.posterUrl = posterUrl;
-    }
-
-    /**
-     * @return The rating
-     */
-    public Double getRating() {
-        return rating;
-    }
-
-    /**
-     * @param rating The rating
-     */
-    public void setRating(Double rating) {
         this.rating = rating;
-    }
-
-    /**
-     * @return The releaseYear
-     */
-    public Integer getReleaseYear() {
-        return releaseYear;
-    }
-
-    /**
-     * @param releaseYear The releaseYear
-     */
-    public void setReleaseYear(Integer releaseYear) {
         this.releaseYear = releaseYear;
-    }
-
-    /**
-     * @return The title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * @param title The title
-     */
-    public void setTitle(String title) {
         this.title = title;
     }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
 
 }

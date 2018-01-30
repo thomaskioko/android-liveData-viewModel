@@ -17,7 +17,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
  * {@link com.thomaskioko.livedatademo.di.module.NetworkModule#okHttpClient(HttpLoggingInterceptor)}
  * which is required when making a request. This will ensure that all requests are made with the API key
  *
- * @author Thomas Kioko
  */
 public class AuthInterceptor implements Interceptor {
 

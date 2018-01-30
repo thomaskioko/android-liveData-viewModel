@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.thomaskioko.livedatademo.BuildConfig;
 import com.thomaskioko.livedatademo.repository.api.AuthInterceptor;
+import com.thomaskioko.livedatademo.repository.util.LiveDataCallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,7 +26,6 @@ import static com.thomaskioko.livedatademo.utils.AppConstants.WRITE_TIMEOUT;
 /**
  * This class is responsible for setting up Retrofit and anything related to network calls.
  *
- * @author Thomas Kioko
  */
 
 @Module
@@ -66,6 +66,7 @@ public class NetworkModule {
                 .baseUrl(BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create()) // Serialize Objects
+                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //Set call to return {@link Observable}
                 .build();
     }

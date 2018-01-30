@@ -9,9 +9,9 @@ import android.support.annotation.VisibleForTesting;
 
 import com.thomaskioko.livedatademo.repository.TmdbRepository;
 import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.vo.Resource;
 import com.thomaskioko.livedatademo.utils.AbsentLiveData;
 import com.thomaskioko.livedatademo.utils.Objects;
-import com.thomaskioko.livedatademo.vo.Resource;
 
 import java.util.List;
 import java.util.Locale;
@@ -21,18 +21,15 @@ import javax.inject.Inject;
 import timber.log.Timber;
 
 
-public class MovieListViewModel extends ViewModel {
+public class SearchViewModel extends ViewModel {
 
-    private final LiveData<Resource<List<Movie>>> moviesLiveData;
     private final MutableLiveData<String> query = new MutableLiveData<>();
     private final LiveData<Resource<List<Movie>>> searchResults;
 
-
     @Inject
-    MovieListViewModel(@NonNull TmdbRepository tmdbRepository) {
-        moviesLiveData = tmdbRepository.getPopularMovies();
+    SearchViewModel(@NonNull TmdbRepository tmdbRepository) {
         searchResults = Transformations.switchMap(query, search -> {
-
+            
             if (search == null || search.trim().length() == 0) {
                 return AbsentLiveData.create();
             } else {
@@ -52,12 +49,6 @@ public class MovieListViewModel extends ViewModel {
             return;
         }
         query.setValue(input);
-    }
-
-
-    @VisibleForTesting
-    public LiveData<Resource<List<Movie>>> getPopularMovies() {
-        return moviesLiveData;
     }
 
 

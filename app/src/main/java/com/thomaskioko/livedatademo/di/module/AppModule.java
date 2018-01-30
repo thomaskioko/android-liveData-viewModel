@@ -8,9 +8,6 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
 
-/**
- * @author Thomas Kioko
- */
 
 @Module(includes = {
         ViewModelModule.class,

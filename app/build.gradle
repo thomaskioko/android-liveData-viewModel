@@ -11,6 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "com.thomaskioko.livedatademo.util.TmdbTestRunner"
 
+        compileOptions.incremental = false
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
@@ -44,6 +45,9 @@ dependencies {
     compile "android.arch.lifecycle:extensions:$archVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$archVersion"
 
+    implementation "android.arch.persistence.room:runtime:$archVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$archVersion"
+
     //Retrofit
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
@@ -64,6 +68,8 @@ dependencies {
     compile "com.jakewharton:butterknife:$butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
 
+    compile "com.miguelcatalan:materialsearchview:$materialSearchViewVersion"
+
     // Testing
     testCompile "org.mockito:mockito-core:$mockitoVersion"
     androidTestCompile "org.mockito:mockito-core:$mockitoVersion"
@@ -71,12 +77,16 @@ dependencies {
 
     testImplementation "junit:junit:$junitVersion"
     testImplementation "android.arch.core:core-testing:$archVersion"
+    // Test helpers for Room
+    testImplementation "android.arch.persistence.room:testing:$archVersion"
     androidTestImplementation "com.android.support.test:runner:$supportTestVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoCoreVersion"
 
     androidTestImplementation("android.arch.core:core-testing:$archVersion", {
     })
 
-    androidTestImplementation "org.mockito:mockito-core:$mockitoVersion", { exclude group: 'net.bytebuddy' }
+    androidTestImplementation "org.mockito:mockito-core:$mockitoVersion", {
+        exclude group: 'net.bytebuddy'
+    }
 
 }

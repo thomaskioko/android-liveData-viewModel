@@ -13,13 +13,13 @@ import com.thomaskioko.livedatademo.repository.model.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Thomas Kioko
- */
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
 
-    private List<Movie> mMovieList =new ArrayList<>();
+    private List<Movie> mMovieList = new ArrayList<>();
 
     public MovieListAdapter() {
     }
@@ -36,7 +36,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
         Movie movie = mMovieList.get(position);
         String posterUrl = holder.ivPoster.getContext().getString(R.string.tmdb_image_url) +
-                holder.ivPoster.getContext().getString(R.string.image_size_780) + movie.getPosterUrl();
+                holder.ivPoster.getContext().getString(R.string.image_size_780) + movie.posterUrl;
 
         Glide.with(holder.ivPoster.getContext())
                 .load(posterUrl)
@@ -64,12 +64,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
      */
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.ivPoster)
         public ImageView ivPoster;
 
         public MovieViewHolder(View itemView) {
             super(itemView);
-
-            ivPoster = itemView.findViewById(R.id.ivPoster);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

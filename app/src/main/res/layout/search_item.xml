@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/cardview_light_background"
+    android:elevation="6dp"
+    android:orientation="horizontal"
+    android:padding="2dp">
+
+    <ImageView
+        android:id="@+id/movie_thumb"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_toEndOf="@+id/movie_thumb"
+        android:layout_toRightOf="@+id/movie_thumb"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="18sp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        tools:text="Search Result" />
+
+    <TextView
+        android:id="@+id/movie_release_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/movie_title"
+        android:layout_toRightOf="@+id/movie_thumb"
+        android:layout_marginLeft="12dp"
+        android:textSize="12sp"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        tools:text="2018" />
+
+</RelativeLayout>
