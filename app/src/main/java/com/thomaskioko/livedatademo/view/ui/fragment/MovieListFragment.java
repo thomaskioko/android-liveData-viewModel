@@ -93,7 +93,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
                 .get(MovieListViewModel.class);
 
         mMovieListViewModel.getPopularMovies()
-                .observe(this, listResource -> handleResponse(false, listResource));
+                .observe(this, this::handleResponse);
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -130,28 +130,26 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
             }
         });
 
+        materialSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                searchResults.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                searchResults.setVisibility(View.GONE);
+            }
+        });
+
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mMovieListViewModel.getPopularMovies()
-                    .observe(this, listResource -> handleResponse(false, listResource));
-        }
-
-        return true;
-    }
-
 
     private void findMovie(String query) {
         if (!query.isEmpty() || !query.equals("")) {
             final List<Movie> filteredModelList = filter(mMovieList, query);
             if (filteredModelList.size() <= 0) {
                 mMovieListViewModel.setSearchQuery(query);
-                mMovieListViewModel.getSearchResults().observe(this,
-                        listResource -> handleResponse(true, listResource)
-                );
+                mMovieListViewModel.getSearchResults().observe(this, this::handleSearchResponse);
             } else {
                 searchAdapter.setItems(filteredModelList);
                 searchAdapter.notifyDataSetChanged();
@@ -172,7 +170,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         return filteredModelList;
     }
 
-    private void handleResponse(boolean searchQuery, Resource<List<Movie>> listResource) {
+    private void handleResponse(Resource<List<Movie>> listResource) {
         if (listResource != null) {
             switch (listResource.status) {
                 case ERROR:
@@ -187,14 +185,39 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
                     progressBar.setVisibility(View.GONE);
                     errorTextView.setVisibility(View.GONE);
                     if (listResource.data != null && listResource.data.size() > 0) {
-                        if (!searchQuery) {
-                            mMovieList = listResource.data;
-                            mMovieListAdapter.setData(listResource.data);
-                            mMovieListAdapter.notifyDataSetChanged();
-                        } else {
-                            searchAdapter.setItems(listResource.data);
-                            mRecyclerView.setVisibility(View.GONE);
-                        }
+                        mMovieList = listResource.data;
+                        mMovieListAdapter.setData(listResource.data);
+                        mMovieListAdapter.notifyDataSetChanged();
+                    } else {
+                        errorTextView.setText(getResources().getString(R.string.error_no_results));
+                        errorTextView.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                default:
+                    progressBar.setVisibility(View.GONE);
+                    errorTextView.setText(getResources().getString(R.string.error_no_results));
+                    break;
+            }
+        }
+    }
+
+    private void handleSearchResponse(Resource<List<Movie>> listResource) {
+        if (listResource != null) {
+            switch (listResource.status) {
+                case ERROR:
+                    progressBar.setVisibility(View.GONE);
+                    errorTextView.setText(listResource.message);
+                    break;
+                case LOADING:
+                    progressBar.setVisibility(View.VISIBLE);
+                    errorTextView.setVisibility(View.GONE);
+                    break;
+                case SUCCESS:
+                    progressBar.setVisibility(View.GONE);
+                    errorTextView.setVisibility(View.GONE);
+                    if (listResource.data != null && listResource.data.size() > 0) {
+                        searchAdapter.setItems(listResource.data);
+                        searchAdapter.notifyDataSetChanged();
                     } else {
                         errorTextView.setText(getResources().getString(R.string.error_no_results));
                         errorTextView.setVisibility(View.VISIBLE);
@@ -213,7 +236,9 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         if (activity != null) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(
                     Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(windowToken, 0);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(windowToken, 0);
+            }
         }
     }
 
