@@ -13,7 +13,7 @@ import java.util.List;
 public class TestUtil {
 
     public static Movie createMovie(String title, String posterPath) {
-        return new Movie(346364, posterPath, 7.8, 2017, title);
+        return new Movie(346364, posterPath, 7.8, "2017", title);
     }
 
     public static MovieResult createMovieResult(Integer page, List<Movie> movieList) {
