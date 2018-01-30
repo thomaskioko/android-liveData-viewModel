@@ -40,6 +40,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
                 holder.imageView.getContext().getString(R.string.image_size_780) + movie.posterUrl;
 
         holder.tvName.setText(movie.title);
+        holder.releaseYear.setText(movie.releaseYear);
         Glide.with(holder.imageView.getContext())
                 .load(posterUrl)
                 .into(holder.imageView);
@@ -55,6 +56,8 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
         TextView tvName;
         @BindView(R.id.movie_thumb)
         ImageView imageView;
+        @BindView(R.id.movie_release_year)
+        TextView releaseYear;
 
         public ViewHolder(View view) {
             super(view);
