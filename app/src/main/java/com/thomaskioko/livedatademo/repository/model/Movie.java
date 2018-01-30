@@ -22,11 +22,12 @@ public class Movie {
     @SerializedName(value = "poster_path")
     public String posterUrl;
     public Double rating;
-    public Integer releaseYear;
+    @SerializedName(value = "release_date")
+    public String releaseYear;
     public String title;
 
 
-    public Movie(int id, String posterUrl, Double rating, Integer releaseYear, String title){
+    public Movie(int id, String posterUrl, Double rating, String releaseYear, String title){
         this.id = id;
         this.posterUrl = posterUrl;
         this.rating = rating;
