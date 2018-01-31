@@ -56,19 +56,20 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
 
+    //Dagger
     compile "com.google.dagger:dagger:$daggerVersion"
     compile "com.google.dagger:dagger-android:$daggerVersion"
     compile "com.google.dagger:dagger-android-support:$daggerVersion"
-
     annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
+    //Other Libs
+    compile "com.miguelcatalan:materialsearchview:$materialSearchViewVersion"
+    compile "com.mikhaellopez:circularprogressbar:$circularProgressbarVersion"
+    compile "joda-time:joda-time:$jodaTimeVersion"
     compile "com.jakewharton.timber:timber:$timberVersion"
-
     compile "com.jakewharton:butterknife:$butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
-
-    compile "com.miguelcatalan:materialsearchview:$materialSearchViewVersion"
 
     // Testing
     testCompile "org.mockito:mockito-core:$mockitoVersion"
