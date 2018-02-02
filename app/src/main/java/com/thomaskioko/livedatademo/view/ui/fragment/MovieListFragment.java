@@ -29,6 +29,7 @@ import com.thomaskioko.livedatademo.di.Injectable;
 import com.thomaskioko.livedatademo.repository.model.Movie;
 import com.thomaskioko.livedatademo.view.adapter.MovieListAdapter;
 import com.thomaskioko.livedatademo.view.adapter.SearchItemAdapter;
+import com.thomaskioko.livedatademo.view.ui.common.NavigationController;
 import com.thomaskioko.livedatademo.viewmodel.MovieListViewModel;
 import com.thomaskioko.livedatademo.vo.Resource;
 
@@ -45,6 +46,8 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
 
     @Inject
     public ViewModelProvider.Factory viewModelFactory;
+    @Inject
+    NavigationController navigationController;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -85,7 +88,9 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mRecyclerView.getContext(), 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
-        mMovieListAdapter = new MovieListAdapter();
+        mMovieListAdapter = new MovieListAdapter(
+                movie -> navigationController.navigateToMovieDetailFragment(movie.id)
+        );
         mRecyclerView.setAdapter(mMovieListAdapter);
 
 
@@ -99,7 +104,9 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         searchResults.setLayoutManager(linearLayoutManager);
 
-        searchAdapter = new SearchItemAdapter();
+        searchAdapter = new SearchItemAdapter(
+                movie -> navigationController.navigateToMovieDetailFragment(movie.id)
+        );
         searchResults.setAdapter(searchAdapter);
 
     }

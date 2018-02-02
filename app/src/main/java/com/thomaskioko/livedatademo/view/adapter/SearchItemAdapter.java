@@ -21,9 +21,11 @@ import butterknife.ButterKnife;
 public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.ViewHolder> {
 
     private List<Movie> mMovieList = new ArrayList<>();
+    private MovieClickCallback mMovieClickCallback;
 
 
-    public SearchItemAdapter() {
+    public SearchItemAdapter(MovieClickCallback movieClickCallback) {
+        mMovieClickCallback = movieClickCallback;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
 
         holder.tvName.setText(movie.title);
         holder.releaseYear.setText(movie.releaseYear);
+        holder.itemView.setOnClickListener(view -> mMovieClickCallback.onClick(movie));
         Glide.with(holder.imageView.getContext())
                 .load(posterUrl)
                 .into(holder.imageView);
@@ -58,10 +61,13 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
         ImageView imageView;
         @BindView(R.id.movie_release_year)
         TextView releaseYear;
+        View itemView;
+
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            this.itemView = view;
         }
     }
 
@@ -70,4 +76,9 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
         mMovieList = movieList;
         notifyDataSetChanged();
     }
+
+    public interface MovieClickCallback {
+        void onClick(Movie movie);
+    }
+
 }
