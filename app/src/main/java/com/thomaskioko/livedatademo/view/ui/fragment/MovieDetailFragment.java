@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 public class MovieDetailFragment extends LifecycleFragment implements Injectable {
 
     @Inject
-    ViewModelProvider.Factory viewModelFactory;
+    public ViewModelProvider.Factory viewModelFactory;
 
     @BindView(R.id.layout_movie_title)
     RelativeLayout mRelativeLayout;
