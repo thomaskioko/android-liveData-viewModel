@@ -59,6 +59,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_card_view_height">
 
+                <ProgressBar
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progress_bar"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="8dp"/>
+
                 <!-- Thumbnail Image -->
                 <ImageView
                     android:id="@+id/movie_detail_thumbnail"
