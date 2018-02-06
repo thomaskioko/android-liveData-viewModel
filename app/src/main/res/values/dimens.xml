@@ -3,4 +3,48 @@
     <dimen name="item_horizontal_margin">8dp</dimen>
     <dimen name="image_view_dimension_medium">140dp</dimen>
     <dimen name="search_image_small">48dp</dimen>
+
+    <!-- Text Sizes. -->
+    <dimen name="text_size_micro">12sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_navdrawer">16sp</dimen>
+    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_medium_plus">21sp</dimen>
+    <dimen name="text_size_large">25sp</dimen>
+
+    <dimen name="app_bar_height">280dp</dimen>
+
+    <!-- Image Margins -->
+    <dimen name="image_margin_micro">2dp</dimen>
+
+    <!-- ImageView Margin-->
+    <dimen name="grid_image_view">160dp</dimen>
+    <dimen name="grid_image_view_large">220dp</dimen>
+    <dimen name="image_view_height_large">100dp</dimen>
+
+    <dimen name="margin_mini">10dp</dimen>
+    <dimen name="margin_micro">5dp</dimen>
+
+    <!-- Cardview dimensions-->
+    <dimen name="card_view_corner_radius_micro">4dp</dimen>
+    <dimen name="margin_card_view_height">140dp</dimen>
+    <dimen name="margin_card_view_height_large">180dp</dimen>
+    <dimen name="margin_card_view_height_xlarge">240dp</dimen>
+
+
+    <dimen name="margin_large">20dp</dimen>
+    <dimen name="margin_extra_large">25dp</dimen>
+
+    <!-- ProgressBar dimensions-->
+    <dimen name="progress_bar_width">90dp</dimen>
+    <dimen name="progress_bar_height">100dp</dimen>
+
+
+    <dimen name="spacing_micro">4dp</dimen>
+    <dimen name="spacing_minor">8dp</dimen>
+    <dimen name="spacing_major">16dp</dimen>
+    <dimen name="spacing_massive">24dp</dimen>
+
+    <dimen name="movie_detail_trailers_item_width">240dp</dimen>
+    <dimen name="movie_detail_reviews_item_width">240dp</dimen>
 </resources>

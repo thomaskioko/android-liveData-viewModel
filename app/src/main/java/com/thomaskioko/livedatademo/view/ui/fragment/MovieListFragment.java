@@ -29,6 +29,7 @@ import com.thomaskioko.livedatademo.di.Injectable;
 import com.thomaskioko.livedatademo.repository.model.Movie;
 import com.thomaskioko.livedatademo.view.adapter.MovieListAdapter;
 import com.thomaskioko.livedatademo.view.adapter.SearchItemAdapter;
+import com.thomaskioko.livedatademo.view.ui.common.NavigationController;
 import com.thomaskioko.livedatademo.viewmodel.MovieListViewModel;
 import com.thomaskioko.livedatademo.vo.Resource;
 
@@ -45,11 +46,13 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
 
     @Inject
     public ViewModelProvider.Factory viewModelFactory;
+    @Inject
+    public NavigationController navigationController;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.search_results)
-    RecyclerView searchResults;
+    RecyclerView searchResultsRecyclerView;
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
     @BindView(R.id.tvError)
@@ -85,7 +88,9 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mRecyclerView.getContext(), 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
-        mMovieListAdapter = new MovieListAdapter();
+        mMovieListAdapter = new MovieListAdapter(
+                movie -> navigationController.navigateToMovieDetailFragment(movie.id)
+        );
         mRecyclerView.setAdapter(mMovieListAdapter);
 
 
@@ -95,12 +100,19 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         mMovieListViewModel.getPopularMovies()
                 .observe(this, this::handleResponse);
 
+        mMovieListViewModel.getSearchResults()
+                .observe(this, this::handleSearchResponse);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        searchResults.setLayoutManager(linearLayoutManager);
 
-        searchAdapter = new SearchItemAdapter();
-        searchResults.setAdapter(searchAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
+                getActivity(), LinearLayoutManager.VERTICAL, false
+        );
+        searchResultsRecyclerView.setLayoutManager(linearLayoutManager);
+
+        searchAdapter = new SearchItemAdapter(
+                movie -> navigationController.navigateToMovieDetailFragment(movie.id)
+        );
+        searchResultsRecyclerView.setAdapter(searchAdapter);
 
     }
 
@@ -133,12 +145,12 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         materialSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
-                searchResults.setVisibility(View.VISIBLE);
+                searchResultsRecyclerView.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onSearchViewClosed() {
-                searchResults.setVisibility(View.GONE);
+                searchResultsRecyclerView.setVisibility(View.GONE);
             }
         });
 
@@ -149,7 +161,6 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
             final List<Movie> filteredModelList = filter(mMovieList, query);
             if (filteredModelList.size() <= 0) {
                 mMovieListViewModel.setSearchQuery(query);
-                mMovieListViewModel.getSearchResults().observe(this, this::handleSearchResponse);
             } else {
                 searchAdapter.setItems(filteredModelList);
                 searchAdapter.notifyDataSetChanged();

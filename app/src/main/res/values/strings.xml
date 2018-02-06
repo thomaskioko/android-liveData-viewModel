@@ -15,4 +15,13 @@
     <string name="error_no_results">No Movie found :(</string>
 
     <string name="hint_search">Search Movies</string>
+
+    <!--TextView Titles -->
+    <string name="tv_release_year">Release Year:</string>
+    <string name="tv_title_plot">Plot:</string>
+    <string name="tv_title_trailers">Trailers:</string>
+    <string name="tv_title_reviews">Reviews:</string>
+    <string name="tv_title_rating">Rating</string>
+    <string name="tv_title_popularity">Popularity:</string>
+    <string name="tv_title_vote_count">Vote Count:</string>
 </resources>

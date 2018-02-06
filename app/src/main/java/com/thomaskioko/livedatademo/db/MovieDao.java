@@ -31,6 +31,9 @@ public abstract class MovieDao {
     @Query("SELECT * FROM Movie where title = :title")
     public abstract LiveData<List<Movie>> searchMovieByTitle(String title);
 
+    @Query("SELECT * FROM Movie where id = :id")
+    public abstract LiveData<Movie> searchMovieById(int id);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long createMovieIfNotExists(Movie movie);
 }

@@ -91,4 +91,31 @@ public class TmdbRepository {
             }
         }.asLiveData();
     }
+
+    public LiveData<Resource<Movie>> getMovieById(int movieId) {
+        return new NetworkBoundResource<Movie, Movie>(mAppExecutors) {
+
+            @Override
+            protected void saveCallResult(@NonNull Movie item) {
+                mMovieDao.insert(item);
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable Movie data) {
+                return data == null;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Movie> loadFromDb() {
+                return mMovieDao.searchMovieById(movieId);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<Movie>> createCall() {
+                return mTmdbService.getMovieById(movieId);
+            }
+        }.asLiveData();
+    }
 }
