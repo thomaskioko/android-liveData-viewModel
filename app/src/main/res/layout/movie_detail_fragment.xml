@@ -66,16 +66,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:visibility="visible"
-                    android:layout_margin="8dp" />
+                    android:layout_margin="8dp"
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/error_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:visibility="visible"
-                    android:text="@string/error_no_results" />
+                    android:text="@string/error_no_results"
+                    android:visibility="visible" />
 
             </RelativeLayout>
 
@@ -130,12 +130,11 @@
                             android:id="@+id/movie_detail_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginStart="30dp"
-                            tools:text="5.7"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/text_size_medium" />
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/text_size_medium"
+                            tools:text="5.7" />
                     </RelativeLayout>
 
                     <!-- Release Year Layout -->
