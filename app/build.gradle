@@ -24,6 +24,11 @@ android {
         }
     }
 
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
+
     buildTypes.each {
         it.buildConfigField 'String', 'TMDB_API_KEY', TMDB_API_KEY
     }
