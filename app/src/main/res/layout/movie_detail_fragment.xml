@@ -101,7 +101,6 @@
                     android:id="@+id/rating_details"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_above="@+id/card_view"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/movie_detail_thumbnail"
                     android:layout_toRightOf="@+id/movie_detail_thumbnail"
@@ -134,7 +133,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="30dp"
                             android:layout_marginStart="30dp"
-                            android:paddingBottom="@dimen/margin_large"
+                            tools:text="5.7"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/text_size_medium" />
                     </RelativeLayout>
@@ -242,42 +241,38 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
-
-                <!-- Plot Details -->
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_below="@+id/movie_detail_thumbnail"
-                    android:layout_marginBottom="@dimen/margin_micro"
-                    android:layout_marginLeft="@dimen/margin_micro"
-                    android:layout_marginRight="@dimen/margin_micro">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="@dimen/margin_mini">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tv_title_plot"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/text_size_medium"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/movie_detail_plot"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-condensed"
-                            tools:text="@string/app_name" />
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
             </RelativeLayout>
+
+            <!-- Plot Details -->
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_micro">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_mini">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_title_plot"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/movie_detail_plot"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
+                        tools:text="@string/app_name" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
