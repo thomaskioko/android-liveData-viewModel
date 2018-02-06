@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.di.Injectable;
 import com.thomaskioko.livedatademo.repository.model.Movie;
 import com.thomaskioko.livedatademo.viewmodel.MovieDetailViewModel;
+import com.thomaskioko.livedatademo.vo.Resource;
 
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -46,7 +48,7 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     @Inject
     public ViewModelProvider.Factory viewModelFactory;
 
-    @BindView(R.id.layout_movie_title)
+    @BindView(R.id.layout_movie_details)
     RelativeLayout mRelativeLayout;
     @BindView(R.id.movie_detail_year)
     TextView mMovieYear;
@@ -70,6 +72,12 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     ImageView imageView;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.layout_display_info)
+    RelativeLayout layoutDisplayInfo;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.error_msg)
+    TextView mErrorTextView;
 
     private static final String BUNDLE_MOVIE_ID = "MOVIE_ID";
 
@@ -100,73 +108,96 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
                 .get(MovieDetailViewModel.class);
 
         movieDetailViewModel.setMovieId(getArguments().getInt(BUNDLE_MOVIE_ID));
-        movieDetailViewModel.getMovie().observe(this, movieResource -> {
-            if (movieResource != null) {
-                handleResponse(movieResource.data);
-            }
-        });
+        movieDetailViewModel.getMovie().observe(this, this::handleResponse);
     }
 
-    private void handleResponse(Movie mMovieResult) {
-        //Image path
-        String imagePath = getString(R.string.tmdb_image_url) +
-                getString(R.string.image_size_780) + mMovieResult.posterUrl;
+    private void handleResponse(Resource<Movie> movieResult) {
+        switch (movieResult.status) {
+            case LOADING:
+                layoutDisplayInfo.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.VISIBLE);
+                layoutDisplayInfo.setVisibility(View.VISIBLE);
+                break;
+            case SUCCESS:
+                layoutDisplayInfo.setVisibility(View.GONE);
+                mProgressBar.setVisibility(View.GONE);
+                displayMovieInfo(movieResult.data);
+                break;
+            case ERROR:
+                layoutDisplayInfo.setVisibility(View.VISIBLE);
+                mProgressBar.setVisibility(View.GONE);
+                mErrorTextView.setVisibility(View.VISIBLE);
+                mErrorTextView.setText(getResources().getString(R.string.error_no_results));
+                break;
+            default:
+                break;
+        }
+    }
 
-        //Backdrop Image URL
-        String imagePathBackDrop = getString(R.string.tmdb_image_url) +
-                getString(R.string.image_size_780)
-                + mMovieResult.backdropPath;
+    private void displayMovieInfo(Movie mMovieResult) {
+        if (mMovieResult != null) {
+            //Image path
+            String imagePath = getString(R.string.tmdb_image_url) +
+                    getString(R.string.image_size_780) + mMovieResult.posterUrl;
 
-        Glide.with(getActivity())
-                .load(imagePath)
-                .asBitmap()
-                .centerCrop()
-                .into(mThumbnail);
+            //Backdrop Image URL
+            String imagePathBackDrop = getString(R.string.tmdb_image_url) +
+                    getString(R.string.image_size_780)
+                    + mMovieResult.backdropPath;
 
-        float rating = mMovieResult.voteAverage.floatValue() * 10;
-        float popularity = mMovieResult.popularity.intValue();
+            Glide.with(getActivity())
+                    .load(imagePath)
+                    .asBitmap()
+                    .centerCrop()
+                    .into(mThumbnail);
 
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd")
-                .withLocale(Locale.getDefault());
+            float rating = mMovieResult.voteAverage.floatValue() * 10;
+            float popularity = mMovieResult.popularity.intValue();
 
-        //Get the year from the release date.
-        LocalDate date = formatter.parseLocalDate(mMovieResult.releaseYear);
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+                    .withLocale(Locale.getDefault());
 
-        mMoviePlot.setText(mMovieResult.overview);
-        mMovieYear.setText(String.valueOf(date.getYear()));
-        mMovieRating.setText(String.valueOf(mMovieResult.voteAverage));
-        mMoviePopularity.setText(String.valueOf(popularity));
-        mMovieVote.setText(String.valueOf(mMovieResult.voteCount));
-        mCircularProgressBar.setProgressWithAnimation(rating);
+            //Get the year from the release date.
+            LocalDate date = formatter.parseLocalDate(mMovieResult.releaseYear);
 
-        appBarLayout.setTitle(mMovieResult.title);
+            mMoviePlot.setText(mMovieResult.overview);
+            mMovieYear.setText(String.valueOf(date.getYear()));
+            mMovieRating.setText(String.valueOf(mMovieResult.voteAverage));
+            mMoviePopularity.setText(String.valueOf(popularity));
+            mMovieVote.setText(String.valueOf(mMovieResult.voteCount));
+            mCircularProgressBar.setProgressWithAnimation(rating);
+
+            appBarLayout.setTitle(mMovieResult.title);
 
 
-        Glide.with(imageView.getContext())
-                .load(imagePathBackDrop)
-                .asBitmap()
-                .into(new BitmapImageViewTarget(imageView) {
-                    @Override
-                    public void onResourceReady(Bitmap bitmap, final GlideAnimation glideAnimation) {
-                        super.onResourceReady(bitmap, glideAnimation);
-                        Palette.from(bitmap).generate(palette -> {
+            Glide.with(imageView.getContext())
+                    .load(imagePathBackDrop)
+                    .asBitmap()
+                    .into(new BitmapImageViewTarget(imageView) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, final GlideAnimation glideAnimation) {
+                            super.onResourceReady(bitmap, glideAnimation);
+                            Palette.from(bitmap).generate(palette -> {
 
-                            if (palette.getDarkVibrantSwatch() != null) {
-                                mRelativeLayout.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
-                                mCircularProgressBar.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
+                                if (palette.getDarkVibrantSwatch() != null) {
+                                    mRelativeLayout.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
+                                    mCircularProgressBar.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
 
-                            } else if (palette.getMutedSwatch() != null) {
-                                mRelativeLayout.setBackgroundColor(palette.getMutedSwatch().getRgb());
-                                mCircularProgressBar.setBackgroundColor(palette.getMutedSwatch().getRgb());
-                            }
-                            if (palette.getLightVibrantSwatch() != null) {
-                                mCircularProgressBar.setColor(palette.getLightVibrantSwatch().getRgb());
-                            } else if (palette.getLightMutedSwatch() != null) {
-                                mCircularProgressBar.setColor(palette.getLightMutedSwatch().getRgb());
-                            }
-                        });
-                    }
-                });
-
+                                } else if (palette.getMutedSwatch() != null) {
+                                    mRelativeLayout.setBackgroundColor(palette.getMutedSwatch().getRgb());
+                                    mCircularProgressBar.setBackgroundColor(palette.getMutedSwatch().getRgb());
+                                }
+                                if (palette.getLightVibrantSwatch() != null) {
+                                    mCircularProgressBar.setColor(palette.getLightVibrantSwatch().getRgb());
+                                } else if (palette.getLightMutedSwatch() != null) {
+                                    mCircularProgressBar.setColor(palette.getLightMutedSwatch().getRgb());
+                                }
+                            });
+                        }
+                    });
+        } else {
+            mErrorTextView.setVisibility(View.VISIBLE);
+            mErrorTextView.setText(getResources().getString(R.string.error_no_results));
+        }
     }
 }
