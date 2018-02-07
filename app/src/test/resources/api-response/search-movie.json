@@ -1,0 +1,388 @@
+{
+  "page": 1,
+  "total_results": 42,
+  "total_pages": 3,
+  "results": [
+    {
+      "vote_count": 1101,
+      "id": 1620,
+      "video": false,
+      "vote_average": 5.9,
+      "title": "Hitman",
+      "popularity": 15.287107,
+      "poster_path": "\/1U2FpMotSyaciATw5qfEsKdgpX4.jpg",
+      "original_language": "en",
+      "original_title": "Hitman",
+      "genre_ids": [
+        28,
+        80,
+        18,
+        53
+      ],
+      "backdrop_path": "\/6wBfey6EVR5qxYLB8pxoTVQYWkS.jpg",
+      "adult": false,
+      "overview": "The best-selling videogame, Hitman, roars to life with both barrels blazing in this hardcore action-thriller starring Timothy Olyphant. A genetically engineered assassin with deadly aim, known only as \"Agent 47\" eliminates strategic targets for a top-secret organization. But when he's double-crossed, the hunter becomes the prey as 47 finds himself in a life-or-death game of international intrigue.",
+      "release_date": "2007-11-21"
+    },
+    {
+      "vote_count": 1306,
+      "id": 249070,
+      "video": false,
+      "vote_average": 5.5,
+      "title": "Hitman: Agent 47",
+      "popularity": 11.396372,
+      "poster_path": "\/4VmZeT8YkuMI6BrA623mHZDISlN.jpg",
+      "original_language": "en",
+      "original_title": "Hitman: Agent 47",
+      "genre_ids": [
+        28,
+        80,
+        53
+      ],
+      "backdrop_path": "\/EnWldA0LlltnAhKjmBZci6Y4Lc.jpg",
+      "adult": false,
+      "overview": "An assassin teams up with a woman to help her find her father and uncover the mysteries of her ancestry.",
+      "release_date": "2015-08-20"
+    },
+    {
+      "vote_count": 31,
+      "id": 31544,
+      "video": false,
+      "vote_average": 5.1,
+      "title": "The Hitman",
+      "popularity": 4.693894,
+      "poster_path": "\/wLjXCJZQZlZna5Vz0L9c7rT3UWN.jpg",
+      "original_language": "en",
+      "original_title": "The Hitman",
+      "genre_ids": [
+        28,
+        80,
+        53
+      ],
+      "backdrop_path": "\/cjltEbHDK4Z55wovqG8ex7SjogC.jpg",
+      "adult": false,
+      "overview": "After surviving an attempt on his life by his former partner, officer Cliff Garrett (Norris) exacts revenge on those who wronged him by going undercover as a hit man. He works to gain the reputation and trust needed in order to be accepted by the burgeoning Seattle-area criminal underworld, but it is all done in order to take it down from within.",
+      "release_date": "1991-05-01"
+    },
+    {
+      "vote_count": 1528,
+      "id": 390043,
+      "video": false,
+      "vote_average": 6.7,
+      "title": "The Hitman's Bodyguard",
+      "popularity": 29.116246,
+      "poster_path": "\/5CGjlz2vyBhW5xHW4eNOZIdgzYq.jpg",
+      "original_language": "en",
+      "original_title": "The Hitman's Bodyguard",
+      "genre_ids": [
+        28,
+        35
+      ],
+      "backdrop_path": "\/7KsqfXDECZMryX1Rv4RKsT7SIjQ.jpg",
+      "adult": false,
+      "overview": "The world's top bodyguard gets a new client, a hit man who must testify at the International Court of Justice. They must put their differences aside and work together to make it to the trial on time.",
+      "release_date": "2017-08-16"
+    },
+    {
+      "vote_count": 57,
+      "id": 118737,
+      "video": false,
+      "vote_average": 5,
+      "title": "Interview with a Hitman",
+      "popularity": 4.552057,
+      "poster_path": "\/hHHKhK6SyjVp5vbcaiIKn9QfXaW.jpg",
+      "original_language": "en",
+      "original_title": "Interview with a Hitman",
+      "genre_ids": [
+        28,
+        53
+      ],
+      "backdrop_path": "\/hFQc6YWhXbLMKnco4j2qKcQWRz.jpg",
+      "adult": false,
+      "overview": "An elite hitman returns to erase his past only to find that somebody has messed with his future.",
+      "release_date": "2012-07-20"
+    },
+    {
+      "vote_count": 0,
+      "id": 104837,
+      "video": false,
+      "vote_average": 0,
+      "title": "Hitman",
+      "popularity": 1.01101,
+      "poster_path": "\/kgIaUWkSvzJtxgNLKJJNHV1XMPl.jpg",
+      "original_language": "en",
+      "original_title": "Hitman",
+      "genre_ids": [
+        28,
+        53
+      ],
+      "backdrop_path": null,
+      "adult": false,
+      "overview": "“Hitman“ tells the story of Ben (played by Cesar), a man seeking revenge for the brutal death of his family committed by the very people who hired him to kill people. Along the way, he meets Gina (Sam Pinto) which compounds the situation and brings Ben to a crossroad. The story happens in just 48 hours with one scene vital to the next that viewers can’t afford to miss out on any one.",
+      "release_date": "2012-02-22"
+    },
+    {
+      "vote_count": 21,
+      "id": 34303,
+      "video": false,
+      "vote_average": 7.5,
+      "title": "Hitman Hart: Wrestling with Shadows",
+      "popularity": 4.848381,
+      "poster_path": "\/mAVFx9AH6VA1sSHK2upWD0itK6k.jpg",
+      "original_language": "en",
+      "original_title": "Hitman Hart: Wrestling with Shadows",
+      "genre_ids": [
+        99
+      ],
+      "backdrop_path": "\/AbEm8tSKDgw0UjTI95caI7M5Mwd.jpg",
+      "adult": false,
+      "overview": "This documentary follows superstar Bret Hart during his last year in the WWF. The film documents the tensions that resulted in The Montreal Screwjob, one of the most controversial events in the history of professional wrestling, in which Vince McMahon, Shawn Micheals, and others, legitimately conspired behind the scenes to go against the script and remove Bret Hart as champion.",
+      "release_date": "1998-12-20"
+    },
+    {
+      "vote_count": 16,
+      "id": 323966,
+      "video": false,
+      "vote_average": 4.8,
+      "title": "A Hitman in London",
+      "popularity": 2.210682,
+      "poster_path": "\/nNny6go0YRyJZ3El3HcujNTaIox.jpg",
+      "original_language": "en",
+      "original_title": "A Hitman in London",
+      "genre_ids": [
+        28,
+        80
+      ],
+      "backdrop_path": "\/fV1mQg2V9CJwVJTuFixERFfJeOT.jpg",
+      "adult": false,
+      "overview": "After his last assignment ended with the death of an innocent woman, a hitman's new job in London is compromised when he is overcome with guilt, and ends up helping a desperate woman who is caught up in a human trafficking operation.",
+      "release_date": "2015-03-12"
+    },
+    {
+      "vote_count": 5,
+      "id": 50185,
+      "video": false,
+      "vote_average": 4,
+      "title": "Diary of a Hitman",
+      "popularity": 1.902343,
+      "poster_path": "\/yhNI5zI4wbWMCgoXy2IO4zWfDgR.jpg",
+      "original_language": "en",
+      "original_title": "Diary of a Hitman",
+      "genre_ids": [
+        53,
+        80,
+        18
+      ],
+      "backdrop_path": "\/hcfPJpuRIP6limXTmVGjSx4czPU.jpg",
+      "adult": false,
+      "overview": "Hitman Dekker is on his last job, out to kill the wife (Jain) of his client, but he starts to waiver. The longer he takes to do the job the more difficult it becomes.",
+      "release_date": "1991-11-20"
+    },
+    {
+      "vote_count": 34,
+      "id": 10616,
+      "video": false,
+      "vote_average": 6.3,
+      "title": "Contract Killer",
+      "popularity": 6.427798,
+      "poster_path": "\/nsX7mOiPUIyGydYJYx8gKL5Rem7.jpg",
+      "original_language": "zh",
+      "original_title": "Sat sau ji wong",
+      "genre_ids": [
+        28,
+        35
+      ],
+      "backdrop_path": "\/l2sOk2IocIaVAFB7HNpDD9VtYaE.jpg",
+      "adult": false,
+      "overview": "Financially troubled, a newbie hitman reluctantly takes the job of finding the plotted killer of a Japanese tycoon.",
+      "release_date": "1998-04-03"
+    },
+    {
+      "vote_count": 1,
+      "id": 295683,
+      "video": false,
+      "vote_average": 6,
+      "title": "Confessions of a Hitman",
+      "popularity": 1.622347,
+      "poster_path": "\/4WlxssRQY3vYeginzARreD2O6Am.jpg",
+      "original_language": "en",
+      "original_title": "Confessions of a Hitman",
+      "genre_ids": [
+        80,
+        18
+      ],
+      "backdrop_path": null,
+      "adult": false,
+      "overview": "A former hitman named Bruno steals some cash from his mobster uncle. He plans to go to Tahiti, but things go wrong and he finds himself headed for Vegas via Death Valley in a comandeered airport limousine, pursued by his uncle's henchmen and accompanied by a limo driver and an enigmatic blonde.",
+      "release_date": "1994-05-04"
+    },
+    {
+      "vote_count": 4,
+      "id": 180803,
+      "video": false,
+      "vote_average": 6.5,
+      "title": "Another Lonely Hitman",
+      "popularity": 1.390296,
+      "poster_path": "\/iK9sknucws8Zl2TOQOcwkMfNHOR.jpg",
+      "original_language": "ja",
+      "original_title": "Shin kanashiki hittoman",
+      "genre_ids": [
+        18,
+        80,
+        35
+      ],
+      "backdrop_path": "\/s2VDgu0rklDHTUVsDbQil6FhhDq.jpg",
+      "adult": false,
+      "overview": "After serving 10 years in prison due to a drug-induced assassination of a rival gang boss Tachibana (Ryo Ishibashi) enters a world that's nothing like it was when he went in. Once a respected and feared Yakuza mastermind, he now must try and adapt within the confines of the new generations vision of honor. As he still garners a somewhat decent amount of respect he just tries to get by. Hooking up with a prostitute he's been in passing by with he begins to feel some sense of comfort. Upon stumbling across her being beaten down by her pimp, Tachibana can't just sit by and do nothing. So he commences in putting down an old school Yakuza ass whipping, thus beginning a showdown with the \"now\" boss, Sato.",
+      "release_date": "1995-06-30"
+    },
+    {
+      "vote_count": 9,
+      "id": 38202,
+      "video": false,
+      "vote_average": 4.2,
+      "title": "Logan's War:  Bound by Honor",
+      "popularity": 3.024397,
+      "poster_path": "\/a4FSVgCrAQCClcbl3yk5YxTTVo7.jpg",
+      "original_language": "en",
+      "original_title": "Logan's War:  Bound by Honor",
+      "genre_ids": [
+        28,
+        12
+      ],
+      "backdrop_path": "\/1OwgkCJIEK9l0vRkqKRWBibU1HQ.jpg",
+      "adult": false,
+      "overview": "Chuck Norris stars as martial arts extraordinaire Jake Fallon, who, after the death of his brother and sister-in-law, adopts (and trains) his orphaned nephew. Logan (Eddie Cibrian, TV's Invasion). After fifteen years of careful instruction, Logan is determined to avenge his parents Death... And, he'll need Uncle Jake's help to do it.",
+      "release_date": "1998-11-01"
+    },
+    {
+      "vote_count": 0,
+      "id": 8370,
+      "video": false,
+      "vote_average": 0,
+      "title": "Hitman Zero",
+      "popularity": 1.00353,
+      "poster_path": null,
+      "original_language": "de",
+      "original_title": "Entführt - Ich hol dich da raus",
+      "genre_ids": [
+        53
+      ],
+      "backdrop_path": null,
+      "adult": false,
+      "overview": "No overview found.",
+      "release_date": "2008-04-08"
+    },
+    {
+      "vote_count": 10,
+      "id": 334307,
+      "video": false,
+      "vote_average": 6.6,
+      "title": "Through the Air",
+      "popularity": 2.518167,
+      "poster_path": "\/otq1ZRXWcLPRiSel5G74I8aYFl4.jpg",
+      "original_language": "fr",
+      "original_title": "La Résistance de l'air",
+      "genre_ids": [
+        18
+      ],
+      "backdrop_path": "\/1vWiNTsSUjxHJAz2EBbYM6GDIeP.jpg",
+      "adult": false,
+      "overview": "Vincent, a former air rifle champion lives a quiet life with his wife and his daughter. Despite his happy family life he ends up with economic problems. One day at the shooting range he meets the mysterious Renaud who promises him a solution to his problems by offering him an unusual job. Suddenly Vincent finds himself in a very dangerous spiral which turns out to be even harder to get out of than finding a solution to his economic problems.",
+      "release_date": "2015-06-17"
+    },
+    {
+      "vote_count": 9,
+      "id": 216043,
+      "video": false,
+      "vote_average": 7.4,
+      "title": "The Iceman: Confessions of a Mafia Hitman",
+      "popularity": 2.187701,
+      "poster_path": "\/fRnwGRy3mHfdDG5mZXYNEVVKnI3.jpg",
+      "original_language": "en",
+      "original_title": "The Iceman: Confessions of a Mafia Hitman",
+      "genre_ids": [
+        99
+      ],
+      "backdrop_path": null,
+      "adult": false,
+      "overview": "The second HBO documentary on former mafia enforcer Richard Kuklinski will chill you to the bone. Speaking in the monotonous drone of a man who has numbed himself with remorseless brutality, Kuklinski was first interviewed in 1991, five years after receiving consecutive life sentences for multiple murders. Specializing in the tidy use of cyanide, Kuklinski lived a double life, like the fictional hitmen in The Sopranos and Road to Perdition, passing as a “businessman” and devoted husband and father. While leading the life of a happy family man in the New Jersey suburbs Richard Kuklinski was also living a bizarre double-life as a Mafia hit man. Kuklinski tells first hand how he brutally murdered men at close range dismembered and disposed of them before returning home to his family. This film offers extraordinary insight into the cold-heart of a killer.",
+      "release_date": "2001-03-01"
+    },
+    {
+      "vote_count": 2,
+      "id": 205311,
+      "video": false,
+      "vote_average": 3.5,
+      "title": "Hitman the Cobra",
+      "popularity": 1.165683,
+      "poster_path": "\/cE4wkEHWjrhGKb35SNwd3mYgQfq.jpg",
+      "original_language": "en",
+      "original_title": "Hitman the Cobra",
+      "genre_ids": [
+        10752,
+        28
+      ],
+      "backdrop_path": null,
+      "adult": false,
+      "overview": "Philippe (Richard Harrison) kills Roger (who sold information to the Japanese). Mike (Mike Abbott), Roger's brother, wants revenge and sends Bob, Blackie (Nathan Mutanda Chukueke) to find Philip.",
+      "release_date": "1987-10-03"
+    },
+    {
+      "vote_count": 1,
+      "id": 102684,
+      "video": false,
+      "vote_average": 3,
+      "title": "Zeyda and the Hitman",
+      "popularity": 1.079609,
+      "poster_path": "\/yMUKIaepSj48Oa7sq3DEu92fdg5.jpg",
+      "original_language": "en",
+      "original_title": "Zeyda and the Hitman",
+      "genre_ids": [
+        28,
+        35
+      ],
+      "backdrop_path": null,
+      "adult": false,
+      "overview": "",
+      "release_date": "2004-06-20"
+    },
+    {
+      "vote_count": 3,
+      "id": 72175,
+      "video": false,
+      "vote_average": 4.7,
+      "title": "Portrait of a Hitman",
+      "popularity": 1.17851,
+      "poster_path": "\/bwm7OaWeSEMhVWBHTJkmIgdL1SG.jpg",
+      "original_language": "en",
+      "original_title": "Portrait of a Hitman",
+      "genre_ids": [
+        18,
+        28
+      ],
+      "backdrop_path": null,
+      "adult": false,
+      "overview": "A professional hitman is hired to kill a brain surgeon. However, it turns out that not only are he and the surgeon old friends, but they are both in love with the same woman.",
+      "release_date": "1979-05-11"
+    },
+    {
+      "vote_count": 0,
+      "id": 243118,
+      "video": false,
+      "vote_average": 0,
+      "title": "Claycat's Hitman Absolution",
+      "popularity": 1.010261,
+      "poster_path": "\/kJ2sUAJZ3SVAXPVXbDW9NwU9LPt.jpg",
+      "original_language": "en",
+      "original_title": "Claycat's Hitman Absolution",
+      "genre_ids": [
+        16
+      ],
+      "backdrop_path": null,
+      "adult": false,
+      "overview": "The attack of The Saints from the latest Hitman game, retold with claymation cats.",
+      "release_date": "2012-10-05"
+    }
+  ]
+}
