@@ -186,6 +186,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
             switch (listResource.status) {
                 case ERROR:
                     progressBar.setVisibility(View.GONE);
+                    errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText(listResource.message);
                     break;
                 case LOADING:
