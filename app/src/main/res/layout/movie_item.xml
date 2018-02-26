@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/image_view_dimension_medium"
     android:orientation="vertical"
+    android:foreground="@drawable/selectable_item_background"
     app:cardUseCompatPadding="true">
 
 
