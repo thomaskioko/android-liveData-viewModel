@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="item_horizontal_margin">8dp</dimen>
-    <dimen name="image_view_dimension_medium">160dp</dimen>
+    <dimen name="image_view_dimension_medium">170dp</dimen>
     <dimen name="search_image_small">48dp</dimen>
 
     <!-- Text Sizes. -->
