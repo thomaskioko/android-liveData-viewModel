@@ -3,7 +3,7 @@ package com.thomaskioko.livedatademo.di.module;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
-import com.thomaskioko.livedatademo.db.MovieDao;
+import com.thomaskioko.livedatademo.db.dao.MovieDao;
 import com.thomaskioko.livedatademo.db.TmdbDb;
 
 import javax.inject.Singleton;

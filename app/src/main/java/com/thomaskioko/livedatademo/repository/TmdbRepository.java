@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.thomaskioko.livedatademo.db.MovieDao;
+import com.thomaskioko.livedatademo.db.dao.MovieDao;
 import com.thomaskioko.livedatademo.db.TmdbDb;
 import com.thomaskioko.livedatademo.repository.api.MovieResult;
 import com.thomaskioko.livedatademo.repository.api.TmdbService;
