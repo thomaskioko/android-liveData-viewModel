@@ -6,9 +6,10 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
+import com.thomaskioko.livedatademo.db.entity.Genre;
+
 import java.util.List;
 
-import streama.streama.video.streama.db.entity.Genre;
 
 /**
  * Interface for database access on Genre related operations.

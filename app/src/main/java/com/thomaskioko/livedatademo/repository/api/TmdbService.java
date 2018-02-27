@@ -38,4 +38,12 @@ public interface TmdbService {
      */
     @GET("movie/{movie_id}")
     LiveData<ApiResponse<Movie>> getMovieById(@Path("movie_id") int movieId);
+
+    /**
+     * Get Movie Genres
+     *
+     * @return JSON Result
+     */
+    @GET("genre/movie/list")
+    LiveData<ApiResponse<GenreResponse>> getGenres();
 }
