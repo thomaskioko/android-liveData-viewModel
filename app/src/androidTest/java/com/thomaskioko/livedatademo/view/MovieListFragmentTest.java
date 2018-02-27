@@ -8,7 +8,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.widget.EditText;
 
 import com.thomaskioko.livedatademo.R;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.testing.SingleFragmentActivity;
 import com.thomaskioko.livedatademo.util.EspressoTestUtil;
 import com.thomaskioko.livedatademo.util.RecyclerViewMatcher;

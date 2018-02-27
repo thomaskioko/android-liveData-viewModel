@@ -6,7 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
 
 import java.util.List;
 

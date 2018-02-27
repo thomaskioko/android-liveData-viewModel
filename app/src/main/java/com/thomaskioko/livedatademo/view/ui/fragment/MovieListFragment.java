@@ -26,7 +26,7 @@ import android.widget.TextView;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.di.Injectable;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.view.adapter.MovieListAdapter;
 import com.thomaskioko.livedatademo.view.adapter.SearchItemAdapter;
 import com.thomaskioko.livedatademo.view.ui.common.NavigationController;

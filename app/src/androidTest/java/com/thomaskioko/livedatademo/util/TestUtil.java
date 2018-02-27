@@ -1,7 +1,7 @@
 package com.thomaskioko.livedatademo.util;
 
 import com.thomaskioko.livedatademo.repository.api.MovieResult;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
 
 import java.util.ArrayList;
 import java.util.List;

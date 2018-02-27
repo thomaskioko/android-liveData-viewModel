@@ -9,7 +9,7 @@ import com.thomaskioko.livedatademo.db.TmdbDb;
 import com.thomaskioko.livedatademo.repository.api.MovieResult;
 import com.thomaskioko.livedatademo.repository.api.TmdbService;
 import com.thomaskioko.livedatademo.repository.model.ApiResponse;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.repository.util.AppExecutors;
 import com.thomaskioko.livedatademo.repository.util.NetworkBoundResource;
 import com.thomaskioko.livedatademo.vo.Resource;

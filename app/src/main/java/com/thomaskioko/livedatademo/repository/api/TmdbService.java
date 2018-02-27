@@ -3,7 +3,7 @@ package com.thomaskioko.livedatademo.repository.api;
 import android.arch.lifecycle.LiveData;
 
 import com.thomaskioko.livedatademo.repository.model.ApiResponse;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;

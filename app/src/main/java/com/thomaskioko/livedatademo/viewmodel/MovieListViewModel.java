@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.thomaskioko.livedatademo.repository.TmdbRepository;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.utils.AbsentLiveData;
 import com.thomaskioko.livedatademo.utils.Objects;
 import com.thomaskioko.livedatademo.vo.Resource;

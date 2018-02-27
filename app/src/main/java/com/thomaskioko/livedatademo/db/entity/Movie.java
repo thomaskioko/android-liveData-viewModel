@@ -1,4 +1,4 @@
-package com.thomaskioko.livedatademo.repository.model;
+package com.thomaskioko.livedatademo.db.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;

@@ -24,7 +24,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.di.Injectable;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.viewmodel.MovieDetailViewModel;
 import com.thomaskioko.livedatademo.vo.Resource;
 
