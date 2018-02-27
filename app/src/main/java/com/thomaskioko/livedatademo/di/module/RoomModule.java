@@ -3,6 +3,7 @@ package com.thomaskioko.livedatademo.di.module;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
+import com.thomaskioko.livedatademo.db.dao.GenreDao;
 import com.thomaskioko.livedatademo.db.dao.MovieDao;
 import com.thomaskioko.livedatademo.db.TmdbDb;
 
@@ -25,5 +26,11 @@ public class RoomModule {
     @Provides
     MovieDao provideMovieDao(TmdbDb db){
         return db.movieDao();
+    }
+
+    @Singleton
+    @Provides
+    GenreDao provideGenreDao(TmdbDb db){
+        return db.genreDao();
     }
 }
