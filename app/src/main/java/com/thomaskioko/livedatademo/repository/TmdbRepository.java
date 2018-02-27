@@ -4,12 +4,15 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.thomaskioko.livedatademo.db.dao.MovieDao;
 import com.thomaskioko.livedatademo.db.TmdbDb;
+import com.thomaskioko.livedatademo.db.dao.GenreDao;
+import com.thomaskioko.livedatademo.db.dao.MovieDao;
+import com.thomaskioko.livedatademo.db.entity.Genre;
+import com.thomaskioko.livedatademo.db.entity.Movie;
+import com.thomaskioko.livedatademo.repository.api.GenreResponse;
 import com.thomaskioko.livedatademo.repository.api.MovieResult;
 import com.thomaskioko.livedatademo.repository.api.TmdbService;
 import com.thomaskioko.livedatademo.repository.model.ApiResponse;
-import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.repository.util.AppExecutors;
 import com.thomaskioko.livedatademo.repository.util.NetworkBoundResource;
 import com.thomaskioko.livedatademo.vo.Resource;
@@ -29,14 +32,17 @@ public class TmdbRepository {
     private TmdbService mTmdbService;
     private TmdbDb mTmdbDb;
     private MovieDao mMovieDao;
+    private GenreDao mGenreDao;
     private final AppExecutors mAppExecutors;
 
     @Inject
-    TmdbRepository(AppExecutors appExecutors, TmdbService tmdbService, TmdbDb tmdbDb, MovieDao movieDao) {
+    TmdbRepository(AppExecutors appExecutors, TmdbService tmdbService, TmdbDb tmdbDb, MovieDao movieDao,
+                   GenreDao genreDao) {
         mTmdbService = tmdbService;
         mAppExecutors = appExecutors;
         mTmdbDb = tmdbDb;
         mMovieDao = movieDao;
+        mGenreDao = genreDao;
     }
 
     public LiveData<Resource<List<Movie>>> getPopularMovies() {
@@ -115,6 +121,32 @@ public class TmdbRepository {
             @Override
             protected LiveData<ApiResponse<Movie>> createCall() {
                 return mTmdbService.getMovieById(movieId);
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<List<Genre>>> getGenres() {
+        return new NetworkBoundResource<List<Genre>, GenreResponse>(mAppExecutors) {
+            @Override
+            protected void saveCallResult(@NonNull GenreResponse item) {
+                mGenreDao.insertGenres(item.getGenres());
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<Genre> data) {
+                return data == null || data.isEmpty();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<List<Genre>> loadFromDb() {
+                return mGenreDao.findAll();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<GenreResponse>> createCall() {
+                return mTmdbService.getGenres();
             }
         }.asLiveData();
     }
