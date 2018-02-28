@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LiveData Demo</string>
+    <string name="app_name">Tmdb</string>
 
 
     <!-- Base TMDB Image Url  -->
