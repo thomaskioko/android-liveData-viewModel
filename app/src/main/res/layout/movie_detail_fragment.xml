@@ -3,43 +3,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinated_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/app_bar_movie_profile_height"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:contentScrim="@color/colorPrimaryDark"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll"
+            app:statusBarScrim="@color/colorPrimaryDark"
+            app:title=" ">
 
             <ImageView
                 android:id="@+id/backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="60.0dip"
                 android:contentDescription="@null"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
 
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="70.0dip"
+                android:layout_gravity="bottom"
+                app:layout_collapseMode="parallax"/>
+
+            <View
+                android:id="@+id/color_bar_info_wrapper"
+                android:layout_width="fill_parent"
+                android:layout_height="70.0dip"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/movie_profile_margin"
+                android:layout_marginRight="@dimen/movie_profile_margin"
+                app:layout_collapseMode="parallax" />
+
+            <include layout="@layout/movie_profile_header_wrapper" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title=" " />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabTrailer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:src="@drawable/ic_play_arrow_"
+        app:backgroundTint="@color/white"
+        app:fabSize="normal"
+        app:layout_anchor="@+id/view"
+        app:layout_anchorGravity="end|top" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -84,7 +119,9 @@
             <RelativeLayout
                 android:id="@+id/layout_movie_details"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
 
                 <!-- Thumbnail Image -->
                 <ImageView
