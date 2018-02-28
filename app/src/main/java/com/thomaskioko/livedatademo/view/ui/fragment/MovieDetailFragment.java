@@ -6,8 +6,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -23,8 +25,9 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.thomaskioko.livedatademo.R;
-import com.thomaskioko.livedatademo.di.Injectable;
 import com.thomaskioko.livedatademo.db.entity.Movie;
+import com.thomaskioko.livedatademo.di.Injectable;
+import com.thomaskioko.livedatademo.view.ui.MainActivity;
 import com.thomaskioko.livedatademo.viewmodel.MovieDetailViewModel;
 import com.thomaskioko.livedatademo.vo.Resource;
 
@@ -54,7 +57,7 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     TextView mMovieYear;
     @BindView(R.id.movie_detail_plot)
     TextView mMoviePlot;
-    @BindView(R.id.movie_detail_thumbnail)
+    @BindView(R.id.iv_poster_profile)
     ImageView mThumbnail;
     @BindView(R.id.movie_detail_rating)
     TextView mMovieRating;
@@ -67,7 +70,9 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     @BindView(R.id.coordinated_layout)
     CoordinatorLayout mCoordinatedLayout;
     @BindView(R.id.toolbar_layout)
-    CollapsingToolbarLayout appBarLayout;
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.app_bar_layout)
+    AppBarLayout appBarLayout;
     @BindView(R.id.backdrop)
     ImageView imageView;
     @BindView(R.id.toolbar)
@@ -78,6 +83,12 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     ProgressBar mProgressBar;
     @BindView(R.id.error_msg)
     TextView mErrorTextView;
+    @BindView(R.id.color_bar_info_wrapper)
+    View colorView;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.fabTrailer)
+    FloatingActionButton floatingActionButton;
 
     private static final String BUNDLE_MOVIE_ID = "MOVIE_ID";
 
@@ -103,6 +114,10 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        ((MainActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
         MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(MovieDetailViewModel.class);
@@ -166,8 +181,28 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
             mMoviePopularity.setText(String.valueOf(popularity));
             mMovieVote.setText(String.valueOf(mMovieResult.voteCount));
             mCircularProgressBar.setProgressWithAnimation(rating);
+            title.setText(mMovieResult.title);
 
-            appBarLayout.setTitle(mMovieResult.title);
+            appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                boolean isShow = true;
+                int scrollRange = -1;
+
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    if (scrollRange == -1) {
+                        scrollRange = appBarLayout.getTotalScrollRange();
+
+                    }
+                    if (scrollRange + verticalOffset == 0) {
+                        isShow = true;
+                        collapsingToolbarLayout.setTitle(mMovieResult.title);
+                    } else if (isShow) {
+                        collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
+                        isShow = false;
+                    }
+                }
+            });
+
 
 
             Glide.with(imageView.getContext())
@@ -182,10 +217,14 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
                                 if (palette.getDarkVibrantSwatch() != null) {
                                     mRelativeLayout.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
                                     mCircularProgressBar.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
+                                    colorView.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
 
                                 } else if (palette.getMutedSwatch() != null) {
                                     mRelativeLayout.setBackgroundColor(palette.getMutedSwatch().getRgb());
                                     mCircularProgressBar.setBackgroundColor(palette.getMutedSwatch().getRgb());
+                                    colorView.setBackgroundColor(palette.getMutedSwatch().getRgb());
+                                    colorView.setBackgroundColor(palette.getMutedSwatch().getRgb());
+
                                 }
                                 if (palette.getLightVibrantSwatch() != null) {
                                     mCircularProgressBar.setColor(palette.getLightVibrantSwatch().getRgb());
@@ -195,6 +234,8 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
                             });
                         }
                     });
+
+
         } else {
             mErrorTextView.setVisibility(View.VISIBLE);
             mErrorTextView.setText(getResources().getString(R.string.error_no_results));
