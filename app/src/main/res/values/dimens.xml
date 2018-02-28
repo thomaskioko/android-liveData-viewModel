@@ -47,4 +47,14 @@
 
     <dimen name="movie_detail_trailers_item_width">240dp</dimen>
     <dimen name="movie_detail_reviews_item_width">240dp</dimen>
+
+    <dimen name="app_bar_movie_profile_height">340dip</dimen>
+    <dimen name="movie_profile_margin">0.0dip</dimen>
+    <dimen name="fab_margin">16dip</dimen>
+    <item type="dimen" name="fab_margin_right">@dimen/fab_margin</item>
+    <color name="white">#ffffffff</color>
+
+    <dimen name="profile_poster_width">120.0dip</dimen>
+    <dimen name="profile_poster_width_horizontal_list">115.0dip</dimen>
+    <dimen name="movie_profile_poster_width">80.0dip</dimen>
 </resources>
