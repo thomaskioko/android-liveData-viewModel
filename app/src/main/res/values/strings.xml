@@ -24,4 +24,7 @@
     <string name="tv_title_rating">Rating</string>
     <string name="tv_title_popularity">Popularity:</string>
     <string name="tv_title_vote_count">Vote Count:</string>
+
+    <!-- Placeholders -->
+    <string name="place_holder_rating">%s Ratings</string>
 </resources>
