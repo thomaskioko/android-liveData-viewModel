@@ -33,6 +33,7 @@ ext.mockitoVersion = "2.7.19"
 ext.materialSearchViewVersion = "1.4.0"
 ext.circularProgressbarVersion = "1.1.1"
 ext.jodaTimeVersion = "2.9.9"
+ext.mockWebServerVersion = "3.8.1"
 
 
 allprojects {

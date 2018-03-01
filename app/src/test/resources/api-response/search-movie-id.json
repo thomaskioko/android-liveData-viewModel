@@ -1,0 +1,63 @@
+{
+  "adult": false,
+  "backdrop_path": "/askg3SMvhqEl4OL52YuvdtY40Yb.jpg",
+  "belongs_to_collection": null,
+  "budget": 175000000,
+  "genres": [
+    {
+      "id": 10751,
+      "name": "Family"
+    },
+    {
+      "id": 16,
+      "name": "Animation"
+    },
+    {
+      "id": 12,
+      "name": "Adventure"
+    },
+    {
+      "id": 35,
+      "name": "Comedy"
+    }
+  ],
+  "homepage": "",
+  "id": 354912,
+  "imdb_id": "tt2380307",
+  "original_language": "en",
+  "original_title": "Coco",
+  "overview": "Despite his family’s baffling generations-old ban on music, Miguel dreams of becoming an accomplished musician like his idol, Ernesto de la Cruz. Desperate to prove his talent, Miguel finds himself in the stunning and colorful Land of the Dead following a mysterious chain of events. Along the way, he meets charming trickster Hector, and together, they set off on an extraordinary journey to unlock the real story behind Miguel's family history.",
+  "popularity": 427.64022,
+  "poster_path": "/eKi8dIrr8voobbaGzDpe8w0PVbC.jpg",
+  "production_companies": [
+    {
+      "name": "Disney Pixar",
+      "id": 6806
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "2017-10-27",
+  "revenue": 700920729,
+  "runtime": 109,
+  "spoken_languages": [
+    {
+      "iso_639_1": "en",
+      "name": "English"
+    },
+    {
+      "iso_639_1": "es",
+      "name": "Español"
+    }
+  ],
+  "status": "Released",
+  "tagline": "The celebration of a lifetime",
+  "title": "Coco",
+  "video": false,
+  "vote_average": 7.7,
+  "vote_count": 1952
+}
