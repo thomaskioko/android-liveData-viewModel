@@ -24,6 +24,11 @@ android {
         }
     }
 
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
+
     buildTypes.each {
         it.buildConfigField 'String', 'TMDB_API_KEY', TMDB_API_KEY
     }
@@ -79,6 +84,9 @@ dependencies {
 
     testImplementation "junit:junit:$junitVersion"
     testImplementation "android.arch.core:core-testing:$archVersion"
+
+    testImplementation "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
+
     // Test helpers for Room
     testImplementation "android.arch.persistence.room:testing:$archVersion"
     androidTestImplementation "com.android.support.test:runner:$supportTestVersion"
