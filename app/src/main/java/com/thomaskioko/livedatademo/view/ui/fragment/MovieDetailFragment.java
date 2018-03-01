@@ -4,7 +4,6 @@ import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -127,6 +126,8 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
         ((MainActivity) getActivity()).setSupportActionBar(mToolbar);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+
+        mToolbar.setNavigationOnClickListener(v ->  getActivity().onBackPressed());
 
         MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(MovieDetailViewModel.class);
