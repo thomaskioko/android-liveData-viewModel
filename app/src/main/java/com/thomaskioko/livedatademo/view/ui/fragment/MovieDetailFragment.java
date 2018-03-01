@@ -4,6 +4,9 @@ import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,6 +39,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.text.NumberFormat;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -87,6 +92,10 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     View colorView;
     @BindView(R.id.title)
     TextView title;
+    @BindView(R.id.rating_bar)
+    RatingBar ratingBar;
+    @BindView(R.id.rating_text)
+    TextView tvRating;
     @BindView(R.id.fabTrailer)
     FloatingActionButton floatingActionButton;
 
@@ -166,7 +175,7 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
                     .centerCrop()
                     .into(mThumbnail);
 
-            float rating = mMovieResult.voteAverage.floatValue() * 10;
+            float rating = (float) (mMovieResult.voteAverage/2);
             float popularity = mMovieResult.popularity.intValue();
 
             DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd")
@@ -180,8 +189,11 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
             mMovieRating.setText(String.valueOf(mMovieResult.voteAverage));
             mMoviePopularity.setText(String.valueOf(popularity));
             mMovieVote.setText(String.valueOf(mMovieResult.voteCount));
-            mCircularProgressBar.setProgressWithAnimation(rating);
             title.setText(mMovieResult.title);
+            ratingBar.setRating(rating);
+
+            String movieRating = NumberFormat.getInstance(Locale.getDefault()).format(mMovieResult.voteCount);
+            tvRating.setText(getString(R.string.place_holder_rating, movieRating));
 
             appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                 boolean isShow = true;
@@ -203,6 +215,8 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
                 }
             });
 
+            LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+
 
 
             Glide.with(imageView.getContext())
@@ -218,18 +232,26 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
                                     mRelativeLayout.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
                                     mCircularProgressBar.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
                                     colorView.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
+                                    collapsingToolbarLayout.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
+                                    collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkVibrantSwatch().getRgb());
+                                    collapsingToolbarLayout.setContentScrimColor(palette.getDarkVibrantSwatch().getRgb());
 
                                 } else if (palette.getMutedSwatch() != null) {
                                     mRelativeLayout.setBackgroundColor(palette.getMutedSwatch().getRgb());
                                     mCircularProgressBar.setBackgroundColor(palette.getMutedSwatch().getRgb());
                                     colorView.setBackgroundColor(palette.getMutedSwatch().getRgb());
-                                    colorView.setBackgroundColor(palette.getMutedSwatch().getRgb());
+                                    collapsingToolbarLayout.setBackgroundColor(palette.getMutedSwatch().getRgb());
+                                    collapsingToolbarLayout.setStatusBarScrimColor(palette.getMutedSwatch().getRgb());
+                                    collapsingToolbarLayout.setContentScrimColor(palette.getMutedSwatch().getRgb());
+
 
                                 }
                                 if (palette.getLightVibrantSwatch() != null) {
                                     mCircularProgressBar.setColor(palette.getLightVibrantSwatch().getRgb());
+                                    stars.getDrawable(2).setColorFilter(palette.getLightVibrantSwatch().getRgb(), PorterDuff.Mode.SRC_ATOP);
                                 } else if (palette.getLightMutedSwatch() != null) {
                                     mCircularProgressBar.setColor(palette.getLightMutedSwatch().getRgb());
+                                    stars.getDrawable(2).setColorFilter(palette.getLightMutedSwatch().getRgb(), PorterDuff.Mode.SRC_ATOP);
                                 }
                             });
                         }
