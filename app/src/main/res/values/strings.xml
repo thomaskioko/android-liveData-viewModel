@@ -25,6 +25,15 @@
     <string name="tv_title_popularity">Popularity:</string>
     <string name="tv_title_vote_count">Vote Count:</string>
 
+    <string name="lorem">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</string>
+
     <!-- Placeholders -->
     <string name="place_holder_rating">%s Ratings</string>
+
+    <!-- Youtube Video ThumbnailUrls -->
+    <string name="thumbnail_default">http://img.youtube.com/vi/%s/default.jpg</string>
+    <string name="thumbnail_high_quality">http://img.youtube.com/vi/%s/hqdefault.jpg</string>
+    <string name="thumbnail_medium_quality">http://img.youtube.com/vi/%s/mqdefault.jpg</string>
+    <string name="thumbnail_standard_definition">http://img.youtube.com/vi/%s/sddefault.jpg</string>
+    <string name="thumbnail_max_resolution">http://img.youtube.com/vi/%s/maxresdefault.jpg</string>
 </resources>
