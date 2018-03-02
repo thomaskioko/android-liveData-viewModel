@@ -1,6 +1,7 @@
 package com.thomaskioko.livedatademo.util;
 
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -81,5 +82,10 @@ public class MatcherUtil {
                 }
             }
         };
+    }
+
+    @NonNull
+    public static RecyclerViewMatcher listMatcher(int recyclerId) {
+        return new RecyclerViewMatcher(recyclerId);
     }
 }
