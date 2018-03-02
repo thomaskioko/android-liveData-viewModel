@@ -1,35 +1,35 @@
 package com.thomaskioko.livedatademo.view;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.support.test.espresso.matcher.BoundedMatcher;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.widget.Toolbar;
 
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.testing.SingleFragmentActivity;
 import com.thomaskioko.livedatademo.util.EspressoTestUtil;
+import com.thomaskioko.livedatademo.util.MatcherUtil;
 import com.thomaskioko.livedatademo.util.TestUtil;
 import com.thomaskioko.livedatademo.util.ViewModelUtil;
 import com.thomaskioko.livedatademo.view.ui.fragment.MovieDetailFragment;
 import com.thomaskioko.livedatademo.viewmodel.MovieDetailViewModel;
 import com.thomaskioko.livedatademo.vo.Resource;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -59,6 +59,8 @@ public class MovieDetailFragmentTest {
     @Test
     public void loading() {
         data.postValue(Resource.loading(null));
+
+        //Verify that progressbar is set
         onView(withId(R.id.progress_bar)).check(matches(isDisplayed()));
     }
 
@@ -67,29 +69,34 @@ public class MovieDetailFragmentTest {
         Movie movie = TestUtil.getMovieList().get(0);
 
         data.postValue(Resource.success(movie));
-        onView(isAssignableFrom(Toolbar.class))
-                .check(matches(withToolbarTitle(is(movie.title))));
-        onView(withId(R.id.movie_detail_plot))
-                .check(matches(withText(movie.overview)));
-        onView(withId(R.id.year_title))
-                .check(matches(withText(movie.releaseYear)));
-        onView(withId(R.id.vote_count))
-                .check(matches(withText(String.valueOf(movie.voteAverage))));
+
+        //Verify that the progressbar is not shown
+        onView(withId(R.id.progress_bar)).check(matches(not(isDisplayed())));
+
+        //Verify that the progressbar is not shown
+        onView(withId(R.id.error_msg)).check(matches(not(isDisplayed())));
+
+        //Verify that the movie title is set
+        onView(withId(R.id.title)).check(matches(MatcherUtil.withText(movie.title)));
+
+        String movieRating = NumberFormat.getInstance(Locale.getDefault()).format(movie.rating);
+
+        //Verify that text rating is set
+        onView(withId(R.id.rating_text)).check(matches(MatcherUtil.withText(movieRating)));
+
+        //Verify that movie overview is set
+        onView(withId(R.id.movie_detail_plot)).check(matches(MatcherUtil.withText(movie.overview)));
+
+        //Verify that the movie release year is set
+        onView(withId(R.id.year_title)).check(matches(MatcherUtil.withText(movie.releaseYear)));
 
     }
 
-    private static Matcher<Object> withToolbarTitle(final Matcher<CharSequence> textMatcher) {
-        return new BoundedMatcher<Object, Toolbar>(Toolbar.class) {
-            @Override
-            public boolean matchesSafely(Toolbar toolbar) {
-                return textMatcher.matches(toolbar.getTitle());
-            }
+    @Test
+    public void testShowError() {
+        data.postValue(Resource.error("Failed to load data", null));
 
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("with toolbar title: ");
-                textMatcher.describeTo(description);
-            }
-        };
+        //Verify that Error message is shown
+        onView(withId(R.id.error_msg)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 }
