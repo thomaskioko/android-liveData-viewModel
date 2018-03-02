@@ -1,14 +1,11 @@
 package com.thomaskioko.livedatademo.util;
 
-import com.thomaskioko.livedatademo.repository.api.MovieResult;
 import com.thomaskioko.livedatademo.db.entity.Movie;
+import com.thomaskioko.livedatademo.db.entity.TmdbVideo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Thomas Kioko
- */
 
 public class TestUtil {
 
@@ -20,13 +17,6 @@ public class TestUtil {
                 732.263205, 6559, false, 7.3);
     }
 
-    public static MovieResult createMovieResult(Integer page, List<Movie> movieList) {
-        MovieResult movieResult = new MovieResult();
-        movieResult.setPage(page);
-        movieResult.setResults(movieList);
-
-        return movieResult;
-    }
 
     public static List<Movie> getMovieList() {
         List<Movie> movieList = new ArrayList<>();
@@ -34,5 +24,22 @@ public class TestUtil {
         movieList.add(createMovie("Jumanji", "\\/47pLZ1gr63WaciDfHCpmoiXJlVr.jpg"));
 
         return movieList;
+    }
+
+
+    public static TmdbVideo createTmdbVideo() {
+        return new TmdbVideo("571bf094c3a368525f006b86", "Official Trailer", "Trailer",
+                "XRVD32rnzOw", 1080, "YouTube", "en", "US", 198663
+        );
+    }
+
+
+    public static List<TmdbVideo> getTmdbVideoList() {
+        List<TmdbVideo> tmdbVideos = new ArrayList<>();
+        tmdbVideos.add(createTmdbVideo());
+        tmdbVideos.add(createTmdbVideo());
+        tmdbVideos.add(createTmdbVideo());
+
+        return tmdbVideos;
     }
 }
