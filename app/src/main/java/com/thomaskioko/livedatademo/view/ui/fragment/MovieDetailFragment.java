@@ -12,6 +12,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -30,7 +31,6 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.di.Injectable;
-import com.thomaskioko.livedatademo.view.ui.MainActivity;
 import com.thomaskioko.livedatademo.viewmodel.MovieDetailViewModel;
 import com.thomaskioko.livedatademo.vo.Resource;
 
@@ -123,9 +123,9 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ((MainActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
         mToolbar.setNavigationOnClickListener(v ->  getActivity().onBackPressed());
 
@@ -142,10 +142,12 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
                 layoutDisplayInfo.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.VISIBLE);
                 layoutDisplayInfo.setVisibility(View.VISIBLE);
+                mErrorTextView.setVisibility(View.GONE);
                 break;
             case SUCCESS:
                 layoutDisplayInfo.setVisibility(View.GONE);
                 mProgressBar.setVisibility(View.GONE);
+                mErrorTextView.setVisibility(View.GONE);
                 displayMovieInfo(movieResult.data);
                 break;
             case ERROR:
