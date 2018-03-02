@@ -23,14 +23,14 @@ public class TmdbVideo {
     public String name;
     public String type;
     public String key;
-    public String size;
+    public int size;
     public String site;
     public String iso_639_1;
     public String iso_3166_1;
     @JsonIgnore
     public int movieId;
 
-    public TmdbVideo(String id, String name, String type, String key, String size, String site, String iso_639_1,
+    public TmdbVideo(String id, String name, String type, String key, int size, String site, String iso_639_1,
                      String iso_3166_1, int movieId) {
         this.id = id;
         this.name = name;
