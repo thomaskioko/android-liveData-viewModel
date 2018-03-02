@@ -13,4 +13,7 @@
     <color name="theme_divider">#B6B6B6</color>
 
     <color name="blue">#ff0099cc</color>
+
+    <color name="translucent_black_dark">#BB000000</color>
+    <color name="translucent_black_light">#70000000</color>
 </resources>
