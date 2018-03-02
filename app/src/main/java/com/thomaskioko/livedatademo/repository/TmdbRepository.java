@@ -7,16 +7,20 @@ import android.support.annotation.Nullable;
 import com.thomaskioko.livedatademo.db.TmdbDb;
 import com.thomaskioko.livedatademo.db.dao.GenreDao;
 import com.thomaskioko.livedatademo.db.dao.MovieDao;
+import com.thomaskioko.livedatademo.db.dao.VideoDao;
 import com.thomaskioko.livedatademo.db.entity.Genre;
 import com.thomaskioko.livedatademo.db.entity.Movie;
+import com.thomaskioko.livedatademo.db.entity.TmdbVideo;
 import com.thomaskioko.livedatademo.repository.api.GenreResponse;
 import com.thomaskioko.livedatademo.repository.api.MovieResult;
 import com.thomaskioko.livedatademo.repository.api.TmdbService;
+import com.thomaskioko.livedatademo.repository.api.VideoResult;
 import com.thomaskioko.livedatademo.repository.model.ApiResponse;
 import com.thomaskioko.livedatademo.repository.util.AppExecutors;
 import com.thomaskioko.livedatademo.repository.util.NetworkBoundResource;
 import com.thomaskioko.livedatademo.vo.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,16 +37,18 @@ public class TmdbRepository {
     private TmdbDb mTmdbDb;
     private MovieDao mMovieDao;
     private GenreDao mGenreDao;
+    private VideoDao mVideoDao;
     private final AppExecutors mAppExecutors;
 
     @Inject
     TmdbRepository(AppExecutors appExecutors, TmdbService tmdbService, TmdbDb tmdbDb, MovieDao movieDao,
-                   GenreDao genreDao) {
+                   GenreDao genreDao, VideoDao videoDao) {
         mTmdbService = tmdbService;
         mAppExecutors = appExecutors;
         mTmdbDb = tmdbDb;
         mMovieDao = movieDao;
         mGenreDao = genreDao;
+        mVideoDao = videoDao;
     }
 
     public LiveData<Resource<List<Movie>>> getPopularMovies() {
@@ -59,7 +65,7 @@ public class TmdbRepository {
 
             @NonNull
             @Override
-            protected LiveData<List<Movie>> loadFromDb()  {
+            protected LiveData<List<Movie>> loadFromDb() {
                 return mMovieDao.findAll();
             }
 
@@ -147,6 +153,39 @@ public class TmdbRepository {
             @Override
             protected LiveData<ApiResponse<GenreResponse>> createCall() {
                 return mTmdbService.getGenres();
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<List<TmdbVideo>>> getMovieVideo(int movieId) {
+        return new NetworkBoundResource<List<TmdbVideo>, VideoResult>(mAppExecutors) {
+            @Override
+            protected void saveCallResult(@NonNull VideoResult item) {
+                List<TmdbVideo> tmdbVideoList = new ArrayList<>();
+                for (TmdbVideo tmdbVideo : item.getResults()) {
+
+                    TmdbVideo movieTmdbVideo = new TmdbVideo(tmdbVideo.id, tmdbVideo.name, tmdbVideo.type, tmdbVideo.key,
+                            tmdbVideo.size, tmdbVideo.site, tmdbVideo.iso_639_1, tmdbVideo.iso_3166_1, movieId);
+                    tmdbVideoList.add(movieTmdbVideo);
+                }
+                mVideoDao.insertVideo(tmdbVideoList);
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable List<TmdbVideo> data) {
+                return data == null || data.isEmpty();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<List<TmdbVideo>> loadFromDb() {
+                return mVideoDao.searchVideodByMovieId(movieId);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<VideoResult>> createCall() {
+                return mTmdbService.getMovieVideos(movieId);
             }
         }.asLiveData();
     }
