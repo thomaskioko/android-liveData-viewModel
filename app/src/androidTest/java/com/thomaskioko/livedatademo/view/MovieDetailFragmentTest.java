@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.db.entity.Movie;
+import com.thomaskioko.livedatademo.db.entity.TmdbVideo;
 import com.thomaskioko.livedatademo.testing.SingleFragmentActivity;
 import com.thomaskioko.livedatademo.util.EspressoTestUtil;
 import com.thomaskioko.livedatademo.util.MatcherUtil;
@@ -22,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -43,6 +45,7 @@ public class MovieDetailFragmentTest {
 
     private MovieDetailViewModel viewModel;
     private MutableLiveData<Resource<Movie>> data = new MutableLiveData<>();
+    private MutableLiveData<Resource<List<TmdbVideo>>> videoData = new MutableLiveData<>();
 
     @Before
     public void init() throws Throwable {
@@ -50,6 +53,7 @@ public class MovieDetailFragmentTest {
         MovieDetailFragment fragment = MovieDetailFragment.create(198663);
         viewModel = mock(MovieDetailViewModel.class);
         when(viewModel.getMovie()).thenReturn(data);
+        when(viewModel.getVideoMovies()).thenReturn(videoData);
         doNothing().when(viewModel).setMovieId(anyInt());
 
         fragment.viewModelFactory = ViewModelUtil.createFor(viewModel);
@@ -73,7 +77,7 @@ public class MovieDetailFragmentTest {
         //Verify that the progressbar is not shown
         onView(withId(R.id.progress_bar)).check(matches(not(isDisplayed())));
 
-        //Verify that the progressbar is not shown
+        //Verify that the error message is not shown
         onView(withId(R.id.error_msg)).check(matches(not(isDisplayed())));
 
         //Verify that the movie title is set
@@ -93,7 +97,31 @@ public class MovieDetailFragmentTest {
     }
 
     @Test
-    public void testShowError() {
+    public void testDisplayMovieVideosOnSuccess(){
+        List<TmdbVideo> tmdbVideoList = TestUtil.getTmdbVideoList();
+        videoData.postValue(Resource.success(tmdbVideoList));
+
+        //Verify that the progressbar is not shown
+        onView(withId(R.id.progress_bar)).check(matches(not(isDisplayed())));
+
+        //Verify that the error message is not shown
+        onView(withId(R.id.error_msg)).check(matches(not(isDisplayed())));
+
+        //verify that the recycler view has at least an item displayed
+        onView(MatcherUtil.listMatcher(R.id.recyclerview_trailer).atPosition(0)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void testShowVideoError() {
+        videoData.postValue(Resource.error("Failed to load data", null));
+
+        //Verify that Error message is shown
+        onView(withId(R.id.error_msg)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void testMovieDetailShowError() {
         data.postValue(Resource.error("Failed to load data", null));
 
         //Verify that Error message is shown
