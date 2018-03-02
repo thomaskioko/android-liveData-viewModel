@@ -15,6 +15,7 @@
         android:orientation="vertical"
         tools:context=".ui.fragments.MovieDetailFragment">
 
+        <!-- Loading data display -->
         <RelativeLayout
             android:id="@+id/layout_display_info"
             android:layout_width="match_parent"
@@ -229,7 +230,45 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
-                    tools:text="@string/app_name" />
+                    tools:text="@string/lorem" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <!-- Trailers-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_trailer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_micro">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_mini">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_title_trailers"
+                    style="@style/HeaderTextView"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"
+                    android:visibility="visible"/>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_trailer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_video_trailer"
+                    android:orientation="horizontal"
+                    tools:layoutManager="LinearLayoutManager"
+                    tools:spanCount="2"/>
+
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
