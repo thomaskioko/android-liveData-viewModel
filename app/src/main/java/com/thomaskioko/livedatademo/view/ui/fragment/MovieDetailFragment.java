@@ -14,6 +14,9 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +33,9 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.db.entity.Movie;
+import com.thomaskioko.livedatademo.db.entity.TmdbVideo;
 import com.thomaskioko.livedatademo.di.Injectable;
+import com.thomaskioko.livedatademo.view.adapter.VideoListAdapter;
 import com.thomaskioko.livedatademo.viewmodel.MovieDetailViewModel;
 import com.thomaskioko.livedatademo.vo.Resource;
 
@@ -39,6 +44,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -95,9 +101,14 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     RatingBar ratingBar;
     @BindView(R.id.rating_text)
     TextView tvRating;
+    @BindView(R.id.recyclerview_trailer)
+    RecyclerView mRecyclerViewTrailer;
+    @BindView(R.id.card_view_trailer)
+    CardView mCardViewTrailer;
     @BindView(R.id.fabTrailer)
     FloatingActionButton floatingActionButton;
 
+    private VideoListAdapter mVideoListAdapter;
     private static final String BUNDLE_MOVIE_ID = "MOVIE_ID";
 
     @Nullable
@@ -129,11 +140,51 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
 
         mToolbar.setNavigationOnClickListener(v ->  getActivity().onBackPressed());
 
+        mVideoListAdapter = new VideoListAdapter(video -> {
+            //TODO:: Open Youtube App
+
+        });
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerViewTrailer.setLayoutManager(layoutManager);
+        mRecyclerViewTrailer.setAdapter(mVideoListAdapter);
+
+
         MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(MovieDetailViewModel.class);
 
         movieDetailViewModel.setMovieId(getArguments().getInt(BUNDLE_MOVIE_ID));
         movieDetailViewModel.getMovie().observe(this, this::handleResponse);
+        movieDetailViewModel.getVideoMovies().observe(this, this::handleVideoResponse);
+    }
+
+    private void handleVideoResponse(Resource<List<TmdbVideo>> listResource) {
+        if (listResource != null) {
+            switch (listResource.status) {
+                case LOADING:
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    layoutDisplayInfo.setVisibility(View.VISIBLE);
+                    mErrorTextView.setVisibility(View.GONE);
+                    break;
+                case SUCCESS:
+                    if (listResource.data != null && listResource.data.size() > 0) {
+                        mProgressBar.setVisibility(View.GONE);
+                        mErrorTextView.setVisibility(View.GONE);
+                        mCardViewTrailer.setVisibility(View.VISIBLE);
+                        mVideoListAdapter.setData(listResource.data);
+                        mVideoListAdapter.notifyDataSetChanged();
+                    }
+                    break;
+                case ERROR:
+                    layoutDisplayInfo.setVisibility(View.VISIBLE);
+                    mProgressBar.setVisibility(View.GONE);
+                    mErrorTextView.setVisibility(View.VISIBLE);
+                    mErrorTextView.setText(getResources().getString(R.string.error_no_results));
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void handleResponse(Resource<Movie> movieResult) {
