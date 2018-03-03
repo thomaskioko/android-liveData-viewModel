@@ -131,7 +131,7 @@ public class TmdbRepository {
         }.asLiveData();
     }
 
-    public LiveData<Resource<List<Genre>>> getGenres() {
+    public LiveData<Resource<List<Genre>>> getAllGenres() {
         return new NetworkBoundResource<List<Genre>, GenreResponse>(mAppExecutors) {
             @Override
             protected void saveCallResult(@NonNull GenreResponse item) {
@@ -147,6 +147,32 @@ public class TmdbRepository {
             @Override
             protected LiveData<List<Genre>> loadFromDb() {
                 return mGenreDao.findAll();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<GenreResponse>> createCall() {
+                return mTmdbService.getGenres();
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<Genre>> getGenresById(int genreId) {
+        return new NetworkBoundResource<Genre, GenreResponse>(mAppExecutors) {
+            @Override
+            protected void saveCallResult(@NonNull GenreResponse item) {
+                mGenreDao.insertGenres(item.getGenres());
+            }
+
+            @Override
+            protected boolean shouldFetch(@Nullable Genre data) {
+                return data == null;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Genre> loadFromDb() {
+                return mGenreDao.searchGenresById(genreId);
             }
 
             @NonNull
@@ -189,4 +215,6 @@ public class TmdbRepository {
             }
         }.asLiveData();
     }
+
+
 }
