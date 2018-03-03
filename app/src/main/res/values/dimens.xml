@@ -48,13 +48,16 @@
     <dimen name="movie_detail_trailers_item_width">240dp</dimen>
     <dimen name="movie_detail_reviews_item_width">240dp</dimen>
 
-    <dimen name="app_bar_movie_profile_height">340dip</dimen>
-    <dimen name="movie_profile_margin">0.0dip</dimen>
-    <dimen name="fab_margin">16dip</dimen>
+    <dimen name="app_bar_movie_profile_height">360dp</dimen>
+    <dimen name="movie_profile_margin">0dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
     <item type="dimen" name="fab_margin_right">@dimen/fab_margin</item>
     <color name="white">#ffffffff</color>
 
-    <dimen name="profile_poster_width">120.0dip</dimen>
-    <dimen name="profile_poster_width_horizontal_list">115.0dip</dimen>
-    <dimen name="movie_profile_poster_width">80.0dip</dimen>
+    <dimen name="profile_poster_width">120dp</dimen>
+    <dimen name="profile_poster_width_horizontal_list">115dp</dimen>
+    <dimen name="movie_profile_poster_width">80dp</dimen>
+
+    <dimen name="movie_color_view_margin">90dp</dimen>
+    <dimen name="backdrop_margin_bottom">60dp</dimen>
 </resources>
