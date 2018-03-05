@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="bottom"
     android:layout_marginBottom="10dp"
     android:layout_marginLeft="@dimen/movie_profile_margin"
     android:layout_marginRight="@dimen/movie_profile_margin"
     android:elevation="5dp"
-    app:layout_collapseMode="parallax"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:layout_collapseMode="parallax">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -45,6 +45,7 @@
                 android:id="@id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_marginRight="60dp"
                 android:ellipsize="marquee"
                 android:gravity="start|center"
@@ -56,7 +57,6 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_alignParentTop="true"
                 tools:text="Maze Runner: The Death Cure" />
 
             <RatingBar
@@ -67,7 +67,9 @@
                 android:layout_alignBottom="@+id/rating_text"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:elevation="4dp"
                 android:numStars="5"
+                android:paddingBottom="4dp"
                 android:theme="@style/RatingBar"
                 tools:rating="4.5" />
 
@@ -75,22 +77,47 @@
                 android:id="@+id/rating_text"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_toRightOf="@+id/rating_bar"
                 android:ellipsize="marquee"
-                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="start|center"
                 android:marqueeRepeatLimit="marquee_forever"
-                android:paddingBottom="2dp"
+                android:paddingBottom="4dp"
                 android:paddingTop="2dp"
                 android:scrollHorizontally="true"
-                android:layout_toRightOf="@+id/rating_bar"
-                android:gravity="start|center"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:layout_below="@+id/title"
-                android:fontFamily="sans-serif-condensed"
                 android:textSize="14sp"
-                tools:text="1, 645 Ratings" />
+                tools:text="1,645 Ratings" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rating_bar">
+
+                <com.thomaskioko.livedatademo.utils.TagView
+                    android:id="@+id/tags_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    app:lineMargin="5dp"
+                    app:tagMargin="3dp"
+                    app:textPaddingBottom="3dp"
+                    app:textPaddingLeft="10dp"
+                    app:textPaddingRight="10dp"
+                    app:textPaddingTop="3dp"
+                    tools:text="Horror" />
+
+            </HorizontalScrollView>
+
+
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
