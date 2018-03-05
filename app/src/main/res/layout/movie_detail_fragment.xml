@@ -28,24 +28,24 @@
                 android:id="@+id/backdrop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="60.0dip"
+                android:layout_marginBottom="@dimen/backdrop_margin_bottom"
                 android:contentDescription="@null"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
-                tools:src="@mipmap/ic_launcher"/>
+                tools:src="@mipmap/ic_launcher" />
 
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
-                android:layout_height="70.0dip"
+                android:layout_height="@dimen/movie_color_view_margin"
                 android:layout_gravity="bottom"
                 app:layout_collapseMode="parallax" />
 
             <View
                 android:id="@+id/color_bar_info_wrapper"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="@dimen/movie_color_view_margin"
                 android:layout_gravity="bottom"
                 android:layout_marginLeft="@dimen/movie_profile_margin"
                 android:layout_marginRight="@dimen/movie_profile_margin"
@@ -74,8 +74,10 @@
         android:src="@drawable/ic_play_arrow_"
         app:backgroundTint="@color/white"
         app:fabSize="normal"
-        app:layout_anchor="@+id/app_bar_layout"
-        app:layout_anchorGravity="bottom|right|end"/>
+        app:layout_anchor="@+id/color_bar_info_wrapper"
+        app:layout_anchorGravity="bottom|right|top"
+        app:layout_behavior="com.thomaskioko.livedatademo.view.ui.utils.ScrollingFabBehavior"
+        app:layout_scrollFlags="scroll|enterAlways|snap" />
 
     <include layout="@layout/include_movie_details_layout" />
 
