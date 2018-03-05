@@ -10,22 +10,11 @@ import android.support.annotation.NonNull;
 public class Genre {
 
     @NonNull
-    private String id;
-    private String name;
+    public int id;
+    public String name;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+    public Genre(int id, String name) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 
