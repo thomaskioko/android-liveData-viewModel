@@ -5,7 +5,9 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.VisibleForTesting;
+import android.support.v7.graphics.Palette;
 
+import com.thomaskioko.livedatademo.db.entity.Genre;
 import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.db.entity.TmdbVideo;
 import com.thomaskioko.livedatademo.repository.TmdbRepository;
@@ -24,9 +26,12 @@ public class MovieDetailViewModel extends ViewModel {
     final MutableLiveData<Integer> movieId = new MutableLiveData<>();
     private final LiveData<Resource<Movie>> movie;
     private final LiveData<Resource<List<TmdbVideo>>> videos;
+    private final MutableLiveData<Palette> mPalette = new MutableLiveData<>();
+    private TmdbRepository tmdbRepository;
 
     @Inject
     MovieDetailViewModel(TmdbRepository tmdbRepository) {
+        this.tmdbRepository = tmdbRepository;
         movie = Transformations.switchMap(movieId, movieId -> {
             if (movieId == null) {
                 return AbsentLiveData.create();
@@ -61,5 +66,23 @@ public class MovieDetailViewModel extends ViewModel {
     @VisibleForTesting
     public LiveData<Resource<List<TmdbVideo>>> getVideoMovies() {
         return videos;
+    }
+
+    public LiveData<Resource<Genre>> getMovieGenresById(int genreId) {
+        return tmdbRepository.getGenresById(genreId);
+    }
+
+    @VisibleForTesting
+    public void setPalette(Palette palette) {
+        if (Objects.equals(palette, mPalette.getValue())) {
+            return;
+        }
+
+        mPalette.setValue(palette);
+    }
+
+    @VisibleForTesting
+    public LiveData<Palette> getPalette() {
+        return mPalette;
     }
 }
