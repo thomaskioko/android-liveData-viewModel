@@ -4,6 +4,7 @@ import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -32,9 +33,11 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.thomaskioko.livedatademo.R;
+import com.thomaskioko.livedatademo.db.entity.Genre;
 import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.db.entity.TmdbVideo;
 import com.thomaskioko.livedatademo.di.Injectable;
+import com.thomaskioko.livedatademo.utils.TagView;
 import com.thomaskioko.livedatademo.view.adapter.VideoListAdapter;
 import com.thomaskioko.livedatademo.viewmodel.MovieDetailViewModel;
 import com.thomaskioko.livedatademo.vo.Resource;
@@ -44,6 +47,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -107,7 +111,11 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     CardView mCardViewTrailer;
     @BindView(R.id.fabTrailer)
     FloatingActionButton floatingActionButton;
+    @BindView(R.id.tags_view)
+    TagView tagView;
 
+    private MovieDetailViewModel movieDetailViewModel;
+    private List<String> genres = new ArrayList<>();
     private VideoListAdapter mVideoListAdapter;
     private static final String BUNDLE_MOVIE_ID = "MOVIE_ID";
 
@@ -138,7 +146,7 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 
-        mToolbar.setNavigationOnClickListener(v ->  getActivity().onBackPressed());
+        mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
         mVideoListAdapter = new VideoListAdapter(video -> {
             //TODO:: Open Youtube App
@@ -150,13 +158,62 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
         mRecyclerViewTrailer.setAdapter(mVideoListAdapter);
 
 
-        MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this, viewModelFactory)
+        movieDetailViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(MovieDetailViewModel.class);
 
         movieDetailViewModel.setMovieId(getArguments().getInt(BUNDLE_MOVIE_ID));
         movieDetailViewModel.getMovie().observe(this, this::handleResponse);
         movieDetailViewModel.getVideoMovies().observe(this, this::handleVideoResponse);
+        movieDetailViewModel.getPalette().observe(this, this::handlePaletteResponse);
     }
+
+    private void handlePaletteResponse(Palette palette) {
+
+        for (String genreName : genres) {
+
+            TagView.Tag tag = new TagView.Tag(genreName);
+            tag.tagTextColor = Color.parseColor("#FFFFFF");
+            tag.radius = 20f;
+            tag.tagTextSize = 14f;
+            tag.layoutBorderSize = 1f;
+            tag.layoutBorderColor = Color.parseColor("#FFFFFF");
+            if (palette.getDarkVibrantSwatch() != null) {
+                tag.layoutColor = palette.getDarkVibrantSwatch().getRgb();
+            } else if (palette.getMutedSwatch() != null) {
+                tag.layoutColor = palette.getMutedSwatch().getRgb();
+            }
+            tagView.addTag(tag);
+        }
+    }
+
+    private void handleGenreResponse(Resource<Genre> genreResource) {
+
+        if (genreResource != null) {
+            switch (genreResource.status) {
+                case LOADING:
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    layoutDisplayInfo.setVisibility(View.VISIBLE);
+                    mErrorTextView.setVisibility(View.GONE);
+                    break;
+                case SUCCESS:
+                    if (genreResource.data != null) {
+                        mProgressBar.setVisibility(View.GONE);
+                        mErrorTextView.setVisibility(View.GONE);
+                        genres.add(genreResource.data.name);
+                    }
+                    break;
+                case ERROR:
+                    layoutDisplayInfo.setVisibility(View.VISIBLE);
+                    mProgressBar.setVisibility(View.GONE);
+                    mErrorTextView.setVisibility(View.VISIBLE);
+                    mErrorTextView.setText(getResources().getString(R.string.error_no_results));
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
 
     private void handleVideoResponse(Resource<List<TmdbVideo>> listResource) {
         if (listResource != null) {
@@ -223,13 +280,17 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
                     getString(R.string.image_size_780)
                     + mMovieResult.backdropPath;
 
+            for (int genreId : mMovieResult.genreIds) {
+                movieDetailViewModel.getMovieGenresById(genreId).observe(this, this::handleGenreResponse);
+            }
+
             Glide.with(getActivity())
                     .load(imagePath)
                     .asBitmap()
                     .centerCrop()
                     .into(mThumbnail);
 
-            float rating = (float) (mMovieResult.voteAverage/2);
+            float rating = (float) (mMovieResult.voteAverage / 2);
             float popularity = mMovieResult.popularity.intValue();
 
             DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd")
@@ -269,11 +330,7 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
                 }
             });
 
-            LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
-
-
-
-            Glide.with(imageView.getContext())
+            Glide.with(getActivity())
                     .load(imagePathBackDrop)
                     .asBitmap()
                     .into(new BitmapImageViewTarget(imageView) {
@@ -281,40 +338,43 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
                         public void onResourceReady(Bitmap bitmap, final GlideAnimation glideAnimation) {
                             super.onResourceReady(bitmap, glideAnimation);
                             Palette.from(bitmap).generate(palette -> {
-
-                                if (palette.getDarkVibrantSwatch() != null) {
-                                    mRelativeLayout.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
-                                    mCircularProgressBar.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
-                                    colorView.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
-                                    collapsingToolbarLayout.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
-                                    collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkVibrantSwatch().getRgb());
-                                    collapsingToolbarLayout.setContentScrimColor(palette.getDarkVibrantSwatch().getRgb());
-
-                                } else if (palette.getMutedSwatch() != null) {
-                                    mRelativeLayout.setBackgroundColor(palette.getMutedSwatch().getRgb());
-                                    mCircularProgressBar.setBackgroundColor(palette.getMutedSwatch().getRgb());
-                                    colorView.setBackgroundColor(palette.getMutedSwatch().getRgb());
-                                    collapsingToolbarLayout.setBackgroundColor(palette.getMutedSwatch().getRgb());
-                                    collapsingToolbarLayout.setStatusBarScrimColor(palette.getMutedSwatch().getRgb());
-                                    collapsingToolbarLayout.setContentScrimColor(palette.getMutedSwatch().getRgb());
-
-
-                                }
-                                if (palette.getLightVibrantSwatch() != null) {
-                                    mCircularProgressBar.setColor(palette.getLightVibrantSwatch().getRgb());
-                                    stars.getDrawable(2).setColorFilter(palette.getLightVibrantSwatch().getRgb(), PorterDuff.Mode.SRC_ATOP);
-                                } else if (palette.getLightMutedSwatch() != null) {
-                                    mCircularProgressBar.setColor(palette.getLightMutedSwatch().getRgb());
-                                    stars.getDrawable(2).setColorFilter(palette.getLightMutedSwatch().getRgb(), PorterDuff.Mode.SRC_ATOP);
-                                }
+                                movieDetailViewModel.setPalette(palette);
+                                updatePaletteColorViews(palette);
                             });
                         }
                     });
-
-
         } else {
             mErrorTextView.setVisibility(View.VISIBLE);
             mErrorTextView.setText(getResources().getString(R.string.error_no_results));
+        }
+    }
+
+    private void updatePaletteColorViews(Palette palette) {
+        if (palette.getDarkVibrantSwatch() != null) {
+            mRelativeLayout.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
+            mCircularProgressBar.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
+            colorView.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
+            collapsingToolbarLayout.setBackgroundColor(palette.getDarkVibrantSwatch().getRgb());
+            collapsingToolbarLayout.setStatusBarScrimColor(palette.getDarkVibrantSwatch().getRgb());
+            collapsingToolbarLayout.setContentScrimColor(palette.getDarkVibrantSwatch().getRgb());
+
+        } else if (palette.getMutedSwatch() != null) {
+            mRelativeLayout.setBackgroundColor(palette.getMutedSwatch().getRgb());
+            mCircularProgressBar.setBackgroundColor(palette.getMutedSwatch().getRgb());
+            colorView.setBackgroundColor(palette.getMutedSwatch().getRgb());
+            collapsingToolbarLayout.setBackgroundColor(palette.getMutedSwatch().getRgb());
+            collapsingToolbarLayout.setStatusBarScrimColor(palette.getMutedSwatch().getRgb());
+            collapsingToolbarLayout.setContentScrimColor(palette.getMutedSwatch().getRgb());
+        }
+
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+
+        if (palette.getLightVibrantSwatch() != null) {
+            mCircularProgressBar.setColor(palette.getLightVibrantSwatch().getRgb());
+            stars.getDrawable(2).setColorFilter(palette.getLightVibrantSwatch().getRgb(), PorterDuff.Mode.SRC_ATOP);
+        } else if (palette.getLightMutedSwatch() != null) {
+            mCircularProgressBar.setColor(palette.getLightMutedSwatch().getRgb());
+            stars.getDrawable(2).setColorFilter(palette.getLightMutedSwatch().getRgb(), PorterDuff.Mode.SRC_ATOP);
         }
     }
 }
