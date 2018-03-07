@@ -97,7 +97,8 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rating_bar">
+                android:layout_below="@+id/rating_bar"
+                android:scrollbars="none">
 
                 <com.thomaskioko.livedatademo.utils.TagView
                     android:id="@+id/tags_view"
