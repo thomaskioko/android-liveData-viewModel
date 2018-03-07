@@ -148,7 +148,7 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
 
         mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
-        mVideoListAdapter = new VideoListAdapter(video -> {
+        mVideoListAdapter = new VideoListAdapter((sharedImageView, video) -> {
             //TODO:: Open Youtube App
 
         });

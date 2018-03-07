@@ -89,7 +89,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
         mMovieListAdapter = new MovieListAdapter(
-                movie -> navigationController.navigateToMovieDetailFragment(movie.id)
+                (ivPoster, movie) -> navigationController.navigateToMovieDetailFragment(ivPoster, movie.id)
         );
         mRecyclerView.setAdapter(mMovieListAdapter);
 
@@ -110,7 +110,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         searchResultsRecyclerView.setLayoutManager(linearLayoutManager);
 
         searchAdapter = new SearchItemAdapter(
-                movie -> navigationController.navigateToMovieDetailFragment(movie.id)
+                (sharedImageView, movie) -> navigationController.navigateToMovieDetailFragment(sharedImageView, movie.id)
         );
         searchResultsRecyclerView.setAdapter(searchAdapter);
 

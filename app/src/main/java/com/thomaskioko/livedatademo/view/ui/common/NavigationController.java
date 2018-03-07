@@ -1,6 +1,8 @@
 package com.thomaskioko.livedatademo.view.ui.common;
 
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewCompat;
+import android.view.View;
 
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.view.ui.MainActivity;
@@ -18,7 +20,7 @@ public class NavigationController {
     private final FragmentManager fragmentManager;
 
     @Inject
-    public NavigationController(MainActivity mainActivity){
+    public NavigationController(MainActivity mainActivity) {
         containerId = R.id.container;
         fragmentManager = mainActivity.getSupportFragmentManager();
     }
@@ -30,9 +32,10 @@ public class NavigationController {
                 .commitAllowingStateLoss();
     }
 
-    public void navigateToMovieDetailFragment(int movieId){
+    public void navigateToMovieDetailFragment(View sharedImageView, int movieId) {
         MovieDetailFragment fragment = MovieDetailFragment.create(movieId);
         fragmentManager.beginTransaction()
+                .addSharedElement(sharedImageView, ViewCompat.getTransitionName(sharedImageView))
                 .replace(containerId, fragment)
                 .addToBackStack(null)
                 .commitAllowingStateLoss();

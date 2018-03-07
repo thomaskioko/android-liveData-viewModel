@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.db.entity.TmdbVideo;
+import com.thomaskioko.livedatademo.view.callback.VideoCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,9 @@ import butterknife.ButterKnife;
 public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.MovieViewHolder> {
 
     private List<TmdbVideo> mVideoList = new ArrayList<>();
-    private VideoClickCallback mVideoClickCallback;
+    private VideoCallback mVideoClickCallback;
 
-    public VideoListAdapter(VideoClickCallback videoClickCallback) {
+    public VideoListAdapter(VideoCallback videoClickCallback) {
         mVideoClickCallback = videoClickCallback;
     }
 
@@ -53,7 +54,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Movi
 
         holder.itemView.setOnClickListener(view -> {
             // <--- Giving time to the ripple effect finish before opening a new activity
-            new Handler().postDelayed(() -> mVideoClickCallback.onClick(video), 200);
+            new Handler().postDelayed(() -> mVideoClickCallback.onClick(holder.ivPoster, video), 200);
         });
 
     }
@@ -90,10 +91,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Movi
 
             this.itemView = itemView;
         }
-    }
-
-    public interface VideoClickCallback {
-        void onClick(TmdbVideo video);
     }
 
 }

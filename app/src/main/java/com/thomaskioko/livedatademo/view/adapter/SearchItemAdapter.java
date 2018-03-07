@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.db.entity.Movie;
+import com.thomaskioko.livedatademo.view.callback.MovieCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +22,10 @@ import butterknife.ButterKnife;
 public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.ViewHolder> {
 
     private List<Movie> mMovieList = new ArrayList<>();
-    private MovieClickCallback mMovieClickCallback;
+    private MovieCallback mMovieClickCallback;
 
 
-    public SearchItemAdapter(MovieClickCallback movieClickCallback) {
+    public SearchItemAdapter(MovieCallback movieClickCallback) {
         mMovieClickCallback = movieClickCallback;
     }
 
@@ -43,7 +44,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
 
         holder.tvName.setText(movie.title);
         holder.releaseYear.setText(movie.releaseYear);
-        holder.itemView.setOnClickListener(view -> mMovieClickCallback.onClick(movie));
+        holder.itemView.setOnClickListener(view -> mMovieClickCallback.onClick(holder.imageView, movie));
         Glide.with(holder.imageView.getContext())
                 .load(posterUrl)
                 .into(holder.imageView);
@@ -77,8 +78,5 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
         notifyDataSetChanged();
     }
 
-    public interface MovieClickCallback {
-        void onClick(Movie movie);
-    }
 
 }
