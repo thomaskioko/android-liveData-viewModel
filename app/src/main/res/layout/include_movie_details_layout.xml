@@ -2,6 +2,7 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_additional_pane"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
@@ -34,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                tools:text="@string/error_no_results"/>
+                tools:text="@string/error_no_results" />
 
         </RelativeLayout>
 
@@ -249,24 +250,24 @@
                 android:padding="@dimen/margin_mini">
 
                 <android.support.v7.widget.AppCompatTextView
+                    style="@style/HeaderTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/tv_title_trailers"
-                    style="@style/HeaderTextView"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerview_trailer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_video_trailer"
                     android:orientation="horizontal"
                     tools:layoutManager="LinearLayoutManager"
-                    tools:spanCount="2"/>
+                    tools:listitem="@layout/item_video_trailer"
+                    tools:spanCount="2" />
 
 
             </LinearLayout>

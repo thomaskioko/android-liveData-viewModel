@@ -32,6 +32,7 @@
                 android:contentDescription="@null"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
+                android:transitionName="@string/detail_icon_transition_name"
                 app:layout_collapseMode="parallax"
                 tools:src="@mipmap/ic_launcher" />
 

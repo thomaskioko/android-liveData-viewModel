@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/poster_placeholder" />
+        android:src="@drawable/poster_placeholder"/>
 
     <ImageView
         android:id="@+id/iv_poster_rating"

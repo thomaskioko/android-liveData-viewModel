@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -88,7 +90,7 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     @BindView(R.id.app_bar_layout)
     AppBarLayout appBarLayout;
     @BindView(R.id.backdrop)
-    ImageView imageView;
+    ImageView imageViewBackDrop;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.layout_display_info)
@@ -114,15 +116,25 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
     @BindView(R.id.tags_view)
     TagView tagView;
 
+
     private MovieDetailViewModel movieDetailViewModel;
-    private List<String> genres = new ArrayList<>();
     private VideoListAdapter mVideoListAdapter;
+    private List<String> genres = new ArrayList<>();
     private static final String BUNDLE_MOVIE_ID = "MOVIE_ID";
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Postpone the shared element enter transition.
+        postponeEnterTransition();
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
 
         View view = inflater.inflate(R.layout.movie_detail_fragment, container, false);
         ButterKnife.bind(this, view);
@@ -333,10 +345,19 @@ public class MovieDetailFragment extends LifecycleFragment implements Injectable
             Glide.with(getActivity())
                     .load(imagePathBackDrop)
                     .asBitmap()
-                    .into(new BitmapImageViewTarget(imageView) {
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(new BitmapImageViewTarget(imageViewBackDrop) {
+                        @Override
+                        public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                            super.onLoadFailed(e, errorDrawable);
+                            startPostponedEnterTransition();
+                        }
+
                         @Override
                         public void onResourceReady(Bitmap bitmap, final GlideAnimation glideAnimation) {
                             super.onResourceReady(bitmap, glideAnimation);
+
+                            startPostponedEnterTransition();
                             Palette.from(bitmap).generate(palette -> {
                                 movieDetailViewModel.setPalette(palette);
                                 updatePaletteColorViews(palette);

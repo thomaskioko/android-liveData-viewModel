@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/image_view_dimension_medium"
         android:layout_gravity="top"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:transitionName="@string/detail_icon_transition_name"/>
 
 </android.support.v7.widget.CardView>

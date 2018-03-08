@@ -36,4 +36,9 @@
     <string name="thumbnail_medium_quality">http://img.youtube.com/vi/%s/mqdefault.jpg</string>
     <string name="thumbnail_standard_definition">http://img.youtube.com/vi/%s/sddefault.jpg</string>
     <string name="thumbnail_max_resolution">http://img.youtube.com/vi/%s/maxresdefault.jpg</string>
+
+    <!-- For Shared Element Transitions -->
+    <string name="detail_icon_transition_name" translatable="false">TN_DetailIcon</string>
+
+    <string name="image_description">Image</string>
 </resources>
