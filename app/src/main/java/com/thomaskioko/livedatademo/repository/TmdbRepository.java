@@ -193,4 +193,7 @@ public class TmdbRepository {
     }
 
 
+    public LiveData<Resource<Boolean>> searchNextPage(String query) {
+        return null;
+    }
 }
