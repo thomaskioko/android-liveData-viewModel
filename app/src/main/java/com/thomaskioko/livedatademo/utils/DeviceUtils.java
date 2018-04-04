@@ -1,10 +1,11 @@
 package com.thomaskioko.livedatademo.utils;
 
-import android.app.Activity;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Build;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.thomaskioko.livedatademo.R;
 
@@ -14,22 +15,27 @@ import com.thomaskioko.livedatademo.R;
 
 public class DeviceUtils {
 
-    public static void darkenStatusBar(Activity activity, int color) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            activity.getWindow().setStatusBarColor(darkenColor(color));
+    public static void setTranslucentStatusBar(Window window, int color) {
+        if (window == null) return;
+        int sdkInt = Build.VERSION.SDK_INT;
+        if (sdkInt >= Build.VERSION_CODES.LOLLIPOP) {
+            setTranslucentStatusBarLollipop(window,  color);
+        } else if (sdkInt >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatusBarKiKat(window);
         }
-
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static void setTranslucentStatusBarLollipop(Window window, int color) {
+        window.setStatusBarColor(
+                window.getContext()
+                        .getResources()
+                        .getColor(color));
+    }
 
-    // Code to darken the color supplied (mostly color of toolbar)
-    private static int darkenColor(int color) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
-        hsv[2] *= 0.8f;
-        return Color.HSVToColor(hsv);
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static void setTranslucentStatusBarKiKat(Window window) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
     public static int getToolbarHeight(Context context) {
