@@ -27,6 +27,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.thomaskioko.livedatademo.R;
 import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.di.Injectable;
+import com.thomaskioko.livedatademo.utils.DeviceUtils;
 import com.thomaskioko.livedatademo.view.adapter.MovieListAdapter;
 import com.thomaskioko.livedatademo.view.adapter.SearchItemAdapter;
 import com.thomaskioko.livedatademo.view.ui.common.NavigationController;
@@ -84,6 +85,8 @@ public class MovieListFragment extends Fragment implements Injectable {
         super.onActivityCreated(savedInstanceState);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         setHasOptionsMenu(true);
+
+        DeviceUtils.setTranslucentStatusBar(getActivity().getWindow(), R.color.colorPrimaryDark);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mRecyclerView.getContext(), 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);

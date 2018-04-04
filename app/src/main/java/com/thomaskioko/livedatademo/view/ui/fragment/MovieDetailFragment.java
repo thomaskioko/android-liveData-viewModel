@@ -39,6 +39,7 @@ import com.thomaskioko.livedatademo.db.entity.Genre;
 import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.db.entity.TmdbVideo;
 import com.thomaskioko.livedatademo.di.Injectable;
+import com.thomaskioko.livedatademo.utils.DeviceUtils;
 import com.thomaskioko.livedatademo.utils.TagView;
 import com.thomaskioko.livedatademo.view.adapter.VideoListAdapter;
 import com.thomaskioko.livedatademo.viewmodel.MovieDetailViewModel;
@@ -157,6 +158,8 @@ public class MovieDetailFragment extends Fragment implements Injectable {
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+
+        DeviceUtils.setTranslucentStatusBar(getActivity().getWindow(), android.R.color.transparent);
 
         mToolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
