@@ -1,12 +1,12 @@
 package com.thomaskioko.livedatademo.view.ui.fragment;
 
-import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -42,7 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MovieListFragment extends LifecycleFragment implements Injectable {
+public class MovieListFragment extends Fragment implements Injectable {
 
     @Inject
     public ViewModelProvider.Factory viewModelFactory;

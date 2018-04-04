@@ -1,6 +1,5 @@
 package com.thomaskioko.livedatademo.view.ui.fragment;
 
-import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
@@ -14,6 +13,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
@@ -62,7 +62,7 @@ import butterknife.ButterKnife;
  *
  */
 
-public class MovieDetailFragment extends LifecycleFragment implements Injectable {
+public class MovieDetailFragment extends Fragment implements Injectable {
 
     @Inject
     public ViewModelProvider.Factory viewModelFactory;
