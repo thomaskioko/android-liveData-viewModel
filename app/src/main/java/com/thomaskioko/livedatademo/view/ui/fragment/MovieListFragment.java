@@ -1,12 +1,12 @@
 package com.thomaskioko.livedatademo.view.ui.fragment;
 
-import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -25,8 +25,9 @@ import android.widget.TextView;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.thomaskioko.livedatademo.R;
+import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.di.Injectable;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.utils.DeviceUtils;
 import com.thomaskioko.livedatademo.view.adapter.MovieListAdapter;
 import com.thomaskioko.livedatademo.view.adapter.SearchItemAdapter;
 import com.thomaskioko.livedatademo.view.ui.common.NavigationController;
@@ -42,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MovieListFragment extends LifecycleFragment implements Injectable {
+public class MovieListFragment extends Fragment implements Injectable {
 
     @Inject
     public ViewModelProvider.Factory viewModelFactory;
@@ -85,11 +86,13 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         setHasOptionsMenu(true);
 
+        DeviceUtils.setTranslucentStatusBar(getActivity().getWindow(), R.color.colorPrimaryDark);
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mRecyclerView.getContext(), 3);
         mRecyclerView.setLayoutManager(gridLayoutManager);
 
         mMovieListAdapter = new MovieListAdapter(
-                movie -> navigationController.navigateToMovieDetailFragment(movie.id)
+                (ivPoster, movie) -> navigationController.navigateToMovieDetailFragment(ivPoster, movie.id)
         );
         mRecyclerView.setAdapter(mMovieListAdapter);
 
@@ -110,7 +113,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
         searchResultsRecyclerView.setLayoutManager(linearLayoutManager);
 
         searchAdapter = new SearchItemAdapter(
-                movie -> navigationController.navigateToMovieDetailFragment(movie.id)
+                (sharedImageView, movie) -> navigationController.navigateToMovieDetailFragment(sharedImageView, movie.id)
         );
         searchResultsRecyclerView.setAdapter(searchAdapter);
 
@@ -186,6 +189,7 @@ public class MovieListFragment extends LifecycleFragment implements Injectable {
             switch (listResource.status) {
                 case ERROR:
                     progressBar.setVisibility(View.GONE);
+                    errorTextView.setVisibility(View.VISIBLE);
                     errorTextView.setText(listResource.message);
                     break;
                 case LOADING:

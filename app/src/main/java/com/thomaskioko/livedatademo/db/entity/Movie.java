@@ -1,4 +1,4 @@
-package com.thomaskioko.livedatademo.repository.model;
+package com.thomaskioko.livedatademo.db.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.thomaskioko.livedatademo.db.TmdbTypeConverters;
+
+import java.util.List;
 
 
 @Entity(indices = {@Index("id")},
@@ -39,10 +41,12 @@ public class Movie {
     public Boolean video;
     @SerializedName(value = "vote_average")
     public Double voteAverage;
+    @SerializedName(value = "genre_ids")
+    public List<Integer> genreIds;
 
     public Movie(int id, String posterUrl, Double rating, String releaseYear, String title, Boolean adult,
                  String overview, String originalTitle, String originalLanguage, String backdropPath,
-                 Double popularity, Integer voteCount, Boolean video, Double voteAverage){
+                 Double popularity, Integer voteCount, Boolean video, Double voteAverage, List<Integer> genreIds){
         this.id = id;
         this.posterUrl = posterUrl;
         this.rating = rating;
@@ -57,6 +61,7 @@ public class Movie {
         this.voteCount = voteCount;
         this.video = video;
         this.voteAverage = voteAverage;
+        this.genreIds = genreIds;
     }
 
 }

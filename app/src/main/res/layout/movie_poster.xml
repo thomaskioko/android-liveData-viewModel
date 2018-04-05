@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_poster_profile"
+    android:layout_width="@dimen/profile_poster_width"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_poster_profile"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/poster_placeholder"/>
+
+    <ImageView
+        android:id="@+id/iv_poster_rating"
+        android:layout_width="25.0dip"
+        android:layout_height="25.0dip"
+        android:layout_gravity="right"
+        android:src="@drawable/badge_10"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_poster_watchedlist"
+        android:layout_width="53.0dip"
+        android:layout_height="53.0dip"
+        android:layout_gravity="right"
+        android:src="@drawable/bg_watched"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_poster_collection"
+        android:layout_width="23.0dip"
+        android:layout_height="36.0dip"
+        android:layout_marginLeft="1.0dip"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_collection"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_poster_watchlist"
+        android:layout_width="23.0dip"
+        android:layout_height="36.0dip"
+        android:layout_marginLeft="8.0dip"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_watchlist"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/fl_bagde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_badge"
+            android:layout_width="22.0dip"
+            android:layout_height="22.0dip"
+            android:layout_marginBottom="5.0dip"
+            android:layout_marginLeft="5.0dip"
+            android:background="@drawable/movie_bage"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="250"
+            android:textColor="@color/white"
+            android:textSize="10.0sp" />
+    </FrameLayout>
+</FrameLayout>

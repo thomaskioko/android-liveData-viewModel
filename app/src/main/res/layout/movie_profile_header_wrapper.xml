@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="@dimen/movie_profile_margin"
+    android:layout_marginRight="@dimen/movie_profile_margin"
+    android:elevation="5dp"
+    android:orientation="vertical"
+    app:layout_collapseMode="parallax">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center|left"
+            android:layout_marginLeft="6dp"
+            android:background="@color/white"
+            android:padding="0.5dip">
+
+            <include
+                android:id="@+id/include_poster"
+                layout="@layout/movie_poster"
+                android:layout_width="@dimen/movie_profile_poster_width"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@id/movie_info_wrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            tools:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="60dp"
+                android:ellipsize="marquee"
+                android:gravity="start|center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingBottom="2dp"
+                android:paddingTop="5dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Maze Runner: The Death Cure" />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/rating_text"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:elevation="4dp"
+                android:numStars="5"
+                android:paddingBottom="4dp"
+                android:theme="@style/RatingBar"
+                tools:rating="4.5" />
+
+            <TextView
+                android:id="@+id/rating_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_toRightOf="@+id/rating_bar"
+                android:ellipsize="marquee"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="start|center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingBottom="4dp"
+                android:paddingTop="2dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                tools:text="1,645 Ratings" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rating_bar"
+                android:scrollbars="none">
+
+                <com.thomaskioko.livedatademo.utils.TagView
+                    android:id="@+id/tags_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    app:lineMargin="5dp"
+                    app:tagMargin="3dp"
+                    app:textPaddingBottom="3dp"
+                    app:textPaddingLeft="10dp"
+                    app:textPaddingRight="10dp"
+                    app:textPaddingTop="3dp"
+                    tools:text="Horror" />
+
+            </HorizontalScrollView>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

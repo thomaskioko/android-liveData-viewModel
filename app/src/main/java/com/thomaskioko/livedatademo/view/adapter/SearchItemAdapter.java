@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.thomaskioko.livedatademo.R;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
+import com.thomaskioko.livedatademo.view.callback.MovieCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +22,16 @@ import butterknife.ButterKnife;
 public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.ViewHolder> {
 
     private List<Movie> mMovieList = new ArrayList<>();
-    private MovieClickCallback mMovieClickCallback;
+    private MovieCallback mMovieClickCallback;
 
 
-    public SearchItemAdapter(MovieClickCallback movieClickCallback) {
+    public SearchItemAdapter(MovieCallback movieClickCallback) {
         mMovieClickCallback = movieClickCallback;
     }
 
     @Override
     public SearchItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search_movie_layout, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -43,7 +44,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
 
         holder.tvName.setText(movie.title);
         holder.releaseYear.setText(movie.releaseYear);
-        holder.itemView.setOnClickListener(view -> mMovieClickCallback.onClick(movie));
+        holder.itemView.setOnClickListener(view -> mMovieClickCallback.onClick(holder.imageView, movie));
         Glide.with(holder.imageView.getContext())
                 .load(posterUrl)
                 .into(holder.imageView);
@@ -77,8 +78,5 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
         notifyDataSetChanged();
     }
 
-    public interface MovieClickCallback {
-        void onClick(Movie movie);
-    }
 
 }

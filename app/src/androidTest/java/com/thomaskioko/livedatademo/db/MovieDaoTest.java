@@ -1,6 +1,6 @@
 package com.thomaskioko.livedatademo.db;
 
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
 import com.thomaskioko.livedatademo.util.TestUtil;
 
 import org.junit.Test;

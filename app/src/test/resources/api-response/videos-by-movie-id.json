@@ -1,0 +1,75 @@
+{
+  "id": 188927,
+  "results": [
+    {
+      "id": "571bf094c3a368525f006b86",
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "key": "XRVD32rnzOw",
+      "name": "Official Trailer",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Trailer"
+    },
+    {
+      "id": "585032ad92514175ad00021e",
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "key": "Tvq3y8BhZ2s",
+      "name": "Official Trailer #2",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Trailer"
+    },
+    {
+      "id": "585033299251416fa100b49d",
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "key": "QSYLhl57pqM",
+      "name": "Captain Kirk  Featurette",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Featurette"
+    },
+    {
+      "id": "58503359c3a3682fb800d603",
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "key": "cr6bYn2EzvQ",
+      "name": "Jaylah  Featurette",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Featurette"
+    },
+    {
+      "id": "5850338e9251416cd000b415",
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "key": "kfPKpVYFSnU",
+      "name": "Krall Featurette",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Featurette"
+    },
+    {
+      "id": "585033b592514175ad0002db",
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "key": "3MBXBMkcUNo",
+      "name": "Official Trailer #3",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Trailer"
+    },
+    {
+      "id": "585033e1c3a368315000afc5",
+      "iso_639_1": "en",
+      "iso_3166_1": "US",
+      "key": "NwpvjQKdpvI",
+      "name": "Official Trailer #4",
+      "site": "YouTube",
+      "size": 1080,
+      "type": "Trailer"
+    }
+  ]
+}

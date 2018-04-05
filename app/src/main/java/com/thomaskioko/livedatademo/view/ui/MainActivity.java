@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         if (savedInstanceState == null) {
             navigationController.navigateToMovieListFragment();
         }
+
+        // Being here means we are in animation mode
+        supportPostponeEnterTransition();
+
     }
 
     @Override

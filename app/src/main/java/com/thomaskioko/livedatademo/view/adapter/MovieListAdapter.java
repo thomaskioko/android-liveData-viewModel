@@ -8,7 +8,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.thomaskioko.livedatademo.R;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.db.entity.Movie;
+import com.thomaskioko.livedatademo.view.callback.MovieCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +21,16 @@ import butterknife.ButterKnife;
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
 
     private List<Movie> mMovieList = new ArrayList<>();
-    private MovieClickCallback mMovieClickCallback;
+    private MovieCallback mMovieCallback;
 
-    public MovieListAdapter(MovieClickCallback movieClickCallback) {
-        mMovieClickCallback = movieClickCallback;
+    public MovieListAdapter(MovieCallback movieCallback) {
+        mMovieCallback = movieCallback;
     }
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.movie_item, parent, false);
+                .inflate(R.layout.item_movie_layout, parent, false);
         return new MovieViewHolder(view);
     }
 
@@ -44,7 +45,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
                 .load(posterUrl)
                 .into(holder.ivPoster);
 
-        holder.itemView.setOnClickListener(view -> mMovieClickCallback.onClick(movie));
+        holder.itemView.setOnClickListener(view -> mMovieCallback.onClick(holder.ivPoster, movie));
 
     }
 
@@ -78,10 +79,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
             this.itemView = itemView;
         }
-    }
-
-    public interface MovieClickCallback {
-        void onClick(Movie movie);
     }
 
 }

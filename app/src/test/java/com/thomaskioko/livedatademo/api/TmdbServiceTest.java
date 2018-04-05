@@ -2,9 +2,11 @@ package com.thomaskioko.livedatademo.api;
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
 
+import com.thomaskioko.livedatademo.db.entity.Movie;
+import com.thomaskioko.livedatademo.db.entity.TmdbVideo;
 import com.thomaskioko.livedatademo.repository.api.MovieResult;
 import com.thomaskioko.livedatademo.repository.api.TmdbService;
-import com.thomaskioko.livedatademo.repository.model.Movie;
+import com.thomaskioko.livedatademo.repository.api.VideoResult;
 import com.thomaskioko.livedatademo.repository.util.LiveDataCallAdapterFactory;
 
 import org.junit.After;
@@ -35,6 +37,7 @@ import static com.thomaskioko.livedatademo.util.LiveDataTestUtil.getValue;
 import static com.thomaskioko.livedatademo.utils.AppConstants.CONNECT_TIMEOUT;
 import static com.thomaskioko.livedatademo.utils.AppConstants.READ_TIMEOUT;
 import static com.thomaskioko.livedatademo.utils.AppConstants.WRITE_TIMEOUT;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -65,36 +68,56 @@ public class TmdbServiceTest {
     }
 
     @Test
-    public void getPopularMovies()  throws IOException, InterruptedException {
+    public void testGetPopularMovies()  throws IOException, InterruptedException {
         enqueueResponse("popular-movies.json");
         MovieResult movieResult = getValue(service.getPopularMovies()).body;
 
         RecordedRequest request = mockWebServer.takeRequest();
         assertThat(request.getPath(), is("/movie/popular?"));
 
+        assertNotNull(movieResult);
+
         List<Movie> movieList = movieResult.getResults();
         assertTrue(movieList.size()> 0);
     }
 
     @Test
-    public void getSearchedMovie()  throws IOException, InterruptedException {
+    public void testGetMovieVideos()  throws IOException, InterruptedException {
+        enqueueResponse("videos-by-movie-id.json");
+        VideoResult videoResult = getValue(service.getMovieVideos(354912)).body;
+
+        RecordedRequest request = mockWebServer.takeRequest();
+        assertThat(request.getPath(), is("/movie/354912/videos"));
+
+        assertNotNull(videoResult);
+
+        List<TmdbVideo> results = videoResult.getResults();
+        assertTrue(results.size()> 0);
+    }
+
+    @Test
+    public void testGetSearchedMovie()  throws IOException, InterruptedException {
         enqueueResponse("search-movie.json");
         MovieResult movieResult = getValue(service.searchMovies("hitman")).body;
 
         RecordedRequest request = mockWebServer.takeRequest();
         assertThat(request.getPath(), is("/search/movie?&query=hitman"));
 
+        assertNotNull(movieResult);
+
         List<Movie> movieList = movieResult.getResults();
         assertTrue(movieList.size()> 0);
     }
 
     @Test
-    public void getSearchedMovieById()  throws IOException, InterruptedException {
+    public void testGetSearchedMovieById()  throws IOException, InterruptedException {
         enqueueResponse("search-movie-id.json");
         Movie movieResult = getValue(service.getMovieById(354912)).body;
 
         RecordedRequest request = mockWebServer.takeRequest();
         assertThat(request.getPath(), is("/movie/354912"));
+
+        assertNotNull(movieResult);
 
         assertThat(movieResult.title, is("Coco"));
     }
