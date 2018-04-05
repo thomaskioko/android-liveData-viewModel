@@ -48,9 +48,9 @@ public class MovieDetailFragmentTest {
     private MutableLiveData<Resource<List<TmdbVideo>>> videoData = new MutableLiveData<>();
 
     @Before
-    public void init() throws Throwable {
+    public void init()  {
         EspressoTestUtil.disableProgressBarAnimations(activityRule);
-        MovieDetailFragment fragment = MovieDetailFragment.create(198663);
+        MovieDetailFragment fragment = MovieDetailFragment.create(anyInt(), anyInt());
         viewModel = mock(MovieDetailViewModel.class);
         when(viewModel.getMovie()).thenReturn(data);
         when(viewModel.getVideoMovies()).thenReturn(videoData);
