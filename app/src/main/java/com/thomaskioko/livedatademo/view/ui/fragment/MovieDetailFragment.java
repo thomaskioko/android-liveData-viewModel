@@ -127,7 +127,7 @@ public class MovieDetailFragment extends Fragment implements Injectable {
         super.onCreate(savedInstanceState);
 
         // Postpone the shared element enter transition.
-//        postponeEnterTransition();
+        postponeEnterTransition();
     }
 
     @Nullable
