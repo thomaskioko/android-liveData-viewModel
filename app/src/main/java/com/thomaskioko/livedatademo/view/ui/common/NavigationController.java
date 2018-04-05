@@ -3,7 +3,7 @@ package com.thomaskioko.livedatademo.view.ui.common;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
-import android.transition.AutoTransition;
+import android.transition.Fade;
 import android.view.View;
 
 import com.thomaskioko.livedatademo.R;
@@ -40,8 +40,8 @@ public class NavigationController {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             fragment.setSharedElementEnterTransition(new DetailsTransition());
-            fragment.setEnterTransition(new AutoTransition());
-            fragment.setExitTransition(new AutoTransition());
+            fragment.setEnterTransition(new Fade());
+            fragment.setExitTransition(new Fade());
             fragment.setSharedElementReturnTransition(new DetailsTransition());
         }
         fragmentManager.beginTransaction()
