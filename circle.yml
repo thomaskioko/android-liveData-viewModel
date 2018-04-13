@@ -1,0 +1,67 @@
+general:
+    artifacts:
+        - /home/ubuntu/SkillTree/app/build/outputs/apk/
+
+machine:
+    environment:
+        ANDROID_HOME: /usr/local/android-sdk-linux
+        ADB_INSTALL_TIMEOUT: 360
+        GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx3072M -XX:+HeapDumpOnOutOfMemoryError"'
+    java:
+        version: oraclejdk8
+
+dependencies:
+    pre:
+        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,android-25
+        - echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+        - echo y | android update sdk --no-ui --all --filter android-25
+        - echo y | android update sdk --no-ui --all --filter tools
+        - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
+        - echo y | android update sdk --no-ui --all --filter extra-android-support
+        - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services
+        - echo y | android update sdk --no-ui --all --filter extra-google-m2repository
+
+    override:
+        - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
+
+    cache_directories:
+        - /usr/local/android-sdk-linux/tools
+        - /usr/local/android-sdk-linux/build-tools/25.0.0
+
+# Comment the test stuff out (or remove it) if you don't need it.
+test:
+
+#  pre:
+#    - emulator -avd circleci-android22 -no-audio -no-window:
+#          background: true
+#          parallel: true
+#    - circle-android wait-for-boot
+#    # unlock emulator
+#    - sleep 30
+#    - adb shell input keyevent 82
+
+  override:
+    # - ./gradlew clean assemble
+    # - ./gradlew assemble connectedDebugAndroidTest -PdisablePreDex --console=plain --info
+
+    # This will ensure the app is build successfully with no errors before running the test
+    - ./gradlew assemble
+    - ./gradlew test
+
+
+
+  post:
+      # junit xml report:
+      - mkdir -p $CIRCLE_TEST_REPORTS/junit-xml/
+      - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit-xml/ \;
+
+      # junit html report:
+      - mkdir -p $CIRCLE_TEST_REPORTS/junit-html/
+      - cp -r app/build/outputs/ $CIRCLE_TEST_REPORTS/junit-html/
+
+      # lint report:
+      - mkdir -p $CIRCLE_TEST_REPORTS/lint/
+      - find . -type f -regex ".*/build/outputs/.*html" -exec cp {} $CIRCLE_TEST_REPORTS/lint/ \;
+
+      # Artifact - APK's
+      - cp -r app/build/outputs $CIRCLE_ARTIFACTS
