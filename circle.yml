@@ -23,7 +23,7 @@ dependencies:
         - sdkmanager --update && yes | sdkmanager --licenses
 
     override:
-        - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
+        - sudo ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
     cache_directories:
         - /usr/local/android-sdk-linux/tools
