@@ -18,6 +18,11 @@ A simple android project that demonstrates how to implement Android Architecture
 
 </table>
 
+### Architecture
+The app uses ViewModel to abstract the data from UI and TmdbRepository as single source of truth for data. TmdbRepository first fetch the data from database if exist than display data to the user and at the same time it also fetches data from the webservice and update the result in database and reflect the changes to UI from database.
+
+![](https://github.com/kioko/android-liveData-viewModel/blob/master/art/archtiture.png)
+
 ### Requirements
 
 * JDK Version 1.7 & above
@@ -30,13 +35,6 @@ If you don’t already have an account, you will need to [create one](https://ww
 in order to request an API Key.
 
 Once you have it, open `gradle.properties` file and paste your API key in `TMDB_API_KEY` variable.
-
-### Architecture
-
-## Architecture
-The app uses ViewModel to abstract the data from UI and TmdbRepository as single source of truth for data. TmdbRepository first fetch the data from database if exist than display data to the user and at the same time it also fetches data from the webservice and update the result in database and reflect the changes to UI from database.
-
-![](https://github.com/kioko/android-liveData-viewModel/blob/master/art/archtiture.png)
 
 ### Libraries
 
