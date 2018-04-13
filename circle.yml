@@ -1,6 +1,6 @@
 general:
     artifacts:
-        - /home/ubuntu/SkillTree/app/build/outputs/apk/
+        - /home/ubuntu/LiveDataDemo/app/build/outputs/apk/
 
 machine:
     environment:
@@ -12,21 +12,22 @@ machine:
 
 dependencies:
     pre:
-        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,android-25
-        - echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
-        - echo y | android update sdk --no-ui --all --filter android-25
+        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,android-27
+        - echo y | android update sdk --no-ui --all --filter build-tools-27.0.3
+        - echo y | android update sdk --no-ui --all --filter android-27
         - echo y | android update sdk --no-ui --all --filter tools
         - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
         - echo y | android update sdk --no-ui --all --filter extra-android-support
         - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services
         - echo y | android update sdk --no-ui --all --filter extra-google-m2repository
+        - sdkmanager --update && yes | sdkmanager --licenses
 
     override:
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
     cache_directories:
         - /usr/local/android-sdk-linux/tools
-        - /usr/local/android-sdk-linux/build-tools/25.0.0
+        - /usr/local/android-sdk-linux/build-tools/27.0.3
 
 # Comment the test stuff out (or remove it) if you don't need it.
 test:
