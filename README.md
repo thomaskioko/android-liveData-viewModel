@@ -1,6 +1,7 @@
 Android LiveData & ViewModel Demo
 ---------------------------------------
 [![CircleCI](https://circleci.com/gh/kioko/android-liveData-viewModel.svg)](https://circleci.com/gh/kioko/android-liveData-viewModel)
+
 A simple android project that demonstrates how to implement Android Architecture Components.
 
 ### Requirements
