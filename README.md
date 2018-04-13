@@ -4,6 +4,20 @@ Android LiveData & ViewModel Demo
 
 A simple android project that demonstrates how to implement Android Architecture Components.
 
+ <table>
+  <td>
+    <p align="center">
+  <img src="https://github.com/kioko/android-liveData-viewModel/blob/master/art/HomeScreen.png?raw=true" alt="Home Page" width="250"/>
+</p>
+</td>
+<td>
+    <p align="center">
+  <img src="https://github.com/kioko/android-liveData-viewModel/blob/master/art/MovieDetails.png?raw=true" alt="Movie Details" width="250"/>
+    </p>
+  </td>
+
+</table>
+
 ### Requirements
 
 * JDK Version 1.7 & above
