@@ -1,11 +1,13 @@
 package com.thomaskioko.livedatademo.db;
 
+import android.annotation.SuppressLint;
 import android.arch.persistence.room.TypeConverter;
 import android.arch.persistence.room.util.StringUtil;
 
 import java.util.Collections;
 import java.util.List;
 
+@SuppressLint("RestrictedApi")
 public class TmdbTypeConverters {
     @TypeConverter
     public static List<Integer> stringToIntList(String data) {
